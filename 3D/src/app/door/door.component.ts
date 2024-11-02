@@ -7,6 +7,9 @@ export class DoorComponent extends THREE.Group {
   private targetRotationY: number = 0; 
   private rotationSpeed: number = 0.05; 
 
+  private audioOpen: HTMLAudioElement;
+  private audioClose: HTMLAudioElement;
+
   constructor() {
     super();
 
@@ -27,6 +30,9 @@ export class DoorComponent extends THREE.Group {
       this.pivot.position.set(20, 0, 25);
     });
 
+    this.audioOpen = new Audio('./assets/sounds/doorOpen.mp3');
+    this.audioClose = new Audio('./assets/sounds/doorClose.mp3');
+
     this.animate();
   }
 
@@ -35,6 +41,8 @@ export class DoorComponent extends THREE.Group {
     if (!this.isOpen) {
       this.targetRotationY = Math.PI / 2; 
       this.isOpen = true; 
+      this.audioOpen.currentTime = 0;
+      this.audioOpen.play(); 
     }
   }
 
@@ -42,7 +50,9 @@ export class DoorComponent extends THREE.Group {
   public close() {
     if (this.isOpen) {
       this.targetRotationY = 0; 
-      this.isOpen = false; 
+      this.isOpen = false;
+      this.audioClose.currentTime = 0; 
+      this.audioClose.play();
     }
   }
 
