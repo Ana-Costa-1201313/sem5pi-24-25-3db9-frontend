@@ -4,21 +4,31 @@ import * as THREE from 'three';
 
 export class ShibaComponent extends THREE.Group {
 
+  private audioClick: HTMLAudioElement; // Audio element for click sound
+
   constructor() {
     super();
+
+    this.audioClick = new Audio('./assets/sounds/dog.mp3');
 
     const gltfLoader = new GLTFLoader();
     gltfLoader.load('./assets/shiba/scene.gltf', (gltfScene) => {
       gltfScene.scene.scale.set(2, 2, 2);
       gltfScene.scene.position.set(-15, 13.8, -19);
-      gltfScene.scene.rotation.y = Math.PI / 6; 
+      gltfScene.scene.rotation.y = Math.PI / 6;
       gltfScene.scene.traverse((child) => {
         if (child instanceof THREE.Mesh) {
-          child.castShadow = true;     
-          child.receiveShadow = true;  
+          child.castShadow = true;
+          child.receiveShadow = true;
         }
       });
       this.add(gltfScene.scene);
     });
   }
+
+  public playClickSound() {
+    this.audioClick.currentTime = 0;
+    this.audioClick.play(); 
+  }
+
 }

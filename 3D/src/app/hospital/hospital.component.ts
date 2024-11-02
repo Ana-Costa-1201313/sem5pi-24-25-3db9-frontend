@@ -63,6 +63,11 @@ export class HospitalComponent implements AfterViewInit {
       this.onDoorClick(event, door);
     });
 
+    window.addEventListener('click', (event) => {
+      this.onShibaClick(event, shiba);
+    });
+
+
     const tools = new InstrumentsComponent();
     this.scene.add(tools);
 
@@ -88,6 +93,21 @@ export class HospitalComponent implements AfterViewInit {
       } else {
         door.open();
       }
+    }
+  }
+
+  private onShibaClick(event: MouseEvent, shiba: ShibaComponent) {
+    const mouse = new THREE.Vector2(
+      (event.clientX / window.innerWidth) * 2 - 1,
+      -(event.clientY / window.innerHeight) * 2 + 1
+    );
+
+    const raycaster = new THREE.Raycaster();
+    raycaster.setFromCamera(mouse, this.camera);
+
+    const intersects = raycaster.intersectObject(shiba, true);
+    if (intersects.length > 0) {
+      shiba.playClickSound();
     }
   }
 
@@ -133,15 +153,15 @@ export class HospitalComponent implements AfterViewInit {
     directionalLight.position.set(10, 10, 20);
     directionalLight.castShadow = true;
 
-    directionalLight.shadow.mapSize.width = 1024; 
+    directionalLight.shadow.mapSize.width = 1024;
     directionalLight.shadow.mapSize.height = 1024;
 
-    directionalLight.shadow.camera.near = 0.5; 
-    directionalLight.shadow.camera.far = 50;  
-    directionalLight.shadow.camera.left = -10;  
-    directionalLight.shadow.camera.right = 10;   
-    directionalLight.shadow.camera.top = 10;     
-    directionalLight.shadow.camera.bottom = -10; 
+    directionalLight.shadow.camera.near = 0.5;
+    directionalLight.shadow.camera.far = 50;
+    directionalLight.shadow.camera.left = -10;
+    directionalLight.shadow.camera.right = 10;
+    directionalLight.shadow.camera.top = 10;
+    directionalLight.shadow.camera.bottom = -10;
 
     this.scene.add(ambientLight);
     this.scene.add(directionalLight);
@@ -167,14 +187,14 @@ export class HospitalComponent implements AfterViewInit {
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     this.renderer.setPixelRatio(devicePixelRatio);
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
-    this.renderer.shadowMap.enabled = true; 
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.mouseButtons = {
-      LEFT: THREE.MOUSE.PAN,       
-      MIDDLE: THREE.MOUSE.DOLLY,    
-      RIGHT: THREE.MOUSE.ROTATE     
+      LEFT: THREE.MOUSE.PAN,
+      MIDDLE: THREE.MOUSE.DOLLY,
+      RIGHT: THREE.MOUSE.ROTATE
     };
 
     this.render();
