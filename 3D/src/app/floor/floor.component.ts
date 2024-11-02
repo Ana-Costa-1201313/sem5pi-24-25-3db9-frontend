@@ -12,7 +12,7 @@ export default class FloorComponent extends THREE.Group {
 
     const geometry = new THREE.PlaneGeometry(100, 100); 
 
-    const material = new THREE.MeshStandardMaterial({ map: texture, side: THREE.FrontSide });
+    const material = new THREE.MeshPhongMaterial({ map: texture, side: THREE.FrontSide, shininess: 100 });
     const floor = new THREE.Mesh(geometry, material);
 
 
