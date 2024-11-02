@@ -1,12 +1,23 @@
-import { Component } from '@angular/core';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import * as THREE from 'three';
 
-@Component({
-  selector: 'app-table',
-  standalone: true,
-  imports: [],
-  templateUrl: './table.component.html',
-  styleUrl: './table.component.scss'
-})
-export class TableComponent {
 
+export class TableComponent extends THREE.Group {
+
+  constructor() {
+    super();
+
+    const gltfLoader = new GLTFLoader();
+    gltfLoader.load('./assets/table/scene.gltf', (gltfScene) => {
+      gltfScene.scene.scale.set(10, 10, 10);
+      gltfScene.scene.position.set(0, 0, 0);
+      gltfScene.scene.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          child.castShadow = true; 
+          child.receiveShadow = true; 
+        }
+      });
+      this.add(gltfScene.scene);
+    });
+  }
 }
