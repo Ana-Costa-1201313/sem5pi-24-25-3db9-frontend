@@ -92,21 +92,21 @@ This section presents the design adopted to solve the requirement.
 
 This diagram guides the realization of the functionality, for level 1 procecss view.
 
-![US5.1.15 N1 SD](US5.1.15%20N1%20SD.svg)
+![US6.2.13 N1 SD](US6.2.13%20N1%20SD.svg)
 
 
 ### 4.2. Level 2 Sequence Diagram
 
 This diagram guides the realization of the functionality, for level 2 procecss view.
 
-![US5.1.15 N2 SD](US5.1.15%20N2%20SD.svg)
+![US6.2.13 N2 SD](US6.2.13%20N2%20SD.svg)
 
 
 ### 4.3. Level 3 Sequence Diagram
 
 This diagram guides the realization of the functionality, for level 3 process view.
 
-![US5.1.15 N3 SD](US5.1.15%20N3%20SD.svg)
+![US6.2.13 N3 SD](US6.2.13%20N3%20SD.svg)
 
 
 ### 4.4. Applied Design Patterns
