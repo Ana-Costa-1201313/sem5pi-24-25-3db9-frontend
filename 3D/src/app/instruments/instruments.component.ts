@@ -1,12 +1,26 @@
-import { Component } from '@angular/core';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import * as THREE from 'three';
 
-@Component({
-  selector: 'app-instruments',
-  standalone: true,
-  imports: [],
-  templateUrl: './instruments.component.html',
-  styleUrl: './instruments.component.scss'
-})
-export class InstrumentsComponent {
 
+export class InstrumentsComponent extends THREE.Group {
+
+  constructor() {
+    super();
+
+    const gltfLoader = new GLTFLoader();
+    gltfLoader.load('./assets/tools/scene.gltf', (gltfScene) => {
+      gltfScene.scene.scale.set(10, 10, 10);
+      gltfScene.scene.position.set(0, 0, -20);
+
+      gltfScene.scene.rotation.y = Math.PI / 2; 
+
+      gltfScene.scene.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          child.castShadow = true;     
+          child.receiveShadow = true;  
+        }
+      });
+      this.add(gltfScene.scene);
+    });
+  }
 }
