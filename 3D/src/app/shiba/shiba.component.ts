@@ -4,7 +4,7 @@ import * as THREE from 'three';
 
 export class ShibaComponent extends THREE.Group {
 
-  private audioClick: HTMLAudioElement; // Audio element for click sound
+  private audioClick: HTMLAudioElement;
 
   constructor() {
     super();

@@ -11,6 +11,7 @@ import { DoorComponent } from '../door/door.component';
 import { InstrumentsComponent } from '../instruments/instruments.component';
 import WallComponent from '../wall/wall.component';
 import InteriorWallComponent from '../interior-wall/interior-wall.component';
+import { LampComponent } from '../lamp/lamp.component';
 
 @Component({
   selector: 'app-hospital',
@@ -58,6 +59,9 @@ export class HospitalComponent implements AfterViewInit {
     const door = new DoorComponent();
     this.scene.add(door);
 
+    const lamp = new LampComponent();
+    this.scene.add(lamp);
+
     // Add click event for the door
     window.addEventListener('click', (event) => {
       this.onDoorClick(event, door);
@@ -65,6 +69,11 @@ export class HospitalComponent implements AfterViewInit {
 
     window.addEventListener('click', (event) => {
       this.onShibaClick(event, shiba);
+    });
+
+    // Add click event for the lamp
+    window.addEventListener('click', (event) => {
+      this.onLampClick(event, lamp);
     });
 
 
@@ -111,6 +120,22 @@ export class HospitalComponent implements AfterViewInit {
     }
   }
 
+  private onLampClick(event: MouseEvent, lamp: LampComponent) {
+    const mouse = new THREE.Vector2(
+      (event.clientX / window.innerWidth) * 2 - 1,
+      -(event.clientY / window.innerHeight) * 2 + 1
+    );
+
+    const raycaster = new THREE.Raycaster();
+    raycaster.setFromCamera(mouse, this.camera);
+
+    // Use intersectObjects to check all children of the lamp
+    const intersects = raycaster.intersectObjects(lamp.children, true);
+    if (intersects.length > 0) {
+      lamp.toggleLight(); // Call toggleLight to turn the lamp on or off
+    }
+  }
+
   private addWalls() {
     const wall = new InteriorWallComponent();
     wall.position.set(29.5, 15, 25);
@@ -151,7 +176,8 @@ export class HospitalComponent implements AfterViewInit {
     const ambientLight = new THREE.AmbientLight(0xffffff, 1);
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(10, 10, 20);
-    directionalLight.castShadow = true;
+    //shadow inactive
+    directionalLight.castShadow = false;
 
     directionalLight.shadow.mapSize.width = 1024;
     directionalLight.shadow.mapSize.height = 1024;

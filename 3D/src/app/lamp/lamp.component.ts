@@ -1,0 +1,53 @@
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import * as THREE from 'three';
+
+export class LampComponent extends THREE.Group {
+  private spotLight: THREE.SpotLight;
+  private target: THREE.Object3D;
+  private isLightOn: boolean = true;
+  private audioClick: HTMLAudioElement;
+
+
+  constructor() {
+    super();
+
+    this.audioClick = new Audio('./assets/sounds/lightSwitch.mp3');
+
+    const gltfLoader = new GLTFLoader();
+    gltfLoader.load('./assets/lamp/scene.gltf', (gltfScene) => {
+      gltfScene.scene.scale.set(0.02, 0.02, 0.02);
+      gltfScene.scene.position.set(6, 30.5, -2.5);
+
+      gltfScene.scene.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          child.castShadow = true;
+          child.receiveShadow = true;
+        }
+      });
+      this.add(gltfScene.scene);
+    });
+
+    this.spotLight = new THREE.SpotLight(0xffffff, 500, 500, Math.PI / 3, 0.1, 2);
+    this.spotLight.position.set(6, 28, -2);
+    this.spotLight.castShadow = true;
+
+    this.spotLight.shadow.mapSize.width = 512;
+    this.spotLight.shadow.mapSize.height = 512;
+    this.spotLight.shadow.camera.near = 0.5;
+    this.spotLight.shadow.camera.far = 50;
+
+    this.target = new THREE.Object3D();
+    this.target.position.set(6, 0, -2);
+    this.spotLight.target = this.target;
+
+    this.add(this.spotLight);
+    this.add(this.target);
+  }
+
+  public toggleLight(): void {
+    this.audioClick.currentTime = 0;
+    this.audioClick.play();
+    this.isLightOn = !this.isLightOn;
+    this.spotLight.intensity = this.isLightOn ? 500 : 0;
+  }
+}

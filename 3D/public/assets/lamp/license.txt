@@ -1,0 +1,11 @@
+Model Information:
+* title:	Celling lamp
+* source:	https://sketchfab.com/3d-models/celling-lamp-dee2b4b1cbc64a2bbea0d6886fa36817
+* author:	DDZ production (https://sketchfab.com/ddzk)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Celling lamp" (https://sketchfab.com/3d-models/celling-lamp-dee2b4b1cbc64a2bbea0d6886fa36817) by DDZ production (https://sketchfab.com/ddzk) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
