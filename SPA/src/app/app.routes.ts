@@ -7,4 +7,4 @@ export const routes: Routes = [
     component: HomeComponent,
     title: 'Home page',
   },
-];
+
