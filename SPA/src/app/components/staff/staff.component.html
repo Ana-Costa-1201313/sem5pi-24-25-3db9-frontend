@@ -7,6 +7,12 @@
     [value]="staffList"
     styleClass="p-datatable-striped"
     [tableStyle]="{ 'min-width': '20rem' }"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [totalRecords]="50"
+    [lazy]="true"
+    (onLazyLoad)="loadStaffLazy($event)"
   >
     <ng-template pTemplate="header">
       <tr>
