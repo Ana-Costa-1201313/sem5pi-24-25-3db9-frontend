@@ -51,10 +51,11 @@ export class HospitalComponent implements AfterViewInit {
     this.scene.add(shiba);
 
     const table = new TableComponent();
+    table.addHuman();
     this.scene.add(table);
 
-    const human = new HumanComponent();
-    this.scene.add(human);
+    //const human = new HumanComponent();
+    //this.scene.add(human);
 
     const door = new DoorComponent();
     this.scene.add(door);
