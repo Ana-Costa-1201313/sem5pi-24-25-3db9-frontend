@@ -5,11 +5,12 @@ import { Staff } from '../../model/staff.model';
 import { StaffService } from '../../services/staff.service';
 import { CommonModule } from '@angular/common';
 import { FilterMatchMode, SelectItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-staff',
   standalone: true,
-  imports: [CommonModule, TableModule, DialogModule],
+  imports: [CommonModule, TableModule, DialogModule, ButtonModule],
   templateUrl: './staff.component.html',
   styleUrl: './staff.component.css',
 })

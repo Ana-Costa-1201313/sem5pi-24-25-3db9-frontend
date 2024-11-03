@@ -55,9 +55,25 @@
         <td>{{ staff.email }}</td>
         <td>{{ staff.specialization }}</td>
         <td class="text-center">
-          <i class="pi pi-eye me-3" (click)="openDetailsModal(staff)"></i>
-          <i class="pi pi-pencil me-3"></i>
-          <i class="pi pi-trash"></i>
+          <p-button
+            icon="pi pi-eye"
+            class="me-3"
+            [rounded]="true"
+            [text]="true"
+            (click)="openDetailsModal(staff)"
+          />
+          <p-button
+            icon="pi pi-pencil"
+            class="me-3"
+            [rounded]="true"
+            [text]="true"
+          />
+          <p-button
+            icon="pi pi-trash"
+            class="me-3"
+            [rounded]="true"
+            [text]="true"
+          />
         </td>
       </tr>
     </ng-template>
