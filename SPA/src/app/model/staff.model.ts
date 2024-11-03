@@ -7,7 +7,7 @@ export type Staff = {
     email: string | null |undefined;
     phone: string | null |undefined;
     specialization: string | null |undefined;
-    availabilitySlots: string | null |undefined;
+    availabilitySlots: string[] | null |undefined;
     role: Role | null |undefined;
     mechanographicNum: string | null |undefined;
     active: boolean | null | undefined;

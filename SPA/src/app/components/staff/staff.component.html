@@ -23,10 +23,65 @@
         <td class="text-center">{{ staff.email }}</td>
         <td class="text-center">{{ staff.specialization }}</td>
         <td class="text-center">{{ staff.active }}</td>
-        <td>
-          <i class="pi pi-check"></i>
+        <td class="text-center">
+          <i class="pi pi-eye me-3" (click)="openDetailsModal(staff)"></i>
+          <i class="pi pi-pencil me-3"></i>
+          <i class="pi pi-trash"></i>
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+
+<p-dialog
+  header="Staff"
+  [(visible)]="showDetails"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <h4 class="fw-bold">{{ currentStaff?.name }}</h4>
+  </ng-template>
+
+  <div class="container">
+    <h5 class="title-separator">General Information</h5>
+    <hr class="line-separator" />
+
+    <div class="row">
+      <label for="role"><b>Role:</b> {{ currentStaff?.role }}</label>
+      <label for="specialization" class="mt-2"
+        ><b>Specialization:</b> {{ currentStaff?.specialization }}</label
+      >
+      <label for="licenseNumber" class="mt-2"
+        ><b>License Number:</b> {{ currentStaff?.licenseNumber }}</label
+      >
+      <label for="mechanographicNumber" class="mt-2"
+        ><b>Mechanographic Number:</b>
+        {{ currentStaff?.mechanographicNum }}</label
+      >
+      <label for="active" class="mt-2"
+        ><b>Active:</b> {{ currentStaff?.active }}</label
+      >
+      <label for="availabilitySlots" class="mt-2"
+        ><b>Availability Slots:</b>
+      </label>
+      <ul>
+        <li *ngFor="let slot of currentStaff?.availabilitySlots" class="slot-list">
+          {{ slot }}
+        </li>
+      </ul>
+    </div>
+
+    <h5 class="title-separator mt-4">Contact Information</h5>
+    <hr class="line-separator" />
+
+    <div class="row">
+      <label for="email"><b>Email:</b> {{ currentStaff?.email }}</label>
+      <label for="phone" class="mt-2"
+        ><b>Phone:</b> {{ currentStaff?.phone }}</label
+      >
+    </div>
+  </div>
+</p-dialog>
