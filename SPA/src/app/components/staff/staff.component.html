@@ -1,5 +1,5 @@
 <div class="text-center">
-  <h1 class="fw-bold mt-2 main-title">Staff</h1>
+  <h1 class="fw-bold mt-2 main-title mb-4">Staff</h1>
 </div>
 
 <div class="container">
@@ -9,20 +9,51 @@
     [tableStyle]="{ 'min-width': '20rem' }"
   >
     <ng-template pTemplate="header">
-      <tr class="text-center">
+      <tr>
         <th>Name</th>
         <th>Email</th>
         <th>Specialization</th>
-        <th>Active</th>
-        <th>Actions</th>
+        <th></th>
+      </tr>
+      <tr>
+        <th>
+          <p-columnFilter
+            type="text"
+            field="name"
+            placeholder="Search by name"
+            ariaLabel="Filter Name"
+            [matchModeOptions]="matchModeOptions"
+            matchMode="contains"
+          />
+        </th>
+        <th>
+          <p-columnFilter
+            type="text"
+            field="email"
+            placeholder="Search by email"
+            ariaLabel="Filter Email"
+            [matchModeOptions]="matchModeOptions"
+            matchMode="contains"
+          />
+        </th>
+        <th>
+          <p-columnFilter
+            type="text"
+            field="specialization"
+            placeholder="Search by specialization"
+            ariaLabel="Filter Specialization"
+            [matchModeOptions]="matchModeOptions"
+            matchMode="contains"
+          />
+        </th>
+        <th></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-staff>
       <tr>
-        <td class="text-center">{{ staff.name }}</td>
-        <td class="text-center">{{ staff.email }}</td>
-        <td class="text-center">{{ staff.specialization }}</td>
-        <td class="text-center">{{ staff.active }}</td>
+        <td>{{ staff.name }}</td>
+        <td>{{ staff.email }}</td>
+        <td>{{ staff.specialization }}</td>
         <td class="text-center">
           <i class="pi pi-eye me-3" (click)="openDetailsModal(staff)"></i>
           <i class="pi pi-pencil me-3"></i>
@@ -46,8 +77,8 @@
   </ng-template>
 
   <div class="container">
-    <h5 class="title-separator">General Information</h5>
-    <hr class="line-separator" />
+    <h5 class="title-separator separator">General Information</h5>
+    <hr class="line-separator separator" />
 
     <div class="row">
       <label for="role"><b>Role:</b> {{ currentStaff?.role }}</label>
@@ -68,14 +99,14 @@
         ><b>Availability Slots:</b>
       </label>
       <ul>
-        <li *ngFor="let slot of currentStaff?.availabilitySlots" class="slot-list">
+        <li *ngFor="let slot of currentStaff?.availabilitySlots">
           {{ slot }}
         </li>
       </ul>
     </div>
 
-    <h5 class="title-separator mt-4">Contact Information</h5>
-    <hr class="line-separator" />
+    <h5 class="title-separator mt-4 separator">Contact Information</h5>
+    <hr class="line-separator separator" />
 
     <div class="row">
       <label for="email"><b>Email:</b> {{ currentStaff?.email }}</label>

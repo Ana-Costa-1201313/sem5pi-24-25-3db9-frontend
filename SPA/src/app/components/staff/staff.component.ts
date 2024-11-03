@@ -4,6 +4,7 @@ import { TableModule } from 'primeng/table';
 import { Staff } from '../../model/staff.model';
 import { StaffService } from '../../services/staff.service';
 import { CommonModule } from '@angular/common';
+import { FilterMatchMode, SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-staff',
@@ -16,6 +17,7 @@ export class StaffComponent implements OnInit {
   staffList: Staff[] = [];
   currentStaff: Staff | null = null;
   showDetails: boolean = false;
+  matchModeOptions: SelectItem[] = [];
 
   constructor(private service: StaffService) {}
 
@@ -23,6 +25,10 @@ export class StaffComponent implements OnInit {
     this.service.getStaffList().subscribe((s) => {
       this.staffList = s;
     });
+
+    this.matchModeOptions = [
+      { label: 'Contains', value: FilterMatchMode.CONTAINS },
+    ];
   }
 
   openDetailsModal(staff: Staff): void {
