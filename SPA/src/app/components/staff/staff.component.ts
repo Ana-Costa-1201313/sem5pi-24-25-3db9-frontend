@@ -19,6 +19,7 @@ export class StaffComponent implements OnInit {
   currentStaff: Staff | null = null;
   showDetails: boolean = false;
   matchModeOptions: SelectItem[] = [];
+  totalRecords: number = 0;
 
   constructor(private service: StaffService) {}
 
@@ -26,6 +27,8 @@ export class StaffComponent implements OnInit {
     this.matchModeOptions = [
       { label: 'Contains', value: FilterMatchMode.CONTAINS },
     ];
+
+    this.service.getTotalRecords().subscribe((t) => (this.totalRecords = t));
   }
 
   openDetailsModal(staff: Staff): void {
@@ -36,14 +39,12 @@ export class StaffComponent implements OnInit {
   loadStaffLazy(event: any) {
     console.log('aaaaaaaaaaaa', event);
 
-    console.log('bbbbbbbbbb', event.filters?.email?.value);
-
     this.service
       .getStaffList(
         event.filters?.name?.value,
         event.filters?.email?.value,
         event.filters?.specialization?.value,
-        event.first,
+        event.first / event.rows + 1,
         event.rows
       )
       .subscribe((s) => (this.staffList = s));

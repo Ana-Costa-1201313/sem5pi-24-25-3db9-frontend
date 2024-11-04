@@ -37,4 +37,10 @@ export class StaffService {
 
     return this.http.get<Staff[]>(this.url, { params: params });
   }
+
+  getTotalRecords(): Observable<number> {
+    return this.http.get<number>(
+      `${this.url}${environment.endpoints.totalRecordsStaff}`
+    );
+  }
 }
