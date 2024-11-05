@@ -53,22 +53,23 @@ export default class RoomComponent extends THREE.Group {
     const doorIntersects = raycaster.intersectObject(this.door.pivot, true);
     if (doorIntersects.length > 0) {
       this.door.isOpen ? this.door.close() : this.door.open();
-      return; // Stop here if door is clicked to avoid triggering other actions
+      return true; // Stop here if door is clicked to avoid triggering other actions
     }
 
     // Check for shiba interaction
     const shibaIntersects = raycaster.intersectObject(this.shiba, true);
     if (shibaIntersects.length > 0) {
       this.shiba.playClickSound();
-      return;
+      return true;
     }
 
     // Check for lamp interaction
     const lampIntersects = raycaster.intersectObjects(this.lamp.children, true);
     if (lampIntersects.length > 0) {
       this.lamp.toggleLight();
-      return;
+      return true;
     }
+    return false;
   }
 
 

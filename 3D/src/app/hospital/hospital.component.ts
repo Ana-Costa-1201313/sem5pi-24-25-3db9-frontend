@@ -1,14 +1,8 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import * as THREE from "three";
-import FloorComponent from '../floor/floor.component';
-import { TableComponent } from '../table/table.component';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import Stats from 'three/examples/jsm/libs/stats.module.js';
 import { ShibaComponent } from '../shiba/shiba.component';
-import { HumanComponent } from '../human/human.component';
 import { DoorComponent } from '../door/door.component';
-import { InstrumentsComponent } from '../instruments/instruments.component';
 import WallComponent from '../wall/wall.component';
 import InteriorWallComponent from '../interior-wall/interior-wall.component';
 import { LampComponent } from '../lamp/lamp.component';
@@ -21,7 +15,7 @@ import RoomComponent from '../room/room.component';
 })
 export class HospitalComponent implements AfterViewInit {
   @ViewChild('myCanvas') private canvasRef!: ElementRef;
-  private room!: RoomComponent;
+  private rooms: RoomComponent[] = [];
 
   // Stage properties
   @Input() public cameraZ: number = 20;
@@ -46,51 +40,43 @@ export class HospitalComponent implements AfterViewInit {
   // Creating the scene
   private createScene(): void {
     this.scene.background = new THREE.Color(0x0099ff);
-    const floor = new FloorComponent();
-    this.scene.add(floor);
+    // const floor = new FloorComponent();
+    // this.scene.add(floor);
 
-    const shiba = new ShibaComponent();
-    this.scene.add(shiba);
+    // const shiba = new ShibaComponent();
+    // this.scene.add(shiba);
 
-    const table = new TableComponent();
-    table.addHuman();
-    this.scene.add(table);
+    // const table = new TableComponent();
+    // table.addHuman();
+    // this.scene.add(table);
 
-    //const human = new HumanComponent();
-    //this.scene.add(human);
 
-    const door = new DoorComponent();
-    this.scene.add(door);
+    // const door = new DoorComponent();
+    // this.scene.add(door);
 
-    const lamp = new LampComponent();
-    this.scene.add(lamp);
-
-    // //Add click event for the door
-    // window.addEventListener('click', (event) => {
-    //   this.onDoorClick(event, door);
-    // });
-
-    // window.addEventListener('click', (event) => {
-    //   this.onShibaClick(event, shiba);
-    // });
-
-    // // Add click event for the lamp
-    // window.addEventListener('click', (event) => {
-    //   this.onLampClick(event, lamp);
-    // });
+    // const lamp = new LampComponent();
+    // this.scene.add(lamp);
 
 
 
 
-    const tools = new InstrumentsComponent();
-    this.scene.add(tools);
 
-    this.addWalls();
+    // const tools = new InstrumentsComponent();
+    // this.scene.add(tools);
 
-    this.room = new RoomComponent();
-    this.room.position.set(85, 0, 0);
-    this.scene.add(this.room);
+    // this.addWalls();
 
+    // this.room = new RoomComponent();
+    // this.room.position.set(85, 0, 0);
+    // this.scene.add(this.room);
+
+
+    for (let i = 0; i < 3; i++) {  // Example: 3 rooms
+      const room = new RoomComponent();
+      room.position.set(i * 85, 0, 0); // Position rooms apart
+      this.scene.add(room);
+      this.rooms.push(room);
+    }
 
 
     // Setup lights
@@ -241,7 +227,17 @@ export class HospitalComponent implements AfterViewInit {
     this.createScene();
     this.renderScene();
 
-    window.addEventListener('click', (event) => this.room.onRoomClick(event, this.camera));
+    window.addEventListener('click', (event) => this.handleRoomClick(event));
+  }
 
+  private handleRoomClick(event: MouseEvent) {
+    // Loop through each room and call its onRoomClick method
+    for (const room of this.rooms) {
+      const interactionHandled = room.onRoomClick(event, this.camera);
+      if (interactionHandled) {
+        // Stop checking other rooms if an interaction was handled
+        break;
+      }
+    }
   }
 }
