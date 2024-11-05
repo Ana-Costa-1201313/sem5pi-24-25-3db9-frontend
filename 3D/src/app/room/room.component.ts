@@ -25,7 +25,6 @@ export default class RoomComponent extends THREE.Group {
     this.add(this.shiba);
 
     this.table = new TableComponent();
-    //this.table.addHuman();
     this.add(this.table);
 
     this.door = new DoorComponent();
@@ -38,7 +37,6 @@ export default class RoomComponent extends THREE.Group {
     this.add(tools);
 
     this.addWalls();
-
   }
 
   public onRoomClick(event: MouseEvent, camera: THREE.PerspectiveCamera) {
@@ -50,21 +48,18 @@ export default class RoomComponent extends THREE.Group {
     const raycaster = new THREE.Raycaster();
     raycaster.setFromCamera(mouse, camera);
 
-    // Check for door interaction
     const doorIntersects = raycaster.intersectObject(this.door.pivot, true);
     if (doorIntersects.length > 0) {
       this.door.isOpen ? this.door.close() : this.door.open();
-      return true; // Stop here if door is clicked to avoid triggering other actions
+      return true;
     }
 
-    // Check for shiba interaction
     const shibaIntersects = raycaster.intersectObject(this.shiba, true);
     if (shibaIntersects.length > 0) {
       this.shiba.playClickSound();
       return true;
     }
 
-    // Check for lamp interaction
     const lampIntersects = raycaster.intersectObjects(this.lamp.children, true);
     if (lampIntersects.length > 0) {
       this.lamp.toggleLight();

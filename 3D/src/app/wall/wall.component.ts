@@ -9,7 +9,6 @@ export default class WallComponent extends THREE.Group {
   ) {
     super();
 
-    // Load textures
     const textureLoader = new THREE.TextureLoader();
     const frontTexture = textureLoader.load(frontTexturePath);
     const rearTexture = textureLoader.load(rearTexturePath);

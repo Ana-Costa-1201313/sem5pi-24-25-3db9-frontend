@@ -1,11 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import * as THREE from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { ShibaComponent } from '../shiba/shiba.component';
-import { DoorComponent } from '../door/door.component';
-import WallComponent from '../wall/wall.component';
-import InteriorWallComponent from '../interior-wall/interior-wall.component';
-import { LampComponent } from '../lamp/lamp.component';
 import RoomComponent from '../room/room.component';
 
 @Component({
@@ -40,40 +35,10 @@ export class HospitalComponent implements AfterViewInit {
   // Creating the scene
   private createScene(): void {
     this.scene.background = new THREE.Color(0x0099ff);
-    // const floor = new FloorComponent();
-    // this.scene.add(floor);
 
-    // const shiba = new ShibaComponent();
-    // this.scene.add(shiba);
-
-    // const table = new TableComponent();
-    // table.addHuman();
-    // this.scene.add(table);
-
-
-    // const door = new DoorComponent();
-    // this.scene.add(door);
-
-    // const lamp = new LampComponent();
-    // this.scene.add(lamp);
-
-
-
-
-
-    // const tools = new InstrumentsComponent();
-    // this.scene.add(tools);
-
-    // this.addWalls();
-
-    // this.room = new RoomComponent();
-    // this.room.position.set(85, 0, 0);
-    // this.scene.add(this.room);
-
-
-    for (let i = 0; i < 3; i++) {  // Example: 3 rooms
+    for (let i = 0; i < 3; i++) {  
       const room = new RoomComponent();
-      room.position.set(i * 85, 0, 0); // Position rooms apart
+      room.position.set(i * 85, 0, 0); 
       if(i == 1){
         room.table.addHuman();
       }
@@ -84,92 +49,6 @@ export class HospitalComponent implements AfterViewInit {
 
     // Setup lights
     this.setupLights();
-  }
-
-  private onDoorClick(event: MouseEvent, door: DoorComponent) {
-    const mouse = new THREE.Vector2(
-      (event.clientX / window.innerWidth) * 2 - 1,
-      -(event.clientY / window.innerHeight) * 2 + 1
-    );
-
-    const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(mouse, this.camera);
-
-    const intersects = raycaster.intersectObject(door.pivot, true);
-    if (intersects.length > 0) {
-      if (door.isOpen) {
-        door.close();
-      } else {
-        door.open();
-      }
-    }
-  }
-
-  private onShibaClick(event: MouseEvent, shiba: ShibaComponent) {
-    const mouse = new THREE.Vector2(
-      (event.clientX / window.innerWidth) * 2 - 1,
-      -(event.clientY / window.innerHeight) * 2 + 1
-    );
-
-    const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(mouse, this.camera);
-
-    const intersects = raycaster.intersectObject(shiba, true);
-    if (intersects.length > 0) {
-      shiba.playClickSound();
-    }
-  }
-
-  private onLampClick(event: MouseEvent, lamp: LampComponent) {
-    const mouse = new THREE.Vector2(
-      (event.clientX / window.innerWidth) * 2 - 1,
-      -(event.clientY / window.innerHeight) * 2 + 1
-    );
-
-    const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(mouse, this.camera);
-
-    // Use intersectObjects to check all children of the lamp
-    const intersects = raycaster.intersectObjects(lamp.children, true);
-    if (intersects.length > 0) {
-      lamp.toggleLight(); // Call toggleLight to turn the lamp on or off
-    }
-  }
-
-  private addWalls() {
-    const wall = new InteriorWallComponent();
-    wall.position.set(29.5, 15, 25);
-    wall.scale.set(20, 30, 20);
-    this.scene.add(wall);
-
-    const wall1 = new InteriorWallComponent();
-    wall1.rotation.y = Math.PI / 2;  // Rotate 90 degrees
-    wall1.position.set(38.6, 15, -3.2);
-    wall1.scale.set(60, 30, 20);
-    this.scene.add(wall1);
-
-    const wall2 = new InteriorWallComponent();
-    wall2.rotation.y = -Math.PI / 2;  // Rotate 90 degrees
-    wall2.position.set(-25, 15, -3.2);
-    wall2.scale.set(60, 30, 20);
-    this.scene.add(wall2);
-
-    const wall3 = new InteriorWallComponent();
-    wall3.rotation.y = -Math.PI;  // Rotate 180 degrees
-    wall3.position.set(6.8, 15, -31.5);
-    wall3.scale.set(67.5, 30, 20);
-    this.scene.add(wall3);
-
-    const wall4 = new InteriorWallComponent();
-    wall4.position.set(-9.7, 15, 25);
-    wall4.scale.set(33, 30, 20);
-    this.scene.add(wall4);
-
-    const wall5 = new WallComponent("./assets/textures/wall1.png", "./assets/textures/whitefloor.png");
-    wall5.position.set(13, 27.27, 25);
-    wall5.scale.set(15, 5.45, 20);
-    wall5.rotation.z = -Math.PI;  // Rotate 90 degrees
-    this.scene.add(wall5);
   }
 
   private setupLights() {
@@ -234,11 +113,9 @@ export class HospitalComponent implements AfterViewInit {
   }
 
   private handleRoomClick(event: MouseEvent) {
-    // Loop through each room and call its onRoomClick method
     for (const room of this.rooms) {
       const interactionHandled = room.onRoomClick(event, this.camera);
       if (interactionHandled) {
-        // Stop checking other rooms if an interaction was handled
         break;
       }
     }
