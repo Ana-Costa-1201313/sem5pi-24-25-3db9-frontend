@@ -37,8 +37,6 @@ export class StaffComponent implements OnInit {
   }
 
   loadStaffLazy(event: any) {
-    console.log('aaaaaaaaaaaa', event);
-
     this.service
       .getStaffList(
         event.filters?.name?.value,

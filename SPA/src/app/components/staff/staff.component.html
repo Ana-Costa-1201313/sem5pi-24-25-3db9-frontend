@@ -115,8 +115,8 @@
         {{ currentStaff?.mechanographicNum }}</label
       >
       <label for="active" class="mt-2"
-        ><b>Active:</b> {{ currentStaff?.active }}</label
-      >
+        ><b>Active:</b> @if(currentStaff?.active){ Yes } @else { No }
+      </label>
       <label for="availabilitySlots" class="mt-2"
         ><b>Availability Slots:</b>
       </label>
