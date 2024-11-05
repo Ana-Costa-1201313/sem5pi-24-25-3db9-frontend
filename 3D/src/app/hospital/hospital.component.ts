@@ -12,6 +12,7 @@ import { InstrumentsComponent } from '../instruments/instruments.component';
 import WallComponent from '../wall/wall.component';
 import InteriorWallComponent from '../interior-wall/interior-wall.component';
 import { LampComponent } from '../lamp/lamp.component';
+import RoomComponent from '../room/room.component';
 
 @Component({
   selector: 'app-hospital',
@@ -20,6 +21,7 @@ import { LampComponent } from '../lamp/lamp.component';
 })
 export class HospitalComponent implements AfterViewInit {
   @ViewChild('myCanvas') private canvasRef!: ElementRef;
+  private room!: RoomComponent;
 
   // Stage properties
   @Input() public cameraZ: number = 20;
@@ -63,25 +65,33 @@ export class HospitalComponent implements AfterViewInit {
     const lamp = new LampComponent();
     this.scene.add(lamp);
 
-    // Add click event for the door
-    window.addEventListener('click', (event) => {
-      this.onDoorClick(event, door);
-    });
+    // //Add click event for the door
+    // window.addEventListener('click', (event) => {
+    //   this.onDoorClick(event, door);
+    // });
 
-    window.addEventListener('click', (event) => {
-      this.onShibaClick(event, shiba);
-    });
+    // window.addEventListener('click', (event) => {
+    //   this.onShibaClick(event, shiba);
+    // });
 
-    // Add click event for the lamp
-    window.addEventListener('click', (event) => {
-      this.onLampClick(event, lamp);
-    });
+    // // Add click event for the lamp
+    // window.addEventListener('click', (event) => {
+    //   this.onLampClick(event, lamp);
+    // });
+
+
 
 
     const tools = new InstrumentsComponent();
     this.scene.add(tools);
 
     this.addWalls();
+
+    this.room = new RoomComponent();
+    this.room.position.set(85, 0, 0);
+    this.scene.add(this.room);
+
+
 
     // Setup lights
     this.setupLights();
@@ -230,5 +240,8 @@ export class HospitalComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.createScene();
     this.renderScene();
+
+    window.addEventListener('click', (event) => this.room.onRoomClick(event, this.camera));
+
   }
 }
