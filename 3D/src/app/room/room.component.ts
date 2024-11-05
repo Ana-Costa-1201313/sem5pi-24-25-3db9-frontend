@@ -13,6 +13,7 @@ export default class RoomComponent extends THREE.Group {
   private door: DoorComponent;
   private shiba: ShibaComponent;
   private lamp: LampComponent;
+  public table: TableComponent;
 
   constructor() {
     super();
@@ -23,9 +24,9 @@ export default class RoomComponent extends THREE.Group {
     this.shiba = new ShibaComponent();
     this.add(this.shiba);
 
-    const table = new TableComponent();
-    table.addHuman();
-    this.add(table);
+    this.table = new TableComponent();
+    //this.table.addHuman();
+    this.add(this.table);
 
     this.door = new DoorComponent();
     this.add(this.door);

@@ -74,6 +74,9 @@ export class HospitalComponent implements AfterViewInit {
     for (let i = 0; i < 3; i++) {  // Example: 3 rooms
       const room = new RoomComponent();
       room.position.set(i * 85, 0, 0); // Position rooms apart
+      if(i == 1){
+        room.table.addHuman();
+      }
       this.scene.add(room);
       this.rooms.push(room);
     }
