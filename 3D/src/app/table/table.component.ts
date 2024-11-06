@@ -5,7 +5,7 @@ import { HumanComponent } from '../human/human.component';
 export class TableComponent extends THREE.Group {
   private human: HumanComponent | null = null;
 
-  constructor(modelPath: string, humanModelPath: string) {
+  constructor(modelPath: string, humanModelPath: string, cirurgy: boolean) {
     super();
 
     const gltfLoader = new GLTFLoader();
@@ -21,17 +21,10 @@ export class TableComponent extends THREE.Group {
       this.add(gltfScene.scene);
       
       this.human = new HumanComponent(humanModelPath);
-      this.human.visible = false;
+      this.human.visible = cirurgy;
       this.add(this.human);
-
     });
   }
 
-
-  public addHuman() {
-    if (this.human) {
-      this.human.visible = true;
-    }
-  }
 
 }

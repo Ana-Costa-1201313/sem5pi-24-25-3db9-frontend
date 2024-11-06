@@ -45,3 +45,7 @@ export const instrumentsData = {
 export const tableData = {
   modelPath: "./assets/table/scene.gltf",
 }
+
+export const roomsJsonData = {
+  jsonPath: "./assets/json/rooms.json",
+}

@@ -1,0 +1,13 @@
+{
+  "rooms": [
+    {
+      "name": "Room 101"
+    },
+    {
+      "name": "Room 102"
+    },
+    {
+      "name": "Room 103"
+    }
+  ]
+}

@@ -10,6 +10,7 @@ import { InstrumentsComponent } from "../instruments/instruments.component";
 
 export default class RoomComponent extends THREE.Group {
 
+  public roomName: string;
   private door: DoorComponent;
   private shiba: ShibaComponent;
   private lamp: LampComponent;
@@ -34,9 +35,13 @@ export default class RoomComponent extends THREE.Group {
     woodPanelFrontTexturePath: string,
     woodPaneRearTexturePath: string,
     woodPanelFrontColor: number,
-    woodPanelRearColor: number
+    woodPanelRearColor: number,
+    cirurgy: boolean,
+    roomName: string
   ) {
     super();
+
+    this.roomName = roomName;
 
     const floor = new FloorComponent(floorTexturePath);
     this.add(floor);
@@ -44,7 +49,7 @@ export default class RoomComponent extends THREE.Group {
     this.shiba = new ShibaComponent(shibaAudioPath, shibaModelPath);
     this.add(this.shiba);
 
-    this.table = new TableComponent(tableModelPath, humanModelPath);
+    this.table = new TableComponent(tableModelPath, humanModelPath, cirurgy);
     this.add(this.table);
 
     this.door = new DoorComponent(doorAudioOpenPath, doorAudioClosePath, doorModelPath);

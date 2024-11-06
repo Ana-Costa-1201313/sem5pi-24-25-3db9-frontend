@@ -1,17 +1,21 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, OnInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import * as THREE from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import RoomComponent from '../room/room.component';
-import { wallData, wallWoodPanelData, doorData, roomFloorData, lampData, shibaData, humanData, instrumentsData, tableData } from "../defaul-data/defaul-data.component";
+import { wallData, wallWoodPanelData, doorData, roomFloorData, lampData, shibaData, humanData, instrumentsData, tableData, roomsJsonData } from "../defaul-data/defaul-data.component";
+import { SpriteComponent } from '../sprite/sprite.component';
 
 @Component({
   selector: 'app-hospital',
   templateUrl: './hospital.component.html',
   styleUrls: ['./hospital.component.scss']
 })
-export class HospitalComponent implements AfterViewInit {
+export class HospitalComponent implements OnInit {
   @ViewChild('myCanvas') private canvasRef!: ElementRef;
   private rooms: RoomComponent[] = [];
+
+  roomsJson: any;
+
 
   // Stage properties
   @Input() public cameraZ: number = 20;
@@ -37,34 +41,41 @@ export class HospitalComponent implements AfterViewInit {
   private createScene(): void {
     this.scene.background = new THREE.Color(0x0099ff);
 
-    for (let i = 0; i < 3; i++) {  
-      const room = new RoomComponent(
-        roomFloorData.texturePath,
-        shibaData.audioPath,
-        shibaData.modelPath,
-        tableData.modelPath,
-        humanData.modelPath,
-        doorData.audioOpenPath,
-        doorData.audioClosePath,
-        doorData.modelPath,
-        lampData.audioPath,
-        lampData.modelPath,
-        instrumentsData.modelPath,
-        wallData.frontTexturePath,
-        wallData.rearTexturePath,
-        wallData.frontColor,
-        wallData.rearColor,
-        wallWoodPanelData.frontTexturePath,
-        wallWoodPanelData.rearTexturePath,
-        wallWoodPanelData.frontColor,
-        wallWoodPanelData.rearColor
-      );
-      room.position.set(i * 85, 0, 0); 
-      if(i == 1){
-        room.table.addHuman();
-      }
-      this.scene.add(room);
-      this.rooms.push(room);
+    if (this.roomsJson && this.roomsJson.rooms) {
+      this.roomsJson.rooms.forEach((roomData: any, index: number) => {
+        const room = new RoomComponent(
+          roomFloorData.texturePath,
+          shibaData.audioPath,
+          shibaData.modelPath,
+          tableData.modelPath,
+          humanData.modelPath,
+          doorData.audioOpenPath,
+          doorData.audioClosePath,
+          doorData.modelPath,
+          lampData.audioPath,
+          lampData.modelPath,
+          instrumentsData.modelPath,
+          wallData.frontTexturePath,
+          wallData.rearTexturePath,
+          wallData.frontColor,
+          wallData.rearColor,
+          wallWoodPanelData.frontTexturePath,
+          wallWoodPanelData.rearTexturePath,
+          wallWoodPanelData.frontColor,
+          wallWoodPanelData.rearColor,
+          false,
+          roomData.name
+        );
+
+
+        room.position.set(index * 85, 0, 0);
+        const sprite = new SpriteComponent(room.roomName);
+        sprite.position.set(index * 85, 0 ,0);
+        this.scene.add(sprite);
+
+        this.scene.add(room);
+        this.rooms.push(room);
+      });
     }
 
 
@@ -126,12 +137,12 @@ export class HospitalComponent implements AfterViewInit {
     this.render();
   }
 
-  ngAfterViewInit(): void {
-    this.createScene();
-    this.renderScene();
+  // ngAfterViewInit(): void {
+  //   this.createScene();
+  //   this.renderScene();
 
-    window.addEventListener('click', (event) => this.handleRoomClick(event));
-  }
+  //   window.addEventListener('click', (event) => this.handleRoomClick(event));
+  // }
 
   private handleRoomClick(event: MouseEvent) {
     for (const room of this.rooms) {
@@ -140,5 +151,24 @@ export class HospitalComponent implements AfterViewInit {
         break;
       }
     }
+  }
+
+  ngOnInit(): void {
+    // Fetch the rooms data before initializing the 3D scene
+    fetch('/assets/json/rooms.json')
+      .then(response => response.json())
+      .then(data => {
+        this.roomsJson = data;
+        console.log("Rooms Data Loaded:", this.roomsJson);
+
+        // Ensure the scene is created after data is loaded
+        this.createScene();
+        this.renderScene();
+        window.addEventListener('click', (event) => this.handleRoomClick(event));
+
+      })
+      .catch(error => {
+        console.error('Error loading rooms data:', error);
+      });
   }
 }
