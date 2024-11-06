@@ -1,2 +1,2 @@
 cd SPA
-ng test
+ng test --code-coverage

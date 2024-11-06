@@ -20,6 +20,8 @@ For organizational purposes, all common documentation is in the sem5pi-24-25-3db
 
 Run the "runSpaTests" script, that builds and runs the tests, saying the number of tests and possible failures.
 
+To check the coverage, go the the SPA folder, then coverage and open the index.html file.
+
 
 ## 4. How to Run
 
