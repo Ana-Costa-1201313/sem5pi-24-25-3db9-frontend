@@ -2,13 +2,21 @@ import * as THREE from "three";
 import WallComponent from "../wall/wall.component";
 
 export default class InteriorWallComponent extends THREE.Group {
-  constructor() {
+  constructor(
+    wallFrontTexturePath: string,
+    wallRearTexturePath: string,
+    wallFrontColor: number,
+    wallRearColor: number,
+    woodPanelFrontTexturePath: string,
+    woodPaneRearTexturePath: string,
+    woodPanelFrontColor: number,
+    woodPanelRearColor: number) {
     super();
 
-    var wall = new WallComponent("./assets/textures/wall1.png", "./assets/textures/whitefloor.png");
+    var wall = new WallComponent(wallFrontTexturePath, wallRearTexturePath, wallFrontColor, wallRearColor);
     this.add(wall);
-    
-    var woodPanel = new WallComponent("./assets/textures/wood.png", "./assets/textures/wood.png", 0xffffff, 0xffffff);
+
+    var woodPanel = new WallComponent(woodPanelFrontTexturePath, woodPaneRearTexturePath, woodPanelFrontColor, woodPanelRearColor);
     woodPanel.scale.set(1.001, 0.1, 1);
     woodPanel.rotation.y = -Math.PI;
 

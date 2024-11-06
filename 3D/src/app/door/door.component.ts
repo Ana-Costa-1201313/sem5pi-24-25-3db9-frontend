@@ -10,14 +10,14 @@ export class DoorComponent extends THREE.Group {
   private audioOpen: HTMLAudioElement;
   private audioClose: HTMLAudioElement;
 
-  constructor() {
+  constructor(audioOpenPath: string, audioClosePath: string, modelPath: string) {
     super();
 
     this.pivot = new THREE.Group();
     this.add(this.pivot);
 
     const gltfLoader = new GLTFLoader();
-    gltfLoader.load('./assets/door/scene.gltf', (gltfScene) => {
+    gltfLoader.load(modelPath, (gltfScene) => {
       gltfScene.scene.scale.setScalar(0.02);
       gltfScene.scene.position.set(0,0,0);
       gltfScene.scene.traverse((child) => {
@@ -30,8 +30,8 @@ export class DoorComponent extends THREE.Group {
       this.pivot.position.set(20, 0, 25);
     });
 
-    this.audioOpen = new Audio('./assets/sounds/doorOpen.mp3');
-    this.audioClose = new Audio('./assets/sounds/doorClose.mp3');
+    this.audioOpen = new Audio(audioOpenPath);
+    this.audioClose = new Audio(audioClosePath);
 
     this.animate();
   }

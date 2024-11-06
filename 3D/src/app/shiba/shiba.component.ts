@@ -6,13 +6,13 @@ export class ShibaComponent extends THREE.Group {
 
   private audioClick: HTMLAudioElement;
 
-  constructor() {
+  constructor(audioPath: string, modelPath: string) {
     super();
 
-    this.audioClick = new Audio('./assets/sounds/dog.mp3');
+    this.audioClick = new Audio(audioPath);
 
     const gltfLoader = new GLTFLoader();
-    gltfLoader.load('./assets/shiba/scene.gltf', (gltfScene) => {
+    gltfLoader.load(modelPath, (gltfScene) => {
       gltfScene.scene.scale.set(2, 2, 2);
       gltfScene.scene.position.set(-15, 13.8, -19);
       gltfScene.scene.rotation.y = Math.PI / 6;

@@ -5,11 +5,11 @@ import { HumanComponent } from '../human/human.component';
 export class TableComponent extends THREE.Group {
   private human: HumanComponent | null = null;
 
-  constructor() {
+  constructor(modelPath: string, humanModelPath: string) {
     super();
 
     const gltfLoader = new GLTFLoader();
-    gltfLoader.load('./assets/table/scene.gltf', (gltfScene) => {
+    gltfLoader.load(modelPath, (gltfScene) => {
       gltfScene.scene.scale.set(10, 10, 10);
       gltfScene.scene.position.set(0, 0, 0);
       gltfScene.scene.traverse((child) => {
@@ -19,14 +19,18 @@ export class TableComponent extends THREE.Group {
         }
       });
       this.add(gltfScene.scene);
+      
+      this.human = new HumanComponent(humanModelPath);
+      this.human.visible = false;
+      this.add(this.human);
+
     });
   }
 
 
   public addHuman() {
-    if (!this.human) {
-      this.human = new HumanComponent();
-      this.add(this.human);
+    if (this.human) {
+      this.human.visible = true;
     }
   }
 

@@ -4,11 +4,11 @@ import * as THREE from 'three';
 
 export class InstrumentsComponent extends THREE.Group {
 
-  constructor() {
+  constructor(modelPath: string) {
     super();
 
     const gltfLoader = new GLTFLoader();
-    gltfLoader.load('./assets/tools/scene.gltf', (gltfScene) => {
+    gltfLoader.load(modelPath, (gltfScene) => {
       gltfScene.scene.scale.set(10, 10, 10);
       gltfScene.scene.position.set(0, 0, -20);
 

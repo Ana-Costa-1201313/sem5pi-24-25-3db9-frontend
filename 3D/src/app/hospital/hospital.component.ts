@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular
 import * as THREE from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import RoomComponent from '../room/room.component';
+import { wallData, wallWoodPanelData, doorData, roomFloorData, lampData, shibaData, humanData, instrumentsData, tableData } from "../defaul-data/defaul-data.component";
 
 @Component({
   selector: 'app-hospital',
@@ -37,7 +38,27 @@ export class HospitalComponent implements AfterViewInit {
     this.scene.background = new THREE.Color(0x0099ff);
 
     for (let i = 0; i < 3; i++) {  
-      const room = new RoomComponent();
+      const room = new RoomComponent(
+        roomFloorData.texturePath,
+        shibaData.audioPath,
+        shibaData.modelPath,
+        tableData.modelPath,
+        humanData.modelPath,
+        doorData.audioOpenPath,
+        doorData.audioClosePath,
+        doorData.modelPath,
+        lampData.audioPath,
+        lampData.modelPath,
+        instrumentsData.modelPath,
+        wallData.frontTexturePath,
+        wallData.rearTexturePath,
+        wallData.frontColor,
+        wallData.rearColor,
+        wallWoodPanelData.frontTexturePath,
+        wallWoodPanelData.rearTexturePath,
+        wallWoodPanelData.frontColor,
+        wallWoodPanelData.rearColor
+      );
       room.position.set(i * 85, 0, 0); 
       if(i == 1){
         room.table.addHuman();

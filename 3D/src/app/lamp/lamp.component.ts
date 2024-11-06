@@ -8,13 +8,13 @@ export class LampComponent extends THREE.Group {
   private audioClick: HTMLAudioElement;
 
 
-  constructor() {
+  constructor(audioPath: string, modelPath: string) {
     super();
 
-    this.audioClick = new Audio('./assets/sounds/lightSwitch.mp3');
+    this.audioClick = new Audio(audioPath);
 
     const gltfLoader = new GLTFLoader();
-    gltfLoader.load('./assets/lamp/scene.gltf', (gltfScene) => {
+    gltfLoader.load(modelPath, (gltfScene) => {
       gltfScene.scene.scale.set(0.02, 0.02, 0.02);
       gltfScene.scene.position.set(6, 30.5, -2.5);
 
