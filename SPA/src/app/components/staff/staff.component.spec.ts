@@ -26,11 +26,19 @@ describe('StaffComponent', () => {
     fixture = TestBed.createComponent(StaffComponent);
     component = fixture.componentInstance;
     service = fixture.debugElement.injector.get(StaffService);
-    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should get total records', () => {
+    spyOn(service, 'getTotalRecords').and.returnValue(of(2));
+
+    component.ngOnInit();
+
+    expect(component.totalRecords).toBe(2);
+    expect(service.getTotalRecords).toHaveBeenCalledTimes(1);
   });
 
   it('should open details', () => {
@@ -50,7 +58,7 @@ describe('StaffComponent', () => {
     component.openDetailsModal(staff);
 
     expect(component.currentStaff).toEqual(staff);
-    expect(component.showDetails).toBe(true);
+    expect(component.showDetails).toBeTrue();
   });
 
   it('should load staffs', () => {
