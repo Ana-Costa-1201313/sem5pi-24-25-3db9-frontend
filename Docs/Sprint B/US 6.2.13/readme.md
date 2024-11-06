@@ -144,7 +144,7 @@ All commits referred the corresponding issue in GitHub, using the #36 tag, as we
 
 ## 6. Integration/Demonstration
 
-To list staff profiles, run the Backoffice app and the SPA app, then go to the Staff page and check all shown staff profiles. Choose one profile to see the details. Choose a filter if desired.
+To list staff profiles, run the Backoffice, Auth and the SPA app, then go to the Staff page and check all shown staff profiles. Choose one profile to see the details. Choose a filter if desired.
 
 ## 7. Observations
 
