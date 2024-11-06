@@ -1,11 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FilterMatchMode, SelectItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { TableLazyLoadEvent, TableModule } from 'primeng/table';
+import { TableModule } from 'primeng/table';
 import { Staff } from '../../model/staff.model';
 import { StaffService } from '../../services/staff.service';
-import { CommonModule } from '@angular/common';
-import { FilterMatchMode, LazyLoadEvent, SelectItem } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-staff',
@@ -45,6 +45,6 @@ export class StaffComponent implements OnInit {
         event.first / event.rows + 1,
         event.rows
       )
-      .subscribe((s) => (this.staffList = s));
+      .subscribe((s: Staff[]) => (this.staffList = s));
   }
 }
