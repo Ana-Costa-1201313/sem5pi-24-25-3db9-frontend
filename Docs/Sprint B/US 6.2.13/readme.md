@@ -127,12 +127,12 @@ This diagram guides the realization of the functionality, for level 3 process vi
 The following tests are to be developed:
 - all staff profiles must be displayed in the staff page.
 - getting a staff profile by name, email, or specialization.
-- if the filter value does not exist, the user must be warned.
-- if there are no staff profiles, the user must be warned. 
+- pagination must be implemented, considering the total records in the db.
 
-Unitary tests to the components and services will be implemented.
 
-E2E Tests will also check all the US flow, from the user interaction to the DB server.
+Unitary tests to the component will be implemented.
+
+E2E Tests will also check all the US flow, from the user interaction to the backend server.
 
 
 ## 5. Implementation
