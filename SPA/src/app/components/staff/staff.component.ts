@@ -20,6 +20,7 @@ export class StaffComponent implements OnInit {
   showDetails: boolean = false;
   matchModeOptions: SelectItem[] = [];
   totalRecords: number = 0;
+  deactivate: boolean = false;
 
   constructor(private service: StaffService) {}
 
@@ -46,5 +47,9 @@ export class StaffComponent implements OnInit {
         event.rows
       )
       .subscribe((s: Staff[]) => (this.staffList = s));
+  }
+
+  openDeactivateModal() {
+    this.deactivate = true;
   }
 }
