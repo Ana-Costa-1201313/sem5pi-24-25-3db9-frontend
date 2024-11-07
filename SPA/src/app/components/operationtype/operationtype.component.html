@@ -1,1 +1,27 @@
-<p>operationtype works!</p>
+<div class="text-center">
+    <h1 class="fw-bold mt-2 main-title">Operation Type</h1>
+  </div>
+  <div class="container">
+    <p-table
+      [value]="operationTypeList"
+      styleClass="p-datatable-striped"
+      [tableStyle]="{ 'min-width': '20rem' }"
+    >
+      <ng-template pTemplate="header">
+        <tr class="text-center">
+          <th>Name</th>
+          <th>Active</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-opType>
+        <tr>
+          <td class="text-center">{{ opType.name }}</td>
+          <td class="text-center">{{ opType.active }}</td>
+          <td>
+            <i class="pi pi-check"></i>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
