@@ -79,7 +79,7 @@
             class="me-3"
             [rounded]="true"
             [text]="true"
-            (click)="openDeactivateModal()"
+            (click)="openDeactivateModal(staff)"
           />
         </td>
       </tr>
@@ -158,6 +158,7 @@
     class="me-3"
     [rounded]="true"
     [text]="true"
+    (click)="deactivateStaff()"
   />
 
   <p-button
@@ -167,5 +168,6 @@
     [rounded]="true"
     [text]="true"
     severity="danger"
+    (click)="deactivate = false"
   />
 </p-dialog>

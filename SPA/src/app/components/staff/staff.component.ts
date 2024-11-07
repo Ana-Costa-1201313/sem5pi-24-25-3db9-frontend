@@ -21,6 +21,7 @@ export class StaffComponent implements OnInit {
   matchModeOptions: SelectItem[] = [];
   totalRecords: number = 0;
   deactivate: boolean = false;
+  lazyEvent: any;
 
   constructor(private service: StaffService) {}
 
@@ -38,6 +39,8 @@ export class StaffComponent implements OnInit {
   }
 
   loadStaffLazy(event: any) {
+    this.lazyEvent = event;
+
     this.service
       .getStaffList(
         event.filters?.name?.value,
@@ -49,7 +52,20 @@ export class StaffComponent implements OnInit {
       .subscribe((s: Staff[]) => (this.staffList = s));
   }
 
-  openDeactivateModal() {
+  openDeactivateModal(staff: Staff) {
+    this.currentStaff = staff;
     this.deactivate = true;
+  }
+
+  deactivateStaff() {
+    if (this.currentStaff?.id == null) {
+      return;
+    }
+
+    this.service.deactivateStaff(this.currentStaff.id).subscribe(() => {
+      this.loadStaffLazy(this.lazyEvent);
+    });
+
+    this.deactivate = false;
   }
 }

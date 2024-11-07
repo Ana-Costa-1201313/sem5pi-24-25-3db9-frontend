@@ -1,7 +1,7 @@
 import { Role } from "./role.model";
 
 export type Staff = {
-    id: string | null |undefined;
+    id?: string;
     name: string | null | undefined;
     licenseNumber: number | null | undefined;
     email: string | null |undefined;
