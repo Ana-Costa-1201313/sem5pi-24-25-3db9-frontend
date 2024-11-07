@@ -15,13 +15,14 @@ export const routes: Routes = [
     title: 'Staff page',
   },
   {
-    path: '**',
-    component: HomeComponent,
-    title: 'Home page',
-  },
-  {
     path: 'operationtype',
     component: OperationtypeComponent,
     title: 'Operation Type page',
   },
+  {
+    path: '**',
+    component: HomeComponent,
+    title: 'Home page',
+  },
+  
 ];
