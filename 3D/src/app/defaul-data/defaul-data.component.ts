@@ -21,7 +21,9 @@ export const doorData = {
 }
 
 export const roomFloorData = {
-  texturePath: "./assets/textures/whitefloor.png"
+  texturePath: "./assets/textures/whitefloor.png",
+  floorWidth: 64,
+  floorDepth: 56
 }
 
 export const lampData = {

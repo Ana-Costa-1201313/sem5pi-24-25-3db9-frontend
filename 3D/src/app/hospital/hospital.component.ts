@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import RoomComponent from '../room/room.component';
 import { wallData, wallWoodPanelData, doorData, roomFloorData, lampData, shibaData, humanData, instrumentsData, tableData, roomsJsonData } from "../defaul-data/defaul-data.component";
 import { SpriteComponent } from '../sprite/sprite.component';
+import FloorComponent from '../floor/floor.component';
 
 @Component({
   selector: 'app-hospital',
@@ -41,10 +42,13 @@ export class HospitalComponent implements OnInit {
   private createScene(): void {
     this.scene.background = new THREE.Color(0x0099ff);
 
+    var size = 0;
     if (this.roomsJson && this.roomsJson.rooms) {
       this.roomsJson.rooms.forEach((roomData: any, index: number) => {
         const room = new RoomComponent(
           roomFloorData.texturePath,
+          roomFloorData.floorWidth,
+          roomFloorData.floorDepth,
           shibaData.audioPath,
           shibaData.modelPath,
           tableData.modelPath,
@@ -67,14 +71,19 @@ export class HospitalComponent implements OnInit {
           roomData.name
         );
 
+        size++;
 
         room.position.set(index * 85, 0, 0);
         const sprite = new SpriteComponent(room.roomName);
-        sprite.position.set(index * 85, 0 ,0);
+        sprite.position.set(index * 85, 0, 0);
         this.scene.add(sprite);
 
         this.scene.add(room);
         this.rooms.push(room);
+
+        const floor3 = new FloorComponent("./assets/textures/whitefloor.png", 106, 105);
+        floor3.position.set(7 + 85 * index, -0.01, 0);
+        this.scene.add(floor3);
       });
     }
 

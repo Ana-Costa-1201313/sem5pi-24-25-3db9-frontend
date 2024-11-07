@@ -18,6 +18,8 @@ export default class RoomComponent extends THREE.Group {
 
   constructor(
     floorTexturePath: string,
+    floorWidth: number,
+    floorDepth: number,
     shibaAudioPath: string,
     shibaModelPath: string,
     tableModelPath: string,
@@ -43,7 +45,8 @@ export default class RoomComponent extends THREE.Group {
 
     this.roomName = roomName;
 
-    const floor = new FloorComponent(floorTexturePath);
+    const floor = new FloorComponent(floorTexturePath, floorWidth, floorDepth);
+    floor.position.set(7, 0, -3);
     this.add(floor);
 
     this.shiba = new ShibaComponent(shibaAudioPath, shibaModelPath);
