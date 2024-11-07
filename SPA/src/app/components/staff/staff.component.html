@@ -74,6 +74,7 @@
             icon="pi pi-pencil"
             class="me-3"
             [rounded]="true"
+            [disabled]="!staff.active"
             [text]="true"
           />
           <p-button
@@ -81,6 +82,7 @@
             class="me-3"
             [rounded]="true"
             [text]="true"
+            [disabled]="!staff.active"
             (click)="openDeactivateModal(staff)"
           />
         </td>
@@ -106,12 +108,16 @@
     <hr class="line-separator separator" />
 
     <div class="row">
-      <label for="role"><b>Role:</b> {{ currentStaff?.role }}</label>
+      <label for="role"> <b>Role:</b> {{ currentStaff?.role }}</label>
       <label for="specialization" class="mt-2"
-        ><b>Specialization:</b> {{ currentStaff?.specialization }}</label
+        ><b>Specialization: </b>
+        @if(currentStaff?.active){{{ currentStaff?.specialization }}} @else
+        {Deactivated Staff}</label
       >
       <label for="licenseNumber" class="mt-2"
-        ><b>License Number:</b> {{ currentStaff?.licenseNumber }}</label
+        ><b>License Number: </b
+        >@if(currentStaff?.active){{{ currentStaff?.licenseNumber }}} @else
+        {Deactivated Staff}</label
       >
       <label for="mechanographicNumber" class="mt-2"
         ><b>Mechanographic Number:</b>
@@ -121,7 +127,7 @@
         ><b>Active:</b> @if(currentStaff?.active){ Yes } @else { No }
       </label>
       <label for="availabilitySlots" class="mt-2"
-        ><b>Availability Slots:</b>
+        ><b>Availability Slots: </b> @if(!currentStaff?.active){Deactivated Staff}
       </label>
       <ul>
         <li *ngFor="let slot of currentStaff?.availabilitySlots">
@@ -136,7 +142,8 @@
     <div class="row">
       <label for="email"><b>Email:</b> {{ currentStaff?.email }}</label>
       <label for="phone" class="mt-2"
-        ><b>Phone:</b> {{ currentStaff?.phone }}</label
+        ><b>Phone: </b> @if(currentStaff?.active){{{ currentStaff?.phone }}}
+        @else {Deactivated Staff}</label
       >
     </div>
   </div>
