@@ -1,16 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FilterMatchMode, SelectItem } from 'primeng/api';
+import { FilterMatchMode, Message, SelectItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { Staff } from '../../model/staff.model';
 import { StaffService } from '../../services/staff.service';
+import { MessagesModule } from 'primeng/messages';
 
 @Component({
   selector: 'app-staff',
   standalone: true,
-  imports: [CommonModule, TableModule, DialogModule, ButtonModule],
+  imports: [
+    CommonModule,
+    TableModule,
+    DialogModule,
+    ButtonModule,
+    MessagesModule,
+  ],
   templateUrl: './staff.component.html',
   styleUrl: './staff.component.css',
 })
@@ -22,6 +29,7 @@ export class StaffComponent implements OnInit {
   totalRecords: number = 0;
   deactivate: boolean = false;
   lazyEvent: any;
+  message: Message[] = [];
 
   constructor(private service: StaffService) {}
 
@@ -67,5 +75,13 @@ export class StaffComponent implements OnInit {
     });
 
     this.deactivate = false;
+
+    this.message = [
+      {
+        severity: 'info',
+        summary: 'Success!',
+        detail: 'The Staff Profile was deactivated with success',
+      },
+    ];
   }
 }
