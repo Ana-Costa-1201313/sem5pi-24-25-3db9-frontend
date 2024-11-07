@@ -26,6 +26,12 @@ export const roomFloorData = {
   floorDepth: 56
 }
 
+export const hospitalFloorData = {
+  texturePath: "./assets/textures/floorwood.png",
+  floorWidth: 106,
+  floorDepth: 105
+}
+
 export const lampData = {
   audioPath: "./assets/sounds/lightSwitch.mp3",
   modelPath: "./assets/lamp/scene.gltf"

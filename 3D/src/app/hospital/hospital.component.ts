@@ -2,7 +2,7 @@ import { AfterViewInit, OnInit, Component, ElementRef, Input, ViewChild } from '
 import * as THREE from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import RoomComponent from '../room/room.component';
-import { wallData, wallWoodPanelData, doorData, roomFloorData, lampData, shibaData, humanData, instrumentsData, tableData, roomsJsonData } from "../defaul-data/defaul-data.component";
+import { hospitalFloorData, wallData, wallWoodPanelData, doorData, roomFloorData, lampData, shibaData, humanData, instrumentsData, tableData, roomsJsonData } from "../defaul-data/defaul-data.component";
 import { SpriteComponent } from '../sprite/sprite.component';
 import FloorComponent from '../floor/floor.component';
 
@@ -81,12 +81,12 @@ export class HospitalComponent implements OnInit {
         this.scene.add(room);
         this.rooms.push(room);
 
-        const floor3 = new FloorComponent("./assets/textures/whitefloor.png", 106, 105);
+        const floor3 = new FloorComponent(hospitalFloorData.texturePath, hospitalFloorData.floorWidth, hospitalFloorData.floorDepth);
         floor3.position.set(7 + 85 * index, -0.01, 0);
         this.scene.add(floor3);
+
       });
     }
-
 
     // Setup lights
     this.setupLights();
@@ -146,13 +146,6 @@ export class HospitalComponent implements OnInit {
     this.render();
   }
 
-  // ngAfterViewInit(): void {
-  //   this.createScene();
-  //   this.renderScene();
-
-  //   window.addEventListener('click', (event) => this.handleRoomClick(event));
-  // }
-
   private handleRoomClick(event: MouseEvent) {
     for (const room of this.rooms) {
       const interactionHandled = room.onRoomClick(event, this.camera);
@@ -163,14 +156,12 @@ export class HospitalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Fetch the rooms data before initializing the 3D scene
     fetch('/assets/json/rooms.json')
       .then(response => response.json())
       .then(data => {
         this.roomsJson = data;
         console.log("Rooms Data Loaded:", this.roomsJson);
 
-        // Ensure the scene is created after data is loaded
         this.createScene();
         this.renderScene();
         window.addEventListener('click', (event) => this.handleRoomClick(event));
