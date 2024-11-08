@@ -141,6 +141,8 @@ The implementation of this US is according to the design, as can be seen in the 
 
 All commits referred the corresponding issue in GitHub, using the #36 tag, as well as a relevant commit message.
 
+The estimated duration for this US is 21h.
+
 
 ## 6. Integration/Demonstration
 
