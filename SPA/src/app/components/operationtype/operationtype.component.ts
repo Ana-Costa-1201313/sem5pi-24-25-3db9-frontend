@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TableModule } from 'primeng/table';
-import { OperationType } from '../../model/operationType.model';
+import { OperationType } from '../../model/operationType/operationType.model';
 import { OperationTypeService } from '../../services/operationType.service';
 import { DialogModule } from 'primeng/dialog';
 

@@ -1,4 +1,4 @@
-import { RequiredStaff } from "./requiredStaff.model";
+import { RequiredStaff } from "../requiredStaff.model";
 
 export type OperationType = {
     id: string | null |undefined;
