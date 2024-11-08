@@ -133,7 +133,7 @@
         class="mt-2"
         *ngIf="currentStaff?.availabilitySlots?.length > 0"
         ><b>Availability Slots: </b>
-        <ul>
+        <ul class="ps-4">
           <li *ngFor="let slot of currentStaff?.availabilitySlots">
             {{ slot }}
           </li>
