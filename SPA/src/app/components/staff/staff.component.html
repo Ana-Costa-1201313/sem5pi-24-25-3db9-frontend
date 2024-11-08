@@ -3,6 +3,8 @@
 </div>
 
 <div class="container">
+  <p-messages [(value)]="message" />
+
   <p-table
     [value]="staffList"
     styleClass="p-datatable-striped"
@@ -72,6 +74,7 @@
             icon="pi pi-pencil"
             class="me-3"
             [rounded]="true"
+            [disabled]="!staff.active"
             [text]="true"
           />
           <p-button
@@ -79,6 +82,8 @@
             class="me-3"
             [rounded]="true"
             [text]="true"
+            [disabled]="!staff.active"
+            (click)="openDeactivateModal(staff)"
           />
         </td>
       </tr>
@@ -103,28 +108,37 @@
     <hr class="line-separator separator" />
 
     <div class="row">
-      <label for="role"><b>Role:</b> {{ currentStaff?.role }}</label>
-      <label for="specialization" class="mt-2"
-        ><b>Specialization:</b> {{ currentStaff?.specialization }}</label
+      <label for="role"> <b>Role:</b> {{ currentStaff?.role }}</label>
+
+      <label
+        for="specialization"
+        class="mt-2"
+        *ngIf="currentStaff?.specialization"
+        ><b>Specialization: </b> {{ currentStaff?.specialization }}</label
       >
-      <label for="licenseNumber" class="mt-2"
-        ><b>License Number:</b> {{ currentStaff?.licenseNumber }}</label
+      <label for="licenseNumber" class="mt-2" *ngIf="currentStaff?.active"
+        ><b>License Number: </b>{{ currentStaff?.licenseNumber }}</label
       >
       <label for="mechanographicNumber" class="mt-2"
         ><b>Mechanographic Number:</b>
         {{ currentStaff?.mechanographicNum }}</label
       >
       <label for="active" class="mt-2"
-        ><b>Active:</b> @if(currentStaff?.active){ Yes } @else { No }
+        ><b>Active: </b>
+        <span *ngIf="currentStaff?.active">Yes</span>
+        <span *ngIf="!currentStaff?.active">No</span>
       </label>
-      <label for="availabilitySlots" class="mt-2"
-        ><b>Availability Slots:</b>
+      <label
+        for="availabilitySlots"
+        class="mt-2"
+        *ngIf="currentStaff?.availabilitySlots?.length > 0"
+        ><b>Availability Slots: </b>
+        <ul class="ps-4">
+          <li *ngFor="let slot of currentStaff?.availabilitySlots">
+            {{ slot }}
+          </li>
+        </ul>
       </label>
-      <ul>
-        <li *ngFor="let slot of currentStaff?.availabilitySlots">
-          {{ slot }}
-        </li>
-      </ul>
     </div>
 
     <h5 class="title-separator mt-4 separator">Contact Information</h5>
@@ -132,9 +146,41 @@
 
     <div class="row">
       <label for="email"><b>Email:</b> {{ currentStaff?.email }}</label>
-      <label for="phone" class="mt-2"
-        ><b>Phone:</b> {{ currentStaff?.phone }}</label
-      >
+      <label for="phone" class="mt-2" *ngIf="currentStaff?.phone"
+        ><b>Phone: </b> {{ currentStaff?.phone }}
+      </label>
     </div>
   </div>
+</p-dialog>
+
+<p-dialog
+  header="Staff"
+  [(visible)]="deactivate"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <h4 class="fw-bold">Deactivate Staff Profile</h4>
+  </ng-template>
+  <div class="mt-2 mb-4">Are you sure you want to deactivate this staff?</div>
+  <p-button
+    label="Confirm"
+    icon="pi pi-check"
+    class="me-3"
+    [rounded]="true"
+    [text]="true"
+    (click)="deactivateStaff()"
+  />
+
+  <p-button
+    label="Cancel"
+    icon="pi pi-times"
+    class="me-3"
+    [rounded]="true"
+    [text]="true"
+    severity="danger"
+    (click)="deactivate = false"
+  />
 </p-dialog>

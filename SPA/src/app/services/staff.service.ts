@@ -43,4 +43,8 @@ export class StaffService {
       `${this.url}${environment.endpoints.totalRecordsStaff}`
     );
   }
+
+  deactivateStaff(staffId: string): Observable<Staff> {
+    return this.http.delete<Staff>(`${this.url}/${staffId}`);
+  }
 }
