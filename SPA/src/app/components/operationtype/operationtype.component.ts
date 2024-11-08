@@ -24,7 +24,10 @@ export class OperationtypeComponent implements OnInit {
   ngOnInit(): void {
     this.service.getOperationTypeList().subscribe((op) => {
       this.operationTypeList = op;
+      console.log(op);
     })
+
+    
   }
 
   openDetailsModal(opType: OperationType): void{

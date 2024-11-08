@@ -24,8 +24,8 @@
   </p-table>
 </div>
 
-<p-dialog header="Operation Type" [(visible)]="showDetails" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
-  [resizable]="false">
+<p-dialog header="Operation Type" [(visible)]="showDetails" [modal]="true" [style]="{ width: '50vw' }"
+  [draggable]="false" [resizable]="false">
   <ng-template pTemplate="header">
     <h4 class="fw-bold">{{ currentOpType?.name }}</h4>
   </ng-template>
@@ -33,25 +33,20 @@
     <h5 class="title-separator">General Information</h5>
     <hr class="line-separator" />
     <div class="row">
-      <label for="role"><b>Role:</b> {{ currentOpType?.name }}</label>
-      <label for="specialization" class="mt-2"><b>Specialization:</b> {{ currentOpType?.name }}</label>
-      <label for="licenseNumber" class="mt-2"><b>License Number:</b> {{ currentOpType?.name }}</label>
-      <label for="mechanographicNumber" class="mt-2"><b>Mechanographic Number:</b>
-        {{ currentOpType?.name }}</label>
-      <label for="active" class="mt-2"><b>Active:</b> {{ currentOpType?.name }}</label>
-      <label for="availabilitySlots" class="mt-2"><b>Availability Slots:</b>
+      <label for="name"><b>Name:</b> {{ currentOpType?.name }}</label>
+      <label for="preparation" class="mt-2"><b>Anesthesia/Preparation:</b> {{
+        currentOpType?.anesthesiaPatientPreparationInMinutes }} min</label>
+      <label for="surgery" class="mt-2"><b>Surgery:</b> {{ currentOpType?.surgeryInMinutes }} min</label>
+      <label for="cleaning" class="mt-2"><b>Cleaning:</b> {{ currentOpType?.cleaningInMinutes }} min</label>
+      <label for="requiredStaff" class="mt-2"><b>Required Staff:</b>
       </label>
       <ul>
-        <!-- <li *ngFor="let slot of currentStaff?.availabilitySlots" class="slot-list">
-          {{ slot }}
-        </li> -->
+        <li *ngFor="let reqStaff of currentOpType?.requiredStaff" class="requiredStaff-list">
+          {{ reqStaff.total }} {{ reqStaff.specialization }}
+        </li>
       </ul>
-    </div>
-    <h5 class="title-separator mt-4">Contact Information</h5>
-    <hr class="line-separator" />
-    <div class="row">
-      <label for="email"><b>Email:</b> {{ currentOpType?.name }}</label>
-      <label for="phone" class="mt-2"><b>Phone:</b> {{ currentOpType?.name }}</label>
+      <label for="active" class="mt-2"><b>Active:</b> {{ currentOpType?.active }}</label>
+
     </div>
   </div>
 </p-dialog>
