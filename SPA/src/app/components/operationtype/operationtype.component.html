@@ -40,13 +40,12 @@
       <label for="cleaning" class="mt-2"><b>Cleaning:</b> {{ currentOpType?.cleaningInMinutes }} min</label>
       <label for="requiredStaff" class="mt-2"><b>Required Staff:</b>
       </label>
-      <ul>
-        <li *ngFor="let reqStaff of currentOpType?.requiredStaff" class="requiredStaff-list">
+      <ul class="ps-5">
+        <li *ngFor="let reqStaff of currentOpType?.requiredStaff">
           {{ reqStaff.total }} {{ reqStaff.specialization }}
         </li>
       </ul>
       <label for="active" class="mt-2"><b>Active:</b> {{ currentOpType?.active }}</label>
-
     </div>
   </div>
 </p-dialog>
