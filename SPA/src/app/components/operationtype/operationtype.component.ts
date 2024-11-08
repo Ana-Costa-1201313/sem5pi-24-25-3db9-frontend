@@ -4,6 +4,7 @@ import { TableModule } from 'primeng/table';
 import { OperationType } from '../../model/operationType/operationType.model';
 import { OperationTypeService } from '../../services/operationType.service';
 import { DialogModule } from 'primeng/dialog';
+import { FilterMatchMode, SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-operationtype',
@@ -17,6 +18,9 @@ export class OperationtypeComponent implements OnInit {
   operationTypeList: OperationType[] = [];
   currentOpType: OperationType | null = null;
   showDetails: boolean = false;
+  matchModeOptions: SelectItem[] = [];
+  statusOptions: SelectItem[] = [];
+
 
   constructor(private service: OperationTypeService) {
   }
@@ -25,9 +29,11 @@ export class OperationtypeComponent implements OnInit {
     this.service.getOperationTypeList().subscribe((op) => {
       this.operationTypeList = op;
       console.log(op);
-    })
+    });
 
-    
+    this.matchModeOptions = [
+      { label: 'Contains', value: FilterMatchMode.CONTAINS}
+    ];
   }
 
   openDetailsModal(opType: OperationType): void{
