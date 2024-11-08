@@ -127,6 +127,8 @@ This diagram guides the realization of the functionality, for level 3 process vi
 The following tests are to be developed:
 - deactivating a staff hides it's data.
 - a deactivated staff can't be deactivated again.
+- a success message should be displayed.
+- the page must reload to show the deleted staff.
 
 
 Unitary tests to the component will be implemented.
