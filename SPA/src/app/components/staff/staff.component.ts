@@ -23,7 +23,7 @@ import { MessagesModule } from 'primeng/messages';
 })
 export class StaffComponent implements OnInit {
   staffList: Staff[] = [];
-  currentStaff: Staff | null = null;
+  currentStaff: Staff = null;
   showDetails: boolean = false;
   matchModeOptions: SelectItem[] = [];
   totalRecords: number = 0;
