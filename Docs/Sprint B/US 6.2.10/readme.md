@@ -1,20 +1,20 @@
-# US 6.2.13
+# US 6.2.10
 
 ## 1. Context
 
-This task appears in the middle of the project's development, to be able to list staff profiles.
+This task appears in the middle of the project's development, to be able to create staff profiles.
 
 
 ## 2. Requirements
 
-**US 6.2.13**  As Admin, I want to list/search staff profiles, so that I can see the details, edit, and remove staff profiles
+**US 6.2.10**  As an Admin, I want to create a new staff profile, so that I can add them to the hospital’s roster.
 
 **Acceptance Criteria:**
 
-- Admins can search staff profiles by attributes such as name, email, or specialization.
-- The system displays search results in a list view with key staff information (name, email, specialization).
-- Admins can select a profile from the list to view, edit, or deactivate.
-- The search results are paginated, and filters are available for refining the search result
+- Admins can input staff details such as the name, contact information, and specialization.
+- A unique staff ID (License Number) is generated upon profile creation.
+- The system ensures that the staff's email and phone number are unique.
+- The profile is stored securely, and access is based on role-based permissions
 
 **Dependencies/References:**
 
@@ -82,7 +82,9 @@ It will boil down to a design decision. From the functional perspective, it's no
 ### 3.2. HTTP requests
 
 The following **HTTP requests** will be implemented:
-- GET (with query parameters, to check specific staff members)
+- POST (to register the new staff profile)
+- GET (to check the new staff profile)
+- Get by ID (to see the staff ID in the URL)
 
 ## 4. Design
 
@@ -92,21 +94,21 @@ This section presents the design adopted to solve the requirement.
 
 This diagram guides the realization of the functionality, for level 1 procecss view.
 
-![US6.2.13 N1 SD](US6.2.13%20N1%20SD.svg)
+![US6.2.10 N1 SD](US6.2.10%20N1%20SD.svg)
 
 
 ### 4.2. Level 2 Sequence Diagram
 
 This diagram guides the realization of the functionality, for level 2 procecss view.
 
-![US6.2.13 N2 SD](US6.2.13%20N2%20SD.svg)
+![US6.2.10 N2 SD](US6.2.10%20N2%20SD.svg)
 
 
 ### 4.3. Level 3 Sequence Diagram
 
 This diagram guides the realization of the functionality, for level 3 process view.
 
-![US6.2.13 N3 SD](US6.2.13%20N3%20SD.svg)
+![US6.2.10 N3 SD](US6.2.10%20N3%20SD.svg)
 
 
 ### 4.4. Applied Design Patterns
@@ -125,9 +127,9 @@ This diagram guides the realization of the functionality, for level 3 process vi
 ### 4.5. Tests
 
 The following tests are to be developed:
-- all staff profiles must be displayed in the staff page.
-- getting a staff profile by name, email, or specialization.
-- pagination must be implemented, considering the total records in the db.
+- the created staff must have the same data as the input.
+- an error message should be displayed when the input is invalid or mandatory.
+- the page must reload to show the new staff.
 
 
 Unitary tests to the component will be implemented.
@@ -139,14 +141,14 @@ E2E Tests will also check all the US flow, from the user interaction to the back
 
 The implementation of this US is according to the design, as can be seen in the diagrams presented before.
 
-All commits referred the corresponding issue in GitHub, using the #36 tag, as well as a relevant commit message.
+All commits referred the corresponding issue in GitHub, using the #33 tag, as well as a relevant commit message.
 
-The estimated duration for this US is 21h.
+The estimated duration for this US is 16h.
 
 
 ## 6. Integration/Demonstration
 
-To list staff profiles, run the Backoffice, Auth and the SPA app, then go to the Staff page and check all shown staff profiles. Choose one profile to see the details. Choose a filter if desired.
+To create a staff profile, run the Backoffice, Auth and the SPA app, then go to the Staff page and click on "plus" icon to add a profile.
 
 ## 7. Observations
 
