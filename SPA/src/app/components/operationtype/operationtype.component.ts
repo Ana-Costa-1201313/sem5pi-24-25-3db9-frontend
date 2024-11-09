@@ -5,12 +5,13 @@ import { OperationType } from '../../model/operationType/operationType.model';
 import { OperationTypeService } from '../../services/operationType.service';
 import { DialogModule } from 'primeng/dialog';
 import { FilterMatchMode, SelectItem } from 'primeng/api';
-import { FormsModule } from '@angular/forms'; // <-- Add this import
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-operationtype',
   standalone: true,
-  imports: [CommonModule, TableModule, DialogModule, FormsModule], // <-- Add FormsModule here
+  imports: [CommonModule, TableModule, DialogModule, FormsModule, ButtonModule],
   templateUrl: './operationtype.component.html',
   styleUrl: './operationtype.component.css'
 })
@@ -26,13 +27,12 @@ export class OperationtypeComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getOperationTypeList().subscribe((op) => {
-      // Flatten 'specialization' for each operation type based on 'requiredStaff' array
       this.operationTypeList = op.map(opType => ({
         ...opType,
         specialization: opType.requiredStaff
           ?.map(staff => staff.specialization)
           .filter(Boolean)
-          .join(', ') // Join multiple specializations into a single string
+          .join(', ')
       }));
       this.filteredOperationTypeList = [...this.operationTypeList];
     });
