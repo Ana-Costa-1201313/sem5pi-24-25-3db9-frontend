@@ -45,7 +45,7 @@ export class StaffComponent implements OnInit {
   message: Message[] = [];
   staffList: Staff[] = [];
   currentStaff: Staff = null;
-  roles: Role[];
+  roles: Role[] = [Role.Doctor, Role.Nurse, Role.Technician];
   showCreate: boolean = false;
   showDetails: boolean = false;
   deactivate: boolean = false;
@@ -60,9 +60,7 @@ export class StaffComponent implements OnInit {
     recruitmentYear: new FormControl(null, Validators.required),
   });
 
-  constructor(private service: StaffService) {
-    this.roles = Object.values(Role);
-  }
+  constructor(private service: StaffService) {}
 
   ngOnInit(): void {
     this.matchModeOptions = [
@@ -80,8 +78,8 @@ export class StaffComponent implements OnInit {
     this.showCreate = false;
 
     this.service.addStaff(this.createStaffForm.value).subscribe({
-      next: (response) => {
-        this.staffList.push(response as Staff);
+      next: () => {
+        this.loadStaffLazy(this.lazyEvent);
         this.message = [
           {
             severity: 'success',
