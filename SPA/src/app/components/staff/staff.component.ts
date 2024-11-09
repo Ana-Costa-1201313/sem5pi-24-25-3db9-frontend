@@ -19,6 +19,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MessageModule } from 'primeng/message';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-staff',
@@ -34,6 +36,8 @@ import { MessageModule } from 'primeng/message';
     ReactiveFormsModule,
     DropdownModule,
     InputTextModule,
+    InputNumberModule,
+    CalendarModule
   ],
   templateUrl: './staff.component.html',
   styleUrl: './staff.component.css',
@@ -76,6 +80,10 @@ export class StaffComponent implements OnInit {
 
   addStaff(): void {
     this.showCreate = false;
+
+    this.createStaffForm
+      .get('phone')
+      .setValue(this.createStaffForm.get('phone').value.toString());
 
     this.service.addStaff(this.createStaffForm.value).subscribe({
       next: () => {
