@@ -148,7 +148,7 @@ export class StaffComponent implements OnInit {
       ];
     } else {
       this.message = [
-        { severity: 'error', summary: 'Failure!', detail: error.error },
+        { severity: 'error', summary: 'Failure!', detail: error.error.message },
       ];
     }
   }
