@@ -22,14 +22,15 @@ import { MessagesModule } from 'primeng/messages';
   styleUrl: './staff.component.css',
 })
 export class StaffComponent implements OnInit {
-  staffList: Staff[] = [];
-  currentStaff: Staff = null;
-  showDetails: boolean = false;
   matchModeOptions: SelectItem[] = [];
   totalRecords: number = 0;
-  deactivate: boolean = false;
   lazyEvent: any;
   message: Message[] = [];
+  staffList: Staff[] = [];
+  currentStaff: Staff = null;
+  showCreate: boolean = false;
+  showDetails: boolean = false;
+  deactivate: boolean = false;
 
   constructor(private service: StaffService) {}
 
@@ -39,6 +40,10 @@ export class StaffComponent implements OnInit {
     ];
 
     this.service.getTotalRecords().subscribe((t) => (this.totalRecords = t));
+  }
+
+  openCreateModal(): void {
+    this.showCreate = true;
   }
 
   openDetailsModal(staff: Staff): void {

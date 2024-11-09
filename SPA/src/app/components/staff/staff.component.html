@@ -1,5 +1,9 @@
 <div class="text-center">
-  <h1 class="fw-bold mt-2 main-title mb-4">Staff</h1>
+  <h1 class="fw-bold mt-2 main-title mb-4">
+    Staff
+    <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="openCreateModal()"
+    />
+  </h1>
 </div>
 
 <div class="container">
@@ -65,22 +69,19 @@
         <td class="text-center">
           <p-button
             icon="pi pi-eye"
-            class="me-3"
-            [rounded]="true"
+            class="me-2"
             [text]="true"
             (click)="openDetailsModal(staff)"
           />
           <p-button
             icon="pi pi-pencil"
-            class="me-3"
-            [rounded]="true"
+            class="me-2"
             [disabled]="!staff.active"
             [text]="true"
           />
           <p-button
             icon="pi pi-trash"
-            class="me-3"
-            [rounded]="true"
+            class="me-2"
             [text]="true"
             [disabled]="!staff.active"
             (click)="openDeactivateModal(staff)"
@@ -90,6 +91,25 @@
     </ng-template>
   </p-table>
 </div>
+
+<p-dialog
+  header="Staff"
+  [(visible)]="showCreate"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <h4 class="fw-bold">Create Staff Profile</h4>
+  </ng-template>
+
+  <form>
+
+
+    
+  </form>
+</p-dialog>
 
 <p-dialog
   header="Staff"
@@ -169,7 +189,6 @@
     label="Confirm"
     icon="pi pi-check"
     class="me-3"
-    [rounded]="true"
     [text]="true"
     (click)="deactivateStaff()"
   />
@@ -178,7 +197,6 @@
     label="Cancel"
     icon="pi pi-times"
     class="me-3"
-    [rounded]="true"
     [text]="true"
     severity="danger"
     (click)="deactivate = false"
