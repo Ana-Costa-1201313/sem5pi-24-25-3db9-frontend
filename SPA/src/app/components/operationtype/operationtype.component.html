@@ -11,8 +11,8 @@
             [matchModeOptions]="matchModeOptions" matchMode="contains" />
         </th>
         <th>
-          <input id="specializationFilter" type="text" class="form-control" [(ngModel)]="specializationFilter"
-            (input)="onSpecializationFilterChange()" placeholder="Search by specialization" />
+          <p-columnFilter type="text" field="specialization" placeholder="Search by specialization"
+            ariaLabel="Filter Specialization" [matchModeOptions]="matchModeOptions" matchMode="contains" />
         </th>
         <th>
           <div class="d-flex align-items-center">
@@ -26,11 +26,11 @@
         <th></th>
       </tr>
       <tr>
-        <th>Name</th>
-        <th>Preparation time (min)</th>
-        <th>Surgery time (min)</th>
-        <th>Cleaning time (min)</th>
-        <th></th>
+        <th class="w-25">Name</th>
+        <th class="w-25">Preparation time (min)</th>
+        <th class="w-15">Surgery time (min)</th>
+        <th class="w-15">Cleaning time (min)</th>
+        <th class="w-10"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-opType>
@@ -70,7 +70,12 @@
           {{ reqStaff.total }} {{ reqStaff.specialization }}
         </li>
       </ul>
-      <label for="active" class="mt-2"><b>Active:</b> {{ currentOpType?.active }}</label>
+      <label for="active" class="mt-2"><b>Active:</b>
+        <span class="status-icon">
+          <i *ngIf="currentOpType?.active" class="pi pi-check-circle text-success ps-1"></i>
+          <i *ngIf="!currentOpType?.active" class="pi pi-times-circle text-danger ps-1"></i>
+        </span>
+      </label>
     </div>
   </div>
 </p-dialog>

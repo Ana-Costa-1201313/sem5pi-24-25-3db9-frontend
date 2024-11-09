@@ -8,4 +8,5 @@ export type OperationType = {
     cleaningInMinutes: number | null | undefined;
     requiredStaff: RequiredStaff[] | null | undefined;
     active: boolean | null | undefined;
+    specialization?: string; //for filter, because is a nested object inside required staff
 }

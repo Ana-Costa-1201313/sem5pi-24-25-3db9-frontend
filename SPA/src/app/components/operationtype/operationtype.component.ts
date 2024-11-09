@@ -21,14 +21,20 @@ export class OperationtypeComponent implements OnInit {
   currentOpType: OperationType | null = null;
   showDetails: boolean = false;
   matchModeOptions: SelectItem[] = [];
-  specializationFilter: string = '';
 
-  constructor(private service: OperationTypeService) {}
+  constructor(private service: OperationTypeService) { }
 
   ngOnInit(): void {
     this.service.getOperationTypeList().subscribe((op) => {
-      this.operationTypeList = op;
-      this.filteredOperationTypeList = op;
+      // Flatten 'specialization' for each operation type based on 'requiredStaff' array
+      this.operationTypeList = op.map(opType => ({
+        ...opType,
+        specialization: opType.requiredStaff
+          ?.map(staff => staff.specialization)
+          .filter(Boolean)
+          .join(', ') // Join multiple specializations into a single string
+      }));
+      this.filteredOperationTypeList = [...this.operationTypeList];
     });
 
     this.matchModeOptions = [
@@ -39,17 +45,5 @@ export class OperationtypeComponent implements OnInit {
   openDetailsModal(opType: OperationType): void {
     this.currentOpType = opType;
     this.showDetails = true;
-  }
-
-  onSpecializationFilterChange() {
-    if (this.specializationFilter) {
-      this.filteredOperationTypeList = this.operationTypeList.filter(opType => 
-        opType.requiredStaff?.some(staff =>
-          staff.specialization?.toLowerCase().includes(this.specializationFilter.toLowerCase())
-        )
-      );
-    } else {
-      this.filteredOperationTypeList = [...this.operationTypeList];
-    }
   }
 }
