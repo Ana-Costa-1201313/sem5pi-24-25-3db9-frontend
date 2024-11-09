@@ -7,6 +7,15 @@ import { TableModule } from 'primeng/table';
 import { Staff } from '../../model/staff.model';
 import { StaffService } from '../../services/staff.service';
 import { MessagesModule } from 'primeng/messages';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { Role } from '../../model/role.model';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-staff',
@@ -17,6 +26,10 @@ import { MessagesModule } from 'primeng/messages';
     DialogModule,
     ButtonModule,
     MessagesModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DropdownModule,
+    InputTextModule
   ],
   templateUrl: './staff.component.html',
   styleUrl: './staff.component.css',
@@ -28,11 +41,24 @@ export class StaffComponent implements OnInit {
   message: Message[] = [];
   staffList: Staff[] = [];
   currentStaff: Staff = null;
+  roles: Role[];
   showCreate: boolean = false;
   showDetails: boolean = false;
   deactivate: boolean = false;
 
-  constructor(private service: StaffService) {}
+  createStaffForm = new FormGroup({
+    name: new FormControl(null),
+    licenseNumber: new FormControl(null),
+    phone: new FormControl(null),
+    specialization: new FormControl(null),
+    availabilitySlots: new FormControl(null),
+    role: new FormControl<Role | null>(null),
+    recruitmentYear: new FormControl(null),
+  });
+
+  constructor(private service: StaffService) {
+    this.roles = Object.values(Role);
+  }
 
   ngOnInit(): void {
     this.matchModeOptions = [
@@ -44,6 +70,10 @@ export class StaffComponent implements OnInit {
 
   openCreateModal(): void {
     this.showCreate = true;
+  }
+
+  addStaff(): void {
+    this.showCreate = false;
   }
 
   openDetailsModal(staff: Staff): void {

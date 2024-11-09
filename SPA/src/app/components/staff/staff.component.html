@@ -1,8 +1,7 @@
 <div class="text-center">
   <h1 class="fw-bold mt-2 main-title mb-4">
     Staff
-    <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="openCreateModal()"
-    />
+    <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="openCreateModal()" />
   </h1>
 </div>
 
@@ -104,10 +103,78 @@
     <h4 class="fw-bold">Create Staff Profile</h4>
   </ng-template>
 
-  <form>
+  <form [formGroup]="createStaffForm" (ngSubmit)="addStaff()">
+   
+    <span class="p-float-label mt-4">
+      <input
+        pInputText
+        formControlName="name"
+        autoWidth="false"
+        [style]="{ minWidth: '60px', width: '60%' }"
+      />
+      <label for="name">Name</label>
+    </span>
 
+    <span class="p-float-label mt-4">
+      <input
+        pInputText
+        formControlName="licenseNumber"
+        autoWidth="false"
+        [style]="{ minWidth: '60px', width: '60%' }"
+      />
+      <label for="licenseNumber">License Number</label>
+    </span>
 
-    
+    <span class="p-float-label mt-4">
+      <input
+        pInputText
+        formControlName="phone"
+        autoWidth="false"
+        [style]="{ minWidth: '60px', width: '60%' }"
+      />
+      <label for="phone">Phone Number</label>
+    </span>
+
+    <span class="p-float-label mt-4">
+      <input
+        pInputText
+        formControlName="specialization"
+        autoWidth="false"
+        [style]="{ minWidth: '60px', width: '60%' }"
+      />
+      <label for="specialization">Specialization</label>
+    </span>
+
+    <span class="p-float-label mt-4">
+      <input
+        pInputText
+        formControlName="availabilitySlots"
+        autoWidth="false"
+        [style]="{ minWidth: '60px', width: '60%' }"
+      />
+      <label for="availabilitySlots">Availability Slots</label>
+    </span>
+
+    <p-dropdown
+      class="mt-4 d-block"
+      placeholder="Role"
+      formControlName="role"
+      [options]="roles"
+      autoWidth="false"
+      [style]="{ minWidth: '60px', width: '60%' }"
+    />
+
+    <span class="p-float-label mt-4">
+      <input
+        pInputText
+        formControlName="recruitmentYear"
+        autoWidth="false"
+        [style]="{ minWidth: '60px', width: '60%' }"
+      />
+      <label for="recruitmentYear">Recruitment Year</label>
+    </span>
+
+    <p-button class="mt-4" type="Submit" label="Submit"/>
   </form>
 </p-dialog>
 
