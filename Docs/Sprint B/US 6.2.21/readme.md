@@ -105,6 +105,8 @@ All commits referred the corresponding issue in GitHub, using the #44 tag, as we
 
 It was implemented in the branch feature/6.2.21-frontend-admin-list-operation-types
 
+The estimated duration for this US is 20h.
+
 
 ## 6. Integration/Demonstration
 
