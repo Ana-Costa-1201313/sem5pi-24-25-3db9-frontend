@@ -16,6 +16,7 @@ import {
 import { Role } from '../../model/role.model';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-staff',
@@ -29,7 +30,7 @@ import { InputTextModule } from 'primeng/inputtext';
     FormsModule,
     ReactiveFormsModule,
     DropdownModule,
-    InputTextModule
+    InputTextModule,
   ],
   templateUrl: './staff.component.html',
   styleUrl: './staff.component.css',
@@ -73,7 +74,23 @@ export class StaffComponent implements OnInit {
   }
 
   addStaff(): void {
-    this.showCreate = false;
+    this.service.addStaff(this.createStaffForm.value).subscribe({
+      next: (response) => {
+        this.staffList.push(response as Staff);
+        this.showCreate = false;
+        this.message = [
+          {
+            severity: 'success',
+            summary: 'Success!',
+            detail: 'Your Staff Profile was added with success',
+          },
+        ];
+        this.createStaffForm.reset();
+      },
+      error: (error) => {
+        this.onFailure(error);
+      },
+    });
   }
 
   openDetailsModal(staff: Staff): void {
@@ -118,5 +135,17 @@ export class StaffComponent implements OnInit {
         detail: 'The Staff Profile was deactivated with success',
       },
     ];
+  }
+
+  onFailure(error: HttpErrorResponse): void {
+    if (error.status >= 500) {
+      this.message = [
+        { severity: 'error', summary: 'Failure!', detail: 'Server error' },
+      ];
+    } else {
+      this.message = [
+        { severity: 'error', summary: 'Failure!', detail: error.error },
+      ];
+    }
   }
 }

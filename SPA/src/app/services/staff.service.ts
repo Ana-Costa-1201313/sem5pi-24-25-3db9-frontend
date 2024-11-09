@@ -10,6 +10,10 @@ export class StaffService {
 
   constructor(private http: HttpClient) {}
 
+  addStaff(staff: Staff): Observable<Staff> {
+    return this.http.post<Staff>(this.url, staff);
+  }
+
   getStaffList(
     name: string,
     email: string,
