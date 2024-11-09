@@ -12,11 +12,13 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { Role } from '../../model/role.model';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-staff',
@@ -27,6 +29,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     DialogModule,
     ButtonModule,
     MessagesModule,
+    MessageModule,
     FormsModule,
     ReactiveFormsModule,
     DropdownModule,
@@ -48,13 +51,13 @@ export class StaffComponent implements OnInit {
   deactivate: boolean = false;
 
   createStaffForm = new FormGroup({
-    name: new FormControl(null),
-    licenseNumber: new FormControl(null),
-    phone: new FormControl(null),
+    name: new FormControl(null, Validators.required),
+    licenseNumber: new FormControl(null, Validators.required),
+    phone: new FormControl(null, Validators.required),
     specialization: new FormControl(null),
     availabilitySlots: new FormControl(null),
-    role: new FormControl<Role | null>(null),
-    recruitmentYear: new FormControl(null),
+    role: new FormControl<Role | null>(null, Validators.required),
+    recruitmentYear: new FormControl(null, Validators.required),
   });
 
   constructor(private service: StaffService) {
@@ -74,10 +77,11 @@ export class StaffComponent implements OnInit {
   }
 
   addStaff(): void {
+    this.showCreate = false;
+
     this.service.addStaff(this.createStaffForm.value).subscribe({
       next: (response) => {
         this.staffList.push(response as Staff);
-        this.showCreate = false;
         this.message = [
           {
             severity: 'success',
