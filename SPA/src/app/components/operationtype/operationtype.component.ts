@@ -4,14 +4,15 @@ import { TableModule } from 'primeng/table';
 import { OperationType } from '../../model/operationType/operationType.model';
 import { OperationTypeService } from '../../services/operationType.service';
 import { DialogModule } from 'primeng/dialog';
-import { FilterMatchMode, SelectItem } from 'primeng/api';
+import { FilterMatchMode, Message, SelectItem } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { MessagesModule } from 'primeng/messages';
 
 @Component({
   selector: 'app-operationtype',
   standalone: true,
-  imports: [CommonModule, TableModule, DialogModule, FormsModule, ButtonModule],
+  imports: [CommonModule, TableModule, DialogModule, FormsModule, ButtonModule, MessagesModule],
   templateUrl: './operationtype.component.html',
   styleUrl: './operationtype.component.css'
 })
@@ -22,6 +23,9 @@ export class OperationtypeComponent implements OnInit {
   currentOpType: OperationType | null = null;
   showDetails: boolean = false;
   matchModeOptions: SelectItem[] = [];
+  deactivate: boolean = false;
+  lazyEvent: any;
+  message: Message[] = [];
 
   constructor(private service: OperationTypeService) { }
 
@@ -46,4 +50,39 @@ export class OperationtypeComponent implements OnInit {
     this.currentOpType = opType;
     this.showDetails = true;
   }
+
+  openDeactivateModal(opType: OperationType): void {
+    this.currentOpType = opType;
+    this.deactivate = true;
+  }
+
+  deactivateOperationType() {
+    if (this.currentOpType?.id == null) {
+      return;
+    }
+
+    this.service.deactivateOperationType(this.currentOpType.id).subscribe(() => {
+      this.service.getOperationTypeList().subscribe((op) => {
+        this.operationTypeList = op.map(opType => ({
+          ...opType,
+          specialization: opType.requiredStaff
+            ?.map(staff => staff.specialization)
+            .filter(Boolean)
+            .join(', ')
+        }));
+        this.filteredOperationTypeList = [...this.operationTypeList];
+      });
+    });
+
+    this.message = [
+      {
+        severity: 'info',
+        summary: 'Success!',
+        detail: 'The Operation Type "' + this.currentOpType.name + '" was deactivated with success',
+      },
+    ];
+
+    this.deactivate = false;
+  }
+
 }

@@ -3,6 +3,8 @@
 </div>
 
 <div class="container">
+  <p-messages [(value)]="message" />
+  
   <p-table [value]="filteredOperationTypeList" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '20rem' }">
     <ng-template pTemplate="header">
       <tr>
@@ -43,8 +45,9 @@
 
 
           <p-button icon="pi pi-eye" class="me-3" [rounded]="true" [text]="true" (click)="openDetailsModal(opType)" />
-          <p-button icon="pi pi-pencil" class="me-3" [rounded]="true" [text]="true" />
-          <p-button icon="pi pi-trash" class="me-3" [rounded]="true" [text]="true" />
+          <p-button icon="pi pi-pencil" class="me-3" [rounded]="true" [text]="true" [disabled]="!opType.active" />
+          <p-button icon="pi pi-trash" class="me-3" [rounded]="true" [text]="true" [disabled]="!opType.active"
+            (click)="openDeactivateModal(opType)" />
         </td>
       </tr>
     </ng-template>
@@ -80,4 +83,18 @@
       </label>
     </div>
   </div>
+</p-dialog>
+
+<p-dialog header="Operation Type" [(visible)]="deactivate" [modal]="true" [style]="{ width: '25vw' }"
+  [draggable]="false" [resizable]="false">
+  <ng-template pTemplate="header">
+    <h4 class="fw-bold">Deactivate Operation Type</h4>
+  </ng-template>
+  <h4 class="fw-bold">{{ currentOpType?.name }}</h4>
+
+  <div class="mt-2 mb-4">Are you sure you want to deactivate this operation type?</div>
+  <p-button label="Confirm" icon="pi pi-check" class="me-3" [rounded]="true" [text]="true"
+    (click)="deactivateOperationType()" />
+  <p-button label="Cancel" icon="pi pi-times" class="me-3" [rounded]="true" [text]="true" severity="danger"
+    (click)="deactivate = false" />
 </p-dialog>

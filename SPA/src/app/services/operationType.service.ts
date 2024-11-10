@@ -13,4 +13,8 @@ export class OperationTypeService {
   getOperationTypeList(): Observable<OperationType[]> {
     return this.http.get<OperationType[]>(this.url);
   }
+
+  deactivateOperationType(opTypeId: string): Observable<OperationType>{
+    return this.http.delete<OperationType>(`${this.url}/${opTypeId}`);
+  }
 }

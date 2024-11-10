@@ -74,4 +74,75 @@ describe('OperationtypeComponent', () => {
     expect(component.filteredOperationTypeList).toEqual(component.operationTypeList);
   });
 
+
+  it('should open deactivation confirmation', () => {
+    const opType: OperationType = {
+      id: 'id',
+      name: 'name',
+      anesthesiaPatientPreparationInMinutes: 10,
+      surgeryInMinutes: 10,
+      cleaningInMinutes: 20,
+      requiredStaff: [],
+      active: true,
+    };
+
+    component.openDeactivateModal(opType);
+
+    expect(component.currentOpType).toEqual(opType);
+    expect(component.deactivate).toBeTrue();
+  });
+
+  it('should deactivate operation type and update operationTypeList', () => {
+    const opType = { id: '1', name: 'Test Operation' } as any;
+    component.currentOpType = opType;
+
+    spyOn(service, 'deactivateOperationType').and.returnValue(of({} as any));
+
+    const mockOperationTypeList: OperationType[] = [
+      {
+        id: '1',
+        name: 'Updated Operation',
+        anesthesiaPatientPreparationInMinutes: 10,
+        surgeryInMinutes: 20,
+        cleaningInMinutes: 30,
+        requiredStaff: [{ specialization: 'Surgeon', total: 1 }],
+        active: false,
+      },
+    ];
+
+    spyOn(service, 'getOperationTypeList').and.returnValue(of(mockOperationTypeList));
+
+    component.deactivateOperationType();
+
+    expect(component.deactivate).toBeFalse();
+
+    const expectedMessage = [
+      {
+        severity: 'info',
+        summary: 'Success!',
+        detail: 'The Operation Type "Test Operation" was deactivated with success',
+      },
+    ];
+    expect(component.message).toEqual(expectedMessage);
+
+    expect(component.operationTypeList).toEqual([
+      {
+        ...mockOperationTypeList[0],
+        specialization: 'Surgeon',
+      },
+    ]);
+    expect(component.filteredOperationTypeList).toEqual(component.operationTypeList);
+
+    expect(service.deactivateOperationType).toHaveBeenCalledWith(opType.id);
+    expect(service.getOperationTypeList).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not deactivate operation type', () => {
+    spyOn(service, 'deactivateOperationType').and.returnValue(of({} as any));
+
+    component.deactivateOperationType();
+
+    expect(service.deactivateOperationType).toHaveBeenCalledTimes(0);
+  })
+
 });
