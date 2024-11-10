@@ -1,15 +1,15 @@
-.main-title{
-    color: #0077b6
+.main-title {
+  color: #0077b6;
 }
 
-.pi:hover{
-    cursor:pointer;
+.pi:hover {
+  cursor: pointer;
 }
 
-.separator{
-    color: #0077b6
+.separator {
+  color: #0077b6;
 }
 
 ::ng-deep .p-message-icon {
-    display: none;
+  display: none;
 }

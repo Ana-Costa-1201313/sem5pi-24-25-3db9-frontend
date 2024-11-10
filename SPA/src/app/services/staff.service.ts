@@ -3,12 +3,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Staff } from '../model/staff.model';
 import { environment } from '../../environments/environment';
+import { CreateStaff } from '../model/createStaff.model';
 
 @Injectable({ providedIn: 'root' })
 export class StaffService {
   url = `${environment.apiUrl}${environment.endpoints.staff}`;
 
   constructor(private http: HttpClient) {}
+
+  addStaff(staff: CreateStaff): Observable<Staff> {
+    return this.http.post<Staff>(this.url, staff);
+  }
 
   getStaffList(
     name: string,
