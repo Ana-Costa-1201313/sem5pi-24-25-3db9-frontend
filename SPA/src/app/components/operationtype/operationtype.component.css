@@ -9,3 +9,7 @@
 .separator{
     color: #0077b6
 }
+
+::ng-deep .p-message-icon {
+    display: none;
+}
