@@ -17,4 +17,8 @@ export class OperationTypeService {
   deactivateOperationType(opTypeId: string): Observable<OperationType>{
     return this.http.delete<OperationType>(`${this.url}/${opTypeId}`);
   }
+
+  addOperationType(opType: OperationType): Observable<OperationType>{
+    return this.http.post<OperationType>(this.url, opType);
+  }
 }

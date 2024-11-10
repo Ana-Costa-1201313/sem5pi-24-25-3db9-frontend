@@ -106,7 +106,29 @@
   <ng-template pTemplate="header">
     <h4 class="fw-bold">Create Operation Type</h4>
   </ng-template>
-  <form>
-    
+  <form [formGroup]="createOperationTypeForm" (ngSubmit)="addOperationType()">
+
+    <span class="p-float-label mt-4">
+      <input pInputText formControlName="name" autoWidth="false" [style]="{ minWidth: '60px', width: '60%'}" />
+      <label for="name">Name</label>
+    </span>
+
+    <span class="p-float-label mt-4">
+      <p-inputNumber inputId="integeronly" formControlName="anesthesiaPatientPreparationInMinutes" autoWidth="false" [min]="1" />
+      <label for="anesthesiaPatientPreparationInMinutes">Anesthesia/Preparation duration</label>
+    </span>
+
+    <span class="p-float-label mt-4">
+      <p-inputNumber inputId="integeronly" formControlName="surgeryInMinutes" autoWidth="false" [min]="1" />
+      <label for="surgeryInMinutes">Surgery duration</label>
+    </span>
+
+    <span class="p-float-label mt-4">
+      <p-inputNumber inputId="integeronly" formControlName="cleaningInMinutes" autoWidth="false" [min]="1" />
+      <label for="cleaningInMinutes">Anesthesia/Preparation duration</label>
+    </span>
+
+    <p-button class="mt-4 d-block" type="Submit" label="Submit" [disabled]="createOperationTypeForm.invalid" />
+
   </form>
 </p-dialog>
