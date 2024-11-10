@@ -106,7 +106,11 @@
 
   <form [formGroup]="createStaffForm" (ngSubmit)="addStaff()">
     <span class="p-float-label mt-4">
-      <input pInputText formControlName="name" autoWidth="false" />
+      <input
+        pInputText
+        formControlName="name"
+        autoWidth="false"
+      />
       <label for="name">Name *</label>
     </span>
     <p-message
@@ -172,7 +176,7 @@
       formControlName="role"
       [options]="roles"
       autoWidth="false"
-      [style]="{ minWidth: '60px', width: '35%' }"
+      [style]="{ minWidth: '60px', width: '50%' }"
     />
     <p-message
       *ngIf="
@@ -189,12 +193,13 @@
       formControlName="specialization"
       [options]="specializationsNames"
       autoWidth="false"
-      [style]="{ minWidth: '60px', width: '70%' }"
+      [style]="{ minWidth: '60px', width: '50%' }"
     />
 
     <span
       class="p-float-label mt-4 mb-2"
       formArrayName="availabilitySlots"
+      [style]="{ minWidth: '60px', width: '50%' }"
       *ngFor="let slot of createStaffForm.controls.availabilitySlots.controls"
     >
       <p-calendar
