@@ -1,1 +1,69 @@
-<p>patient works!</p>
+<div class="text-center">
+    <h1 class="fw-bold mt-2 main-title mb-4">
+      Staff
+      <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="openCreateModal()"
+      />
+    </h1>
+  </div>
+
+  <div class="container">
+    <p-messages [(value)]="message" />
+
+    <p-table
+    [value]="patientList"
+    styleClass="p-datatable-striped"
+    [tableStyle]="{ 'min-width': '20rem' }"
+  >
+  <ng-template pTemplate="header">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Date Of Birth</th>
+        <th>Medical Record Number</th>
+        <th></th>
+        </tr>
+        <tr>
+            <th>
+                <p-columnFilter
+                type="text"
+                field="name"
+                placeholder="Search by name"
+                ariaLabel="Filter Name"
+                [matchModeOptions]="matchModeOptions"
+                matchMode="contains"
+                />
+            </th>
+            <th>
+                <p-columnFilter
+                type="text"
+                field="email"
+                placeholder="Search by email"
+                ariaLabel="Filter Email"
+                [matchModeOptions]="matchModeOptions"
+                matchMode="contains"
+                />
+            </th>
+            <th>
+                <p-columnFilter
+                type="text"
+                field="dateOfBirth"
+                placeholder="Search by date of birth"
+                ariaLabel="Filter DateOfBirth"
+                [matchModeOptions]="matchModeOptions"
+                matchMode="contains"
+                />
+            </th>
+            <th>
+                <p-columnFilter
+                type="text"
+                field="medicalRecordNumber"
+                placeholder="Search by record number"
+                ariaLabel="Filter medicalRecordNumber"
+                [matchModeOptions]="matchModeOptions"
+                matchMode="contains"
+                />
+            </th>
+            <th></th>
+        </tr>
+  </ng-template>
+  
