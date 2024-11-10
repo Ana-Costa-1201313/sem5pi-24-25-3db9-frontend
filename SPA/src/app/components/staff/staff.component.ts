@@ -87,9 +87,11 @@ export class StaffComponent implements OnInit {
     const availabilitySlotsIso: string[] = [];
 
     this.createStaffForm.get('availabilitySlots').value.forEach((slot) => {
-      availabilitySlotsIso.push(
-        slot[0].toISOString() + '/' + slot[1].toISOString()
-      );
+      if (slot != null) {
+        availabilitySlotsIso.push(
+          slot[0].toISOString() + '/' + slot[1].toISOString()
+        );
+      }
     });
 
     const request: CreateStaff = {
