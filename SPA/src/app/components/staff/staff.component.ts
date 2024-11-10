@@ -8,6 +8,8 @@ import { Staff } from '../../model/staff.model';
 import { StaffService } from '../../services/staff.service';
 import { MessagesModule } from 'primeng/messages';
 import {
+  FormArray,
+  FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
@@ -21,6 +23,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MessageModule } from 'primeng/message';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
+import { CreateStaff } from '../../model/createStaff.model';
 
 @Component({
   selector: 'app-staff',
@@ -37,7 +40,7 @@ import { CalendarModule } from 'primeng/calendar';
     DropdownModule,
     InputTextModule,
     InputNumberModule,
-    CalendarModule
+    CalendarModule,
   ],
   templateUrl: './staff.component.html',
   styleUrl: './staff.component.css',
@@ -59,7 +62,7 @@ export class StaffComponent implements OnInit {
     licenseNumber: new FormControl(null, Validators.required),
     phone: new FormControl(null, Validators.required),
     specialization: new FormControl(null),
-    availabilitySlots: new FormControl(null),
+    availabilitySlots: new FormArray([new FormControl(null)]),
     role: new FormControl<Role | null>(null, Validators.required),
     recruitmentYear: new FormControl(null, Validators.required),
   });
@@ -81,11 +84,19 @@ export class StaffComponent implements OnInit {
   addStaff(): void {
     this.showCreate = false;
 
-    this.createStaffForm
-      .get('phone')
-      .setValue(this.createStaffForm.get('phone').value.toString());
+    const request: CreateStaff = {
+      ...this.createStaffForm.value,
 
-    this.service.addStaff(this.createStaffForm.value).subscribe({
+      phone: this.createStaffForm.get('phone').value.toString(),
+
+      availabilitySlots: [],
+
+      recruitmentYear: new Date(
+        this.createStaffForm.get('recruitmentYear').value
+      ).getFullYear(),
+    };
+
+    this.service.addStaff(request).subscribe({
       next: () => {
         this.loadStaffLazy(this.lazyEvent);
         this.message = [
@@ -101,6 +112,12 @@ export class StaffComponent implements OnInit {
         this.onFailure(error);
       },
     });
+  }
+
+  addSlot(): void {
+    const availabilitySlot = new FormControl(null);
+
+    this.createStaffForm.controls.availabilitySlots.push(availabilitySlot);
   }
 
   openDetailsModal(staff: Staff): void {

@@ -149,10 +149,20 @@
       <label for="specialization">Specialization</label>
     </span>
 
-    <span class="p-float-label mt-4">
-      <input pInputText formControlName="availabilitySlots" autoWidth="false" />
-      <label for="availabilitySlots">Availability Slots</label>
+    <span
+      class="p-float-label mt-4 mb-2"
+      formArrayName="availabilitySlots"
+      *ngFor="let slot of createStaffForm.controls.availabilitySlots.controls"
+    >
+      <p-calendar
+        selectionMode="range"
+        [showTime]="true"
+        [formControl]="slot"
+        autoWidth="false"
+      />
+      <label for="availabilitySlots">Availability Slot</label>
     </span>
+    <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="addSlot()" />
 
     <p-dropdown
       class="mt-4 d-block"
@@ -172,8 +182,12 @@
     ></p-message>
 
     <span class="p-float-label mt-4">
-      <p-calendar view="year" dateFormat="yy"
-      formControlName="recruitmentYear" autoWidth="false" />
+      <p-calendar
+        view="year"
+        dateFormat="yy"
+        formControlName="recruitmentYear"
+        autoWidth="false"
+      />
       <label for="recruitmentYear">Recruitment Year *</label>
     </span>
     <p-message
