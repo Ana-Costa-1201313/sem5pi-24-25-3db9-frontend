@@ -1,0 +1,84 @@
+<div class="text-center">
+    <h1 class="fw-bold mt-2 main-title mb-4">Operation Request</h1>
+  </div>
+  
+  <div class="container">
+    <p-table [value]="filteredOperationRequestList" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '20rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            <p-columnFilter type="text" field="id" placeholder="Search by Id" ariaLabel="Filter Id"
+              [matchModeOptions]="matchModeOptions" matchMode="contains" />
+          </th>
+          <th>
+            <p-columnFilter type="text" field="optypename" placeholder="Search by operation type name"
+              ariaLabel="Filter Operation Type" [matchModeOptions]="matchModeOptions" matchMode="contains" />
+          </th>
+          <th>
+            <p-columnFilter type="text" field="patientId" placeholder="Search by patient id"
+              ariaLabel="Filter Patient" [matchModeOptions]="matchModeOptions" matchMode="contains" />
+          </th>
+          <th>
+            <p-columnFilter type="text" field="priority" placeholder="Search by priority"
+              ariaLabel="Filter Priority" [matchModeOptions]="matchModeOptions" matchMode="contains" />
+          </th>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="me-3">Status</span>
+              <p-columnFilter type="boolean" field="active" placeholder="Search by status" ariaLabel="Filter status"
+                [matchModeOptions]="matchModeOptions" matchMode="equals" />
+            </div>
+          </th>
+  
+          <th></th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-opReq>
+        <tr>
+          <td>{{ opReq.Id }}</td>
+          <td>{{ opReq.OpTypeName }}</td>
+          <td>{{ opReq.OpTypeId }}</td>
+          <td>{{ opReq.Deadline }}</td>
+          <td>{{ opReq.Priority }}</td>
+          <td>{{ opReq.PatientName }}</td>
+          <td>{{ opReq.PatientId }}</td>
+          <td>{{ opReq.DoctorName }}</td>
+          <td>{{ opReq.DoctorId }}</td>
+          <td>{{ opReq.Status }}</td>
+          <td>{{ opReq.Description }}</td>
+          <td class="text-center">
+  
+  
+            <p-button icon="pi pi-eye" class="me-3" [rounded]="true" [text]="true" (click)="openDetailsModal(opReq)" />
+            <p-button icon="pi pi-pencil" class="me-3" [rounded]="true" [text]="true" />
+            <p-button icon="pi pi-trash" class="me-3" [rounded]="true" [text]="true" />
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  
+  <p-dialog header="Operation Request" [(visible)]="showDetails" [modal]="true" [style]="{ width: '50vw' }"
+    [draggable]="false" [resizable]="false">
+    <ng-template pTemplate="header">
+      <h4 class="fw-bold">{{ currentOpRequest?.Id }}</h4>
+    </ng-template>
+    <div class="container">
+      <h5 class="title-separator separator">General Information</h5>
+      <hr class="line-separator separator" />
+      <div class="row">
+        <label for="Id"><b>Id:</b> {{ currentOpRequest?.Id }}</label>
+        <label for="OpTypeName"><b>OpTypeName:</b> {{ currentOpRequest?.OpTypeName }}</label>
+        <label for="OpTypeId" class="mt-2"><b>OpTypeId:</b> {{ currentOpRequest?.OpTypeId }}</label>
+        <label for="Deadline" class="mt-2"><b>Deadline:</b> {{ currentOpRequest?.Deadline }}</label>
+        <label for="Priority" class="mt-2"><b>Priority:</b> {{ currentOpRequest?.Priority }}</label>
+        <label for="PatientName" class="mt-2"><b>PatientName:</b> {{ currentOpRequest?.PatientName }}</label>
+        <label for="PatientId" class="mt-2"><b>PatientId:</b> {{ currentOpRequest?.PatientId }}</label>
+        <label for="DoctorName" class="mt-2"><b>DoctorName:</b> {{ currentOpRequest?.DoctorName }}</label>
+        <label for="DoctorId" class="mt-2"><b>DoctorId:</b> {{ currentOpRequest?.DoctorId }}</label>
+        <label for="Status" class="mt-2"><b>Status:</b> {{ currentOpRequest?.Status }}</label>
+        <label for="Description" class="mt-2"><b>Description:</b> {{ currentOpRequest?.Description }}</label>
+      </div>
+    </div>
+  </p-dialog>
