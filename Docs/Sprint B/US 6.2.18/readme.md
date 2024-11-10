@@ -1,18 +1,22 @@
-# US 6.2.20
+# US 6.2.18
 
 ## 1. Context
 
-This task appears in the middle of the project's development, to be able to deactivate a existing operation type.
+This task appears in the middle of the project's development, to be able to create a new operation type.
 
 
 ## 2. Requirements
 
-**US 6.2.20** As an Admin, I want to remove obsolete or no longer performed operation types, so that the system stays current with hospital practices.
+**US 6.2.18** As an Admin, I want to add new types of operations, so that I can reflect the available medical procedures in the system. 
 
 **Acceptance Criteria:**
-- Admins can search for and mark operation types as inactive (rather than deleting them) to preserve historical records. 
-- Inactive operation types are no longer available for future scheduling but remain in historical data. 
-- A confirmation prompt is shown before deactivating an operation type. 
+
+- Admins can add new operation types with attributes like: 
+- Operation Name 
+- Required Staff by Specialization 
+- Estimated Duration 
+- The system validates that the operation name is unique. 
+- The system logs the creation of new operation types and makes them available for scheduling immediately. 
 
 
 **Dependencies/References:**
@@ -21,50 +25,40 @@ It is also required that the user is registered and logged in as an admin.
 The backend component of the US should already be developed.
 
 
-
 ## 3. Analysis
 
 For this US were considered the requirements specified in the project's description and the client's answers. 
 Some relevant answers excerpts are here specified:
 
-
 ```
-"The next one is about removing operation types.
+Q: The document you provided divides surgical times into "specific phases of the surgery," whereas the main statement only mentions recording the total surgery time. Should the system, therefore, store and specify the time spent on each phase of the surgery, or is it sufficient to only record the total surgery time without detailing the time distribution across each phase?
 
-This is how the user story is described, but in the acceptance criteria, the concept of deactivation is introduced. So, is removing actually deactivating the type of operation? Yes, the question is, you need to think in terms of timeline. So, I might have a specific type of operation, say, some kind of leg surgery.
-
-But for some reason, I decided that my hospital would no longer do this type of leg surgery. But I have done it in the past. So, I can't really remove the type of leg surgery.
-
-What I can do is disable this type of operation, so that it is no longer available, so that doctors can no longer order this type of operation. But if I look at the data from the past, and if I have any leg surgery operations, of course I will have the type of leg surgery operation as well. But it is disable.
-
-So, remove, in this sense, is to deactivate. And the last question is more related to the surgery types document."
-
-
-Q: Is removing an operation type the same as deactivating it?
-
-A: Yes, deactivating makes the operation type unavailable for future use but retains historical data.
+A: when describing an operation type, the system must record the time for each phase
 ```
 
 ```
-Q: 
+Q: Are the different phases of surgery relevant to the business and should they be recorded in the system?
 
-A: 
+A: yes. they are important due to the time it takes each phase and in the future for the planning of different teams (e.g., cleaning team)
 ```
 
 ```
-Q: 
+Q: In the document with the surgeries, they all have 3 phases and respective duration:
 
-A: 
+-Anesthesia/patient preparation
+
+-Surgery
+
+-Cleaning
+
+Can we assume while creating a new operation type, that the surgery must always have this 3 phases?
+
+A: Yes
 ```
 
-```
-Q: 
-
-A: 
-```
 
 The following **HTTP requests** will be implemented:
-- DELETE (to deactivate a existing operation type)
+- POST (to create a new operation type)
 
 
 ## 4. Design
@@ -85,6 +79,7 @@ This section presents the design adopted to solve the requirement.
 
 ![SSD_Lvl1.png](SD3.svg) 
 
+
 ### 4.4. Applied Design Patterns
 
 - **Domain Driven Development (DDD):** the focus is the business logic and not the implementation.
@@ -101,27 +96,27 @@ This section presents the design adopted to solve the requirement.
 ### 4.5. Tests
 
 The following tests are to be developed:
-- a deactivated operation type can't be deactivated again.
+- the created operation type must have the same data as the input.
+- an error message should be displayed when the input is invalid or mandatory.
 
 Unitary tests to the component will be implemented.
 
 E2E Tests will also check all the US flow, from the user interaction to the backend server.
 
-
 ## 5. Implementation
 
 The implementation of this US is according to the design, as can be seen in the SD and CD presented before.
 
-All commits referred the corresponding issue in GitHub, using the #43 tag, as well as a relevant commit message.
+All commits referred the corresponding issue in GitHub, using the #41 tag, as well as a relevant commit message.
 
-It was implemented in the branch feature/6.2.20-frontend-admin-deactivate-operation-types.
+It was implemented in the branch feature/6.2.18-frontend-admin-add-operation-types.
 
-The estimated duration for this US is 10h.
+The estimated duration for this US is 15h.
 
 
 ## 6. Integration/Demonstration
 
-To deactivate a Operation Type, run the Backoffice, Auth and SPA app and then go to the Operation Type page and click on the delete icon in the operation type you wish to delete.
+To create a new Operation Type, run the Backoffice, Auth and SPA app then go to the Operation Type page and click on the "+" icon to add a operation type.
 
 ## 7. Observations
 
