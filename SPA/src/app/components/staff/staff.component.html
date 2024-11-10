@@ -132,52 +132,17 @@
     ></p-message>
 
     <span class="p-float-label mt-4">
-      <p-inputNumber formControlName="phone" autoWidth="false" />
+      <p-inputNumber
+        formControlName="phone"
+        autoWidth="false"
+        [maxlength]="9"
+      />
       <label for="phone">Phone Number *</label>
     </span>
     <p-message
       *ngIf="
         createStaffForm.get('phone')?.dirty &&
         createStaffForm.get('phone')?.hasError('required')
-      "
-      severity="error"
-      text="Field is required"
-    ></p-message>
-
-    <span class="p-float-label mt-4">
-      <input pInputText formControlName="specialization" autoWidth="false" />
-      <label for="specialization">Specialization</label>
-    </span>
-
-    <span
-      class="p-float-label mt-4 mb-2"
-      formArrayName="availabilitySlots"
-      *ngFor="let slot of createStaffForm.controls.availabilitySlots.controls"
-    >
-      <p-calendar
-        selectionMode="range"
-        [showTime]="true"
-        [formControl]="slot"
-        autoWidth="false"
-        hideOnDateTimeSelect="false"
-        [style]="{ minWidth: '60px', width: '100%' }"
-      />
-      <label for="availabilitySlots">Availability Slot</label>
-    </span>
-    <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="addSlot()" />
-
-    <p-dropdown
-      class="mt-4 d-block"
-      placeholder="Role *"
-      formControlName="role"
-      [options]="roles"
-      autoWidth="false"
-      [style]="{ minWidth: '60px', width: '35%' }"
-    />
-    <p-message
-      *ngIf="
-        createStaffForm.get('role')?.dirty &&
-        createStaffForm.get('role')?.hasError('required')
       "
       severity="error"
       text="Field is required"
@@ -200,6 +165,49 @@
       severity="error"
       text="Field is required"
     ></p-message>
+
+    <p-dropdown
+      class="mt-4 d-block"
+      placeholder="Role *"
+      formControlName="role"
+      [options]="roles"
+      autoWidth="false"
+      [style]="{ minWidth: '60px', width: '35%' }"
+    />
+    <p-message
+      *ngIf="
+        createStaffForm.get('role')?.dirty &&
+        createStaffForm.get('role')?.hasError('required')
+      "
+      severity="error"
+      text="Field is required"
+    ></p-message>
+
+    <p-dropdown
+      class="mt-4 d-block"
+      placeholder="Specialization"
+      formControlName="specialization"
+      [options]="specializationsNames"
+      autoWidth="false"
+      [style]="{ minWidth: '60px', width: '70%' }"
+    />
+
+    <span
+      class="p-float-label mt-4 mb-2"
+      formArrayName="availabilitySlots"
+      *ngFor="let slot of createStaffForm.controls.availabilitySlots.controls"
+    >
+      <p-calendar
+        selectionMode="range"
+        [showTime]="true"
+        [formControl]="slot"
+        autoWidth="false"
+        hideOnDateTimeSelect="false"
+        [style]="{ minWidth: '60px', width: '100%' }"
+      />
+      <label for="availabilitySlots">Availability Slot</label>
+    </span>
+    <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="addSlot()" />
 
     <p-button
       class="mt-4 d-block"

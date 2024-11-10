@@ -1,29 +1,30 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FilterMatchMode, Message, SelectItem } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { TableModule } from 'primeng/table';
-import { Staff } from '../../model/staff.model';
-import { StaffService } from '../../services/staff.service';
-import { MessagesModule } from 'primeng/messages';
 import {
   FormArray,
-  FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Role } from '../../model/role.model';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputTextModule } from 'primeng/inputtext';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MessageModule } from 'primeng/message';
-import { InputNumberModule } from 'primeng/inputnumber';
+import { FilterMatchMode, Message, SelectItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
+import { TableModule } from 'primeng/table';
 import { CreateStaff } from '../../model/createStaff.model';
+import { Role } from '../../model/role.model';
+import { Staff } from '../../model/staff.model';
+import { StaffService } from '../../services/staff.service';
+import { Specialization } from '../../model/specialization.model';
+import { SpecializationService } from '../../services/specialization.service';
 
 @Component({
   selector: 'app-staff',
@@ -53,6 +54,8 @@ export class StaffComponent implements OnInit {
   staffList: Staff[] = [];
   currentStaff: Staff = null;
   roles: Role[] = [Role.Doctor, Role.Nurse, Role.Technician];
+  specializations: Specialization[] = [];
+  specializationsNames: string[] = [];
   showCreate: boolean = false;
   showDetails: boolean = false;
   deactivate: boolean = false;
@@ -61,13 +64,16 @@ export class StaffComponent implements OnInit {
     name: new FormControl(null, Validators.required),
     licenseNumber: new FormControl(null, Validators.required),
     phone: new FormControl(null, Validators.required),
-    specialization: new FormControl(null),
+    specialization: new FormControl<string | null>(null),
     availabilitySlots: new FormArray([new FormControl<Date[]>(null)]),
     role: new FormControl<Role | null>(null, Validators.required),
     recruitmentYear: new FormControl(null, Validators.required),
   });
 
-  constructor(private service: StaffService) {}
+  constructor(
+    private service: StaffService,
+    private specService: SpecializationService
+  ) {}
 
   ngOnInit(): void {
     this.matchModeOptions = [
@@ -75,6 +81,16 @@ export class StaffComponent implements OnInit {
     ];
 
     this.service.getTotalRecords().subscribe((t) => (this.totalRecords = t));
+
+    this.specService.getSpecializationList().subscribe((s) => {
+      this.specializations = s;
+
+      const names: string[] = [];
+
+      this.specializations.forEach((spec) => names.push(spec.name));
+
+      this.specializationsNames = names;
+    });
   }
 
   openCreateModal(): void {
@@ -117,6 +133,8 @@ export class StaffComponent implements OnInit {
           },
         ];
         this.createStaffForm.reset();
+        this.createStaffForm.controls.availabilitySlots.clear();
+        this.addSlot();
       },
       error: (error) => {
         this.onFailure(error);
