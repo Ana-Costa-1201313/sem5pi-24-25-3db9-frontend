@@ -1,10 +1,12 @@
 <div class="text-center">
-  <h1 class="fw-bold mt-2 main-title mb-4">Operation Type</h1>
+  <h1 class="fw-bold mt-2 main-title mb-4">Operation Type
+    <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="openCreateModal()" />
+  </h1>
 </div>
 
 <div class="container">
   <p-messages [(value)]="message" />
-  
+
   <p-table [value]="filteredOperationTypeList" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '20rem' }">
     <ng-template pTemplate="header">
       <tr>
@@ -97,4 +99,14 @@
     (click)="deactivateOperationType()" />
   <p-button label="Cancel" icon="pi pi-times" class="me-3" [rounded]="true" [text]="true" severity="danger"
     (click)="deactivate = false" />
+</p-dialog>
+
+<p-dialog header="Staff" [(visible)]="showCreate" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
+  [resizable]="false">
+  <ng-template pTemplate="header">
+    <h4 class="fw-bold">Create Operation Type</h4>
+  </ng-template>
+  <form>
+    
+  </form>
 </p-dialog>

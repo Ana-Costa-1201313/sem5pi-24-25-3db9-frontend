@@ -26,6 +26,7 @@ export class OperationtypeComponent implements OnInit {
   deactivate: boolean = false;
   lazyEvent: any;
   message: Message[] = [];
+  showCreate: boolean = false;
 
   constructor(private service: OperationTypeService) { }
 
@@ -83,6 +84,10 @@ export class OperationtypeComponent implements OnInit {
     ];
 
     this.deactivate = false;
+  }
+
+  openCreateModal(): void{
+    this.showCreate = true;
   }
 
 }
