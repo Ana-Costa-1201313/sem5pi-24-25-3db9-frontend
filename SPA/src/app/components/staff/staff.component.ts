@@ -62,7 +62,7 @@ export class StaffComponent implements OnInit {
     licenseNumber: new FormControl(null, Validators.required),
     phone: new FormControl(null, Validators.required),
     specialization: new FormControl(null),
-    availabilitySlots: new FormArray([new FormControl(null)]),
+    availabilitySlots: new FormArray([new FormControl<Date[]>(null)]),
     role: new FormControl<Role | null>(null, Validators.required),
     recruitmentYear: new FormControl(null, Validators.required),
   });
@@ -84,12 +84,20 @@ export class StaffComponent implements OnInit {
   addStaff(): void {
     this.showCreate = false;
 
+    const availabilitySlotsIso: string[] = [];
+
+    this.createStaffForm.get('availabilitySlots').value.forEach((slot) => {
+      availabilitySlotsIso.push(
+        slot[0].toISOString() + '/' + slot[1].toISOString()
+      );
+    });
+
     const request: CreateStaff = {
       ...this.createStaffForm.value,
 
       phone: this.createStaffForm.get('phone').value.toString(),
 
-      availabilitySlots: [],
+      availabilitySlots: availabilitySlotsIso,
 
       recruitmentYear: new Date(
         this.createStaffForm.get('recruitmentYear').value
@@ -115,7 +123,7 @@ export class StaffComponent implements OnInit {
   }
 
   addSlot(): void {
-    const availabilitySlot = new FormControl(null);
+    const availabilitySlot = new FormControl<Date[]>(null);
 
     this.createStaffForm.controls.availabilitySlots.push(availabilitySlot);
   }
