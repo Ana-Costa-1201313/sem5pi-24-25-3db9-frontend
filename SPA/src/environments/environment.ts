@@ -3,6 +3,7 @@ export const environment = {
   endpoints: {
     staff: '/Staff',
     totalRecordsStaff: '/totalRecords',
-    specialization: '/Specializations'
+    operationTypes: '/OperationTypes',
+    specialization: '/Specializations',
   },
 };
