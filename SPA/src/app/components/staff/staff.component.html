@@ -51,11 +51,22 @@
           <p-columnFilter
             type="text"
             field="specialization"
-            placeholder="Search by specialization"
             ariaLabel="Filter Specialization"
             [matchModeOptions]="matchModeOptions"
             matchMode="contains"
-          />
+            ><ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-dropdown
+                [ngModel]="value"
+                [options]="specializationsNames"
+                (onChange)="filter($event.value)"
+                placeholder="Search by specialization"
+              >
+              </p-dropdown> </ng-template
+          ></p-columnFilter>
         </th>
         <th></th>
       </tr>
@@ -106,11 +117,7 @@
 
   <form [formGroup]="createStaffForm" (ngSubmit)="addStaff()">
     <span class="p-float-label mt-4">
-      <input
-        pInputText
-        formControlName="name"
-        autoWidth="false"
-      />
+      <input pInputText formControlName="name" autoWidth="false" />
       <label for="name">Name *</label>
     </span>
     <p-message
@@ -175,7 +182,7 @@
       placeholder="Role *"
       formControlName="role"
       [options]="roles"
-      [showClear]="true" 
+      [showClear]="true"
       autoWidth="false"
       [style]="{ minWidth: '60px', width: '50%' }"
     />
@@ -193,7 +200,7 @@
       placeholder="Specialization"
       formControlName="specialization"
       [options]="specializationsNames"
-      [showClear]="true" 
+      [showClear]="true"
       autoWidth="false"
       [style]="{ minWidth: '60px', width: '50%' }"
     />
