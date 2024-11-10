@@ -59,6 +59,7 @@ export class StaffComponent implements OnInit {
   showCreate: boolean = false;
   showDetails: boolean = false;
   deactivate: boolean = false;
+  showEdit: boolean = false;
 
   createStaffForm = new FormGroup({
     name: new FormControl(null, Validators.required),
@@ -165,6 +166,11 @@ export class StaffComponent implements OnInit {
         event.rows
       )
       .subscribe((s: Staff[]) => (this.staffList = s));
+  }
+
+  openEditModal(staff: Staff): void {
+    this.currentStaff = staff;
+    this.showEdit = true;
   }
 
   openDeactivateModal(staff: Staff) {

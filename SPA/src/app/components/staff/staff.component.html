@@ -88,6 +88,7 @@
             class="me-2"
             [disabled]="!staff.active"
             [text]="true"
+            (click)="openEditModal(staff)"
           />
           <p-button
             icon="pi pi-trash"
@@ -292,6 +293,21 @@
       </label>
     </div>
   </div>
+</p-dialog>
+
+<p-dialog
+  header="Staff"
+  [(visible)]="showEdit"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <h4 class="fw-bold">Edit Staff Profile</h4>
+  </ng-template>
+
+  
 </p-dialog>
 
 <p-dialog
