@@ -77,16 +77,11 @@ export class OperationtypeComponent implements OnInit {
 
     this.specService.getSpecializationList().subscribe((s) => {
       this.specializations = s;
-
-
-      console.log(this.specializations);
-
+      
       const names: string[] = [];
 
       this.specializations.forEach((spec) => names.push(spec.name));
       this.specializationsNames = names;
-
-      console.log(this.specializationsNames);
     });
   }
 
@@ -161,6 +156,7 @@ export class OperationtypeComponent implements OnInit {
 
     this.service.addOperationType(request).subscribe({
       next: () => {
+        // Success message
         this.message = [
           {
             severity: 'success',
@@ -168,8 +164,22 @@ export class OperationtypeComponent implements OnInit {
             detail: 'Your Operation Type was added with success',
           },
         ];
+
+        // Reset form and clear requiredStaff FormArray
         this.createOperationTypeForm.reset();
         this.requiredStaff.clear();
+
+        // Refresh the operationTypeList to include the newly added item
+        this.service.getOperationTypeList().subscribe((op) => {
+          this.operationTypeList = op.map(opType => ({
+            ...opType,
+            specialization: opType.requiredStaff
+              ?.map(staff => staff.specialization)
+              .filter(Boolean)
+              .join(', ')
+          }));
+          this.filteredOperationTypeList = [...this.operationTypeList];
+        });
       },
       error: (error) => this.onFailure(error),
     });
