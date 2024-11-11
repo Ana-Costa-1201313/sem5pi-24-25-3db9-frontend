@@ -20,11 +20,11 @@ import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
 import { Role } from '../../model/role.model';
-import { StaffService } from '../../services/staff.service';
 import { Specialization } from '../../model/specialization.model';
-import { SpecializationService } from '../../services/specialization.service';
-import { Staff } from '../../model/staff/staff.model';
 import { CreateStaff } from '../../model/staff/createStaff.model';
+import { Staff } from '../../model/staff/staff.model';
+import { SpecializationService } from '../../services/specialization.service';
+import { StaffService } from '../../services/staff.service';
 
 @Component({
   selector: 'app-staff',
@@ -184,9 +184,26 @@ export class StaffComponent implements OnInit {
 
     this.editStaffForm.controls.availabilitySlots.clear();
 
-    this.currentStaff?.availabilitySlots.forEach((slot) => {
-      this.addSlotToEdit();
+    this.currentStaff?.availabilitySlots.forEach((slot, index) => {
+      //para cada range string
+      this.addSlotToEdit(); //adicionar um field
+
+      //this.editStaffForm.get('availabilitySlots').setValue(this.createAvailabilitySlot(slot));         //por o valor antigo (date[]) nesse field
+
+      this.editStaffForm.controls.availabilitySlots
+        .at(index)
+        .setValue(this.createAvailabilitySlot(slot));
     });
+  }
+
+  createAvailabilitySlot(avSlot: string): Date[] {
+    const slotString: string[] = avSlot.split('/');
+
+    const slotDate: Date[] = [];
+    slotDate[0] = new Date(slotString[0]);
+    slotDate[1] = new Date(slotString[1]);
+
+    return slotDate;
   }
 
   editStaff(): void {
