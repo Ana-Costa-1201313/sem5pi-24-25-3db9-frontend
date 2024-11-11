@@ -11,38 +11,7 @@ export class PatientService{
 
     constructor(private http: HttpClient){}
 
-    getPatientList(
-        name?: string,
-        email?: string,
-        dateOfBirth?: string,
-        medicalRecordNumber?: string
-    ): Observable<Patient[]>{
-        let params = new HttpParams();
-        if (name){
-            params = params.append('name',name);
-        }
-        if(email){
-            params = params.append('email',email);
-        }
-        if(dateOfBirth){
-            params =params.append('dateOfBirth',dateOfBirth);
-        }
-        if(medicalRecordNumber){
-            params = params.append('medicalRecordNumber',medicalRecordNumber);
-        }
-
-        return this.http.get<Patient[]>(this.url, {params});
-    }
-    
-    createPatient(patient :Patient): Observable<Patient>{
-        return this.http.post<Patient>(this.url,patient);
-    }
-
-    updatePatient(id: string, patient: Patient): Observable<Patient>{
-        return this.http.put<Patient>(`${this.url}/${id}`, patient);
-    }
-
-    deletePatient(id: string):Observable<Patient>{
-        return this.http.delete<Patient>(`${this.url}/${id}`);
+    getPatientList(): Observable<Patient[]>{
+        return this.http.get<Patient[]>(this.url);
     }
 }

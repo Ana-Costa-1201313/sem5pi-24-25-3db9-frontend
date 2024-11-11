@@ -1,103 +1,26 @@
 <div class="text-center">
-    <h1 class="fw-bold mt-2 main-title mb-4">
-      Patient
-      <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="openCreateModal()"
-      />
-    </h1>
+    <h1 class="fw-bold mt-2 main-title mb-4">Patient List</h1>
   </div>
-
+  
   <div class="container">
-    <p-messages [(value)]="message" />
-
-    <p-table
-    [value]="patientList"
-    styleClass="p-datatable-striped"
-    [tableStyle]="{ 'min-width': '20rem' }"
-  >
-  <ng-template pTemplate="header">
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Date Of Birth</th>
-        <th>Medical Record Number</th>
-        <th></th>
-        </tr>
+    <p-table [value]="patientList" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '20rem' }">
+      <ng-template pTemplate="header">
         <tr>
-            <th>
-                <p-columnFilter
-                type="text"
-                field="name"
-                placeholder="Search by name"
-                ariaLabel="Filter Name"
-                [matchModeOptions]="matchModeOptions"
-                matchMode="contains"
-                />
-            </th>
-            <th>
-                <p-columnFilter
-                type="text"
-                field="email"
-                placeholder="Search by email"
-                ariaLabel="Filter Email"
-                [matchModeOptions]="matchModeOptions"
-                matchMode="contains"
-                />
-            </th>
-            <th>
-                <p-columnFilter
-                type="text"
-                field="dateOfBirth"
-                placeholder="Search by date of birth"
-                ariaLabel="Filter DateOfBirth"
-                [matchModeOptions]="matchModeOptions"
-                matchMode="contains"
-                />
-            </th>
-            <th>
-                <p-columnFilter
-                type="text"
-                field="medicalRecordNumber"
-                placeholder="Search by record number"
-                ariaLabel="Filter medicalRecordNumber"
-                [matchModeOptions]="matchModeOptions"
-                matchMode="contains"
-                />
-            </th>
-            <th></th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Medical Record Number</th>
+          <th>Date of Birth</th>
         </tr>
-  </ng-template>
-
-  <ng-template>
-    <ng-template pTemplate="body" let-patient>
+      </ng-template>
+  
+      <ng-template pTemplate="body" let-patient>
         <tr>
-            <td>{{patient.fullName}}</td>
-            <td>{{patient.email}}</td>
-            <td>{{patient.dateOfBirth | date: 'dd/MM/yyyy'}}</td>
-            <td class="text-center">
-
-                <p-button
-                icon="pi pi-eye"
-                class="me-2"
-                [text]="true"
-                (click)="openDetailsModal(patient)"
-                />
-
-                <p-button
-                icon="pi pi-pencil"
-                class="me-2"
-                [text]="true"
-                (click)="openEditModal(patient)"
-                />
-
-                <p-button
-                icon="pi pi-trash"
-                class="me-2"
-                [text]="true"
-                (click)="openDeleteModal(patient)"
-                />
-
-            </td>
+          <td>{{ patient.fullName }}</td>
+          <td>{{ patient.email }}</td>
+          <td>{{ patient.medicalRecordNumber }}</td>
+          <td>{{ patient.dateOfBirth | date:'dd/MM/yyyy' }}</td>
         </tr>
-    </ng-template>
-</p-table>
-</div>
+      </ng-template>
+    </p-table>
+  </div>
+  
