@@ -1,4 +1,4 @@
-import { Role } from './role.model';
+import { Role } from "../role.model";
 
 export type CreateStaff = {
   name?: string;

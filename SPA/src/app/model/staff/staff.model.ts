@@ -1,5 +1,5 @@
-import { Role } from './role.model';
-import { Specialization } from './specialization.model';
+import { Role } from '../role.model';
+import { Specialization } from '../specialization.model';
 
 export type Staff = {
   id?: string;

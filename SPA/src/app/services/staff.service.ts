@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Staff } from '../model/staff.model';
 import { environment } from '../../environments/environment';
-import { CreateStaff } from '../model/createStaff.model';
+import { CreateStaff } from '../model/staff/createStaff.model';
+import { Staff } from '../model/staff/staff.model';
 
 @Injectable({ providedIn: 'root' })
 export class StaffService {
@@ -47,6 +47,10 @@ export class StaffService {
     return this.http.get<number>(
       `${this.url}${environment.endpoints.totalRecordsStaff}`
     );
+  }
+
+  editStaff(staff: CreateStaff): Observable<Staff> {
+    return this.http.put<Staff>(this.url, staff);
   }
 
   deactivateStaff(staffId: string): Observable<Staff> {

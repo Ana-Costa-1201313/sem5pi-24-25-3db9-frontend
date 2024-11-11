@@ -19,12 +19,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
-import { CreateStaff } from '../../model/createStaff.model';
 import { Role } from '../../model/role.model';
-import { Staff } from '../../model/staff.model';
 import { StaffService } from '../../services/staff.service';
 import { Specialization } from '../../model/specialization.model';
 import { SpecializationService } from '../../services/specialization.service';
+import { Staff } from '../../model/staff/staff.model';
+import { CreateStaff } from '../../model/staff/createStaff.model';
 
 @Component({
   selector: 'app-staff',
@@ -181,6 +181,9 @@ export class StaffComponent implements OnInit {
 
   editStaff(): void {
     this.showEdit = false;
+
+
+
   }
 
   openDeactivateModal(staff: Staff) {
