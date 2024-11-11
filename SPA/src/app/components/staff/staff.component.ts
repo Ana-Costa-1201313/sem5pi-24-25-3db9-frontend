@@ -224,7 +224,7 @@ export class StaffComponent implements OnInit {
     const slot1: string = format(slotDate[0], 'MM/dd/yyyy HH:mm');
     const slot2: string = format(slotDate[1], 'MM/dd/yyyy HH:mm');
 
-    return slot1 + " - " + slot2;
+    return slot1 + ' - ' + slot2;
   }
 
   openDeactivateModal(staff: Staff) {

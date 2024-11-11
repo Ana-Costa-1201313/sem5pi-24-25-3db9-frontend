@@ -336,10 +336,13 @@
     />
 
     <span
-      class="p-float-label mt-4 mb-2"
+      class="p-float-label mt-4 mb-2 d-flex"
       formArrayName="availabilitySlots"
       [style]="{ minWidth: '60px', width: '50%' }"
-      *ngFor="let slot of editStaffForm.controls.availabilitySlots.controls"
+      *ngFor="
+        let slot of editStaffForm.controls.availabilitySlots.controls;
+        index as i
+      "
     >
       <p-calendar
         selectionMode="range"
@@ -348,10 +351,15 @@
         autoWidth="false"
         hideOnDateTimeSelect="false"
         [style]="{ minWidth: '60px', width: '100%' }"
+        [showButtonBar]="true"
       />
       <label for="availabilitySlots">Availability Slot</label>
     </span>
-    <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="addSlot()" />
+    <p-button
+      icon="pi pi-plus"
+      class="me-3 ms-3"
+      (click)="addAvailabilitySlotToEdit()"
+    />
 
     <p-button
       class="mt-4 d-block"
