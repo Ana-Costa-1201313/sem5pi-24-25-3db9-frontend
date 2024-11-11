@@ -71,6 +71,12 @@ export class StaffComponent implements OnInit {
     recruitmentYear: new FormControl(null, Validators.required),
   });
 
+  editStaffForm = new FormGroup({
+    phone: new FormControl(null, Validators.required),
+    specialization: new FormControl<string | null>(null),
+    availabilitySlots: new FormArray([new FormControl<Date[]>(null)]),
+  });
+
   constructor(
     private service: StaffService,
     private specService: SpecializationService
@@ -171,6 +177,10 @@ export class StaffComponent implements OnInit {
   openEditModal(staff: Staff): void {
     this.currentStaff = staff;
     this.showEdit = true;
+  }
+
+  editStaff(): void {
+    this.showEdit = false;
   }
 
   openDeactivateModal(staff: Staff) {
