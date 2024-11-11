@@ -277,7 +277,7 @@
         ><b>Availability Slots: </b>
         <ul class="ps-4">
           <li *ngFor="let slot of currentStaff?.availabilitySlots">
-            {{ slot }}
+            {{ showAvailabilitySlots(slot) }}
           </li>
         </ul>
       </label>
@@ -328,6 +328,7 @@
     <p-dropdown
       class="mt-4 d-block"
       formControlName="specialization"
+      placeholder="Specialization"
       [options]="specializationsNames"
       [showClear]="true"
       autoWidth="false"
@@ -358,7 +359,7 @@
       label="Submit"
       [disabled]="editStaffForm.invalid"
     />
-  </form>  
+  </form>
 </p-dialog>
 
 <p-dialog

@@ -25,6 +25,7 @@ import { CreateStaff } from '../../model/staff/createStaff.model';
 import { Staff } from '../../model/staff/staff.model';
 import { SpecializationService } from '../../services/specialization.service';
 import { StaffService } from '../../services/staff.service';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-staff',
@@ -185,15 +186,26 @@ export class StaffComponent implements OnInit {
     this.editStaffForm.controls.availabilitySlots.clear();
 
     this.currentStaff?.availabilitySlots.forEach((slot, index) => {
-      //para cada range string
-      this.addSlotToEdit(); //adicionar um field
-
-      //this.editStaffForm.get('availabilitySlots').setValue(this.createAvailabilitySlot(slot));         //por o valor antigo (date[]) nesse field
+      this.addAvailabilitySlotToEdit();
 
       this.editStaffForm.controls.availabilitySlots
         .at(index)
         .setValue(this.createAvailabilitySlot(slot));
     });
+  }
+
+  editStaff(): void {
+    this.showEdit = false;
+
+    this.editStaffForm.reset();
+    this.editStaffForm.controls.availabilitySlots.clear();
+    this.addAvailabilitySlotToEdit();
+  }
+
+  addAvailabilitySlotToEdit(): void {
+    const availabilitySlot = new FormControl<Date[]>(null);
+
+    this.editStaffForm.controls.availabilitySlots.push(availabilitySlot);
   }
 
   createAvailabilitySlot(avSlot: string): Date[] {
@@ -206,18 +218,13 @@ export class StaffComponent implements OnInit {
     return slotDate;
   }
 
-  editStaff(): void {
-    this.showEdit = false;
+  showAvailabilitySlots(slots: string): string {
+    const slotDate: Date[] = this.createAvailabilitySlot(slots);
 
-    this.editStaffForm.reset();
-    this.editStaffForm.controls.availabilitySlots.clear();
-    this.addSlotToEdit();
-  }
+    const slot1: string = format(slotDate[0], 'MM/dd/yyyy HH:mm');
+    const slot2: string = format(slotDate[1], 'MM/dd/yyyy HH:mm');
 
-  addSlotToEdit(): void {
-    const availabilitySlot = new FormControl<Date[]>(null);
-
-    this.editStaffForm.controls.availabilitySlots.push(availabilitySlot);
+    return slot1 + " - " + slot2;
   }
 
   openDeactivateModal(staff: Staff) {
