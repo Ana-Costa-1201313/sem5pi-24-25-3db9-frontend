@@ -27,8 +27,10 @@ export class OperationrequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getOperationRequestList().subscribe((op) => {
-      this.operationRequestList = op;
-      console.log(this.operationRequestList);
+      this.operationRequestList = op.map(opReq => ({
+        ...opReq
+      }));
+      console.log(this.operationRequestList)
     });
     this.filteredOperationRequestList = [...this.operationRequestList];
     this.matchModeOptions = [
