@@ -177,13 +177,30 @@ export class StaffComponent implements OnInit {
   openEditModal(staff: Staff): void {
     this.currentStaff = staff;
     this.showEdit = true;
+    this.editStaffForm.get('phone').setValue(this.currentStaff?.phone);
+    this.editStaffForm
+      .get('specialization')
+      .setValue(this.currentStaff?.specialization);
+
+    this.editStaffForm.controls.availabilitySlots.clear();
+
+    this.currentStaff?.availabilitySlots.forEach((slot) => {
+      this.addSlotToEdit();
+    });
   }
 
   editStaff(): void {
     this.showEdit = false;
 
+    this.editStaffForm.reset();
+    this.editStaffForm.controls.availabilitySlots.clear();
+    this.addSlotToEdit();
+  }
 
+  addSlotToEdit(): void {
+    const availabilitySlot = new FormControl<Date[]>(null);
 
+    this.editStaffForm.controls.availabilitySlots.push(availabilitySlot);
   }
 
   openDeactivateModal(staff: Staff) {
