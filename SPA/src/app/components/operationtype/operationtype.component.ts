@@ -14,6 +14,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CreateOperationType } from '../../model/operationType/CreateOperationType.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RequiredStaff } from '../../model/operationType/requiredStaff.model';
+import { Specialization } from '../../model/specialization.model';
+import { SpecializationService } from '../../services/specialization.service';
 
 @Component({
   selector: 'app-operationtype',
@@ -36,11 +38,15 @@ export class OperationtypeComponent implements OnInit {
   lazyEvent: any;
   message: Message[] = [];
   showCreate = false;
+  specializations: Specialization[] = [];
+  specializationsNames: string[] = [];
+
 
   createOperationTypeForm: FormGroup;
 
   constructor(
     private service: OperationTypeService,
+    private specService: SpecializationService,
     private fb: FormBuilder  // Injecting FormBuilder here
   ) {
     // Initializing the form with FormBuilder
@@ -68,6 +74,20 @@ export class OperationtypeComponent implements OnInit {
     this.matchModeOptions = [
       { label: 'Contains', value: FilterMatchMode.CONTAINS }
     ];
+
+    this.specService.getSpecializationList().subscribe((s) => {
+      this.specializations = s;
+
+
+      console.log(this.specializations);
+
+      const names: string[] = [];
+
+      this.specializations.forEach((spec) => names.push(spec.name));
+      this.specializationsNames = names;
+
+      console.log(this.specializationsNames);
+    });
   }
 
   get requiredStaff(): FormArray {

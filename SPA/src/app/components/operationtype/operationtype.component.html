@@ -101,7 +101,7 @@
     (click)="deactivate = false" />
 </p-dialog>
 
-<p-dialog header="Staff" [(visible)]="showCreate" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
+<p-dialog header="Staff" [(visible)]="showCreate" [modal]="true" [style]="{ width: '26vw' }" [draggable]="false"
   [resizable]="false">
   <ng-template pTemplate="header">
     <h4 class="fw-bold">Create Operation Type</h4>
@@ -109,14 +109,14 @@
   <form [formGroup]="createOperationTypeForm" (ngSubmit)="addOperationType()">
 
     <span class="p-float-label mt-4">
-      <input pInputText formControlName="name" autoWidth="false" [style]="{ minWidth: '60px', width: '60%'}" />
+      <input pInputText formControlName="name" autoWidth="false" />
       <label for="name">Name</label>
     </span>
 
     <span class="p-float-label mt-4">
       <p-inputNumber inputId="integeronly" formControlName="anesthesiaPatientPreparationInMinutes" autoWidth="false"
         [min]="1" />
-      <label for="anesthesiaPatientPreparationInMinutes">Anesthesia/Preparation duration</label>
+      <label for="anesthesiaPatientPreparationInMinutes">Anesthesia duration</label>
     </span>
 
     <span class="p-float-label mt-4">
@@ -136,24 +136,28 @@
       <div *ngFor="let staff of requiredStaff.controls; let i = index" [formGroupName]="i"
         class="d-flex align-items-center gap-2 mb-4 mt-4">
 
-        <span class="p-float-label" style="flex: 0.5;">
+        <span class="p-float-label">
           <p-inputNumber formControlName="total" placeholder="Total" [min]="1" />
           <label for="total">Total</label>
         </span>
 
-        <span class="p-float-label" style="flex: 1;">
+        <!-- <span class="p-float-label">
           <input pInputText formControlName="specialization" placeholder="Specialization" />
           <label for="specialization">Specialization</label>
-        </span>
+        </span> -->
+
+        <p-dropdown class="d-block" placeholder="Specialization" formControlName="specialization"
+          [options]="specializationsNames" [showClear]="true" autoWidth="false"
+          [style]="{ minWidth: '300px', maxWidth: '300px' }" />
 
         <button pButton icon="pi pi-times" class="p-button-danger p-button-sm" type="button"
           (click)="removeRequiredStaff(i)" aria-label="Remove"></button>
       </div>
 
-      <button pButton icon="pi pi-plus" class="p-button-secondary mt-4" type="button" (click)="addRequiredStaff()"
-        label="Add Staff"></button>
+      <button pButton icon="pi pi-plus" class="p-button-secondary" type="button" (click)="addRequiredStaff()"
+        label="Add Required Staff"></button>
+      <p-button class="mt-4 d-block" type="Submit" label="Submit" [disabled]="createOperationTypeForm.invalid" />
     </div>
-
 
   </form>
 </p-dialog>
