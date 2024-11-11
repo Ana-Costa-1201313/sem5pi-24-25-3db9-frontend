@@ -26,15 +26,19 @@ export class OperationrequestComponent implements OnInit {
   constructor(private service: OperationRequestService) { }
 
   ngOnInit(): void {
+    this.service.getOperationRequestList().subscribe((op) => {
+      this.operationRequestList = op;
+      console.log(this.operationRequestList);
+    });
     this.filteredOperationRequestList = [...this.operationRequestList];
     this.matchModeOptions = [
       { label: 'Contains', value: FilterMatchMode.CONTAINS }
     ]
   };
 
-openDetailsModal(opRequest: OperationRequest): void {
-  this.currentOpRequest = opRequest;
-  this.showDetails = true;
-}
+  openDetailsModal(opRequest: OperationRequest): void {
+    this.currentOpRequest = opRequest;
+    this.showDetails = true;
+  }
 
 }

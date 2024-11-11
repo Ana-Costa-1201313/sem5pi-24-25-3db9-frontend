@@ -1,5 +1,5 @@
 export type OperationRequest = {
-    Id: string | null |undefined;
+    Id: string | null | undefined;
     OpTypeName: string | null | undefined;
     OpTypeId: string | null | undefined;
     Deadline: string | null | undefined;
