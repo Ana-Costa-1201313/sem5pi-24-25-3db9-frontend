@@ -165,11 +165,9 @@ export class OperationtypeComponent implements OnInit {
           },
         ];
 
-        // Reset form and clear requiredStaff FormArray
         this.createOperationTypeForm.reset();
         this.requiredStaff.clear();
 
-        // Refresh the operationTypeList to include the newly added item
         this.service.getOperationTypeList().subscribe((op) => {
           this.operationTypeList = op.map(opType => ({
             ...opType,

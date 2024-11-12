@@ -3,21 +3,24 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OperationtypeComponent } from './operationtype.component';
 import { OperationTypeService } from '../../services/operationType.service';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 import { OperationType } from '../../model/operationType/operationType.model';
-import { of } from 'rxjs';
-
+import { of, throwError } from 'rxjs';
+import { SpecializationService } from '../../services/specialization.service';
+import { Specialization } from '../../model/specialization.model';
 
 describe('OperationtypeComponent', () => {
   let component: OperationtypeComponent;
   let fixture: ComponentFixture<OperationtypeComponent>;
   let service: OperationTypeService;
+  let specService: SpecializationService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [OperationtypeComponent],
       providers: [
         OperationTypeService,
+        SpecializationService,
         provideHttpClientTesting(),
         provideHttpClient(),
       ],
@@ -26,6 +29,7 @@ describe('OperationtypeComponent', () => {
     fixture = TestBed.createComponent(OperationtypeComponent);
     component = fixture.componentInstance;
     service = fixture.debugElement.injector.get(OperationTypeService);
+    specService = fixture.debugElement.injector.get(SpecializationService);
     fixture.detectChanges();
   });
 
@@ -47,8 +51,8 @@ describe('OperationtypeComponent', () => {
     expect(component.showDetails).toBe(true);
   });
 
-  it('should populate operationTypeList and filteredOperationTypeList in ngOnInit', () => {
-    const mockData: OperationType[] = [
+    it('should populate operationTypeList, filteredOperationTypeList, specializations, and specializationsNames in ngOnInit', () => {
+    const mockOperationTypes: OperationType[] = [
       {
         id: '1',
         name: 'Surgery A',
@@ -59,21 +63,30 @@ describe('OperationtypeComponent', () => {
         active: true,
       }
     ];
-
-    spyOn(service, 'getOperationTypeList').and.returnValue(of(mockData));
-
+  
+    const mockSpecializations: Specialization[] = [
+      { name: 'Nurse' , active: true},
+      { name: 'Surgeon', active: true }
+    ];
+  
+    spyOn(service, 'getOperationTypeList').and.returnValue(of(mockOperationTypes));
+    spyOn(specService, 'getSpecializationList').and.returnValue(of(mockSpecializations));
+  
     component.ngOnInit();
-
+  
     expect(component.operationTypeList).toEqual([
       {
-        ...mockData[0],
-        specialization: 'Nurse',
+        ...mockOperationTypes[0],
+        specialization: 'Nurse',  
       }
     ]);
-
+  
     expect(component.filteredOperationTypeList).toEqual(component.operationTypeList);
+  
+    expect(component.specializations).toEqual(mockSpecializations);
+  
+    expect(component.specializationsNames).toEqual(['Nurse', 'Surgeon']);
   });
-
 
   it('should open deactivation confirmation', () => {
     const opType: OperationType = {
@@ -143,6 +156,134 @@ describe('OperationtypeComponent', () => {
     component.deactivateOperationType();
 
     expect(service.deactivateOperationType).toHaveBeenCalledTimes(0);
-  })
+  });
+
+  it('should open create modal', () => {
+    component.openCreateModal();
+
+    expect(component.showCreate).toBeTrue();
+  });
+
+  it('should add operation type', () => {
+    spyOn(service, 'addOperationType').and.returnValue(of({} as any));
+    spyOn(component, 'addRequiredStaff');
+
+
+    component.createOperationTypeForm
+      .get('requiredStaff');
+
+    component.addOperationType();
+
+    expect(component.showCreate).toBeFalse();
+  });
+
+  it('should send operation type', () => {
+    spyOn(service, 'addOperationType').and.returnValue(of({} as any));
+    spyOn(component, 'addRequiredStaff').and.callThrough();
+
+    component.createOperationTypeForm.setValue({
+      name: 'name',
+      anesthesiaPatientPreparationInMinutes: 20,
+      surgeryInMinutes: 30,
+      cleaningInMinutes: 10,
+      requiredStaff: []
+    });
+
+    component.addRequiredStaff();
+    component.requiredStaff.at(0).setValue({
+      specialization: 'spec',
+      total: 2
+    });
+
+    const expectedRequest = {
+      name: 'name',
+      anesthesiaPatientPreparationInMinutes: 20,
+      surgeryInMinutes: 30,
+      cleaningInMinutes: 10,
+      requiredStaff: [
+        {
+          specialization: 'spec',
+          total: 2
+        }
+      ]
+    };
+
+    component.addOperationType();
+
+    expect(service.addOperationType).toHaveBeenCalledOnceWith(expectedRequest);
+  });
+
+  it('should add required staff', () => {
+  component.addRequiredStaff();
+
+  expect(component.requiredStaff.length).toBe(1);
+});
+
+
+
+  it('should send error 500', () => {
+    const error: HttpErrorResponse = { status: 500 } as any;
+
+    component.onFailure(error);
+
+    expect(component.message).toEqual([
+      { severity: 'error', summary: 'Failure!', detail: 'Server error' },
+    ]);
+  });
+
+  it('should send error 400', () => {
+    const error: HttpErrorResponse = { status: 400, error: { message: 'abc' } } as any;
+
+    component.onFailure(error);
+
+    expect(component.message).toEqual([
+      { severity: 'error', summary: 'Failure!', detail: 'abc' },
+    ]);
+  });
+
+  it('should send error adding operation type', () => {
+    spyOn(service, 'addOperationType').and.returnValue(
+      throwError(() => ({
+        status: 400,
+        error: { message: 'abc' },
+      }))
+    );
+
+    component.createOperationTypeForm.setValue({
+      name: 'Test Operation',
+      anesthesiaPatientPreparationInMinutes: 20,
+      surgeryInMinutes: 30,
+      cleaningInMinutes: 10,
+      requiredStaff: []
+    });
+
+    component.addRequiredStaff();
+    component.requiredStaff.at(0).setValue({
+      specialization: 'spec',
+      total: 2,
+    });
+
+    component.addOperationType();
+
+    expect(component.message).toEqual([
+      { severity: 'error', summary: 'Failure!', detail: 'abc' },
+    ]);
+  });
+
+  it('should remove required staff at specified index', () => {
+    component.addRequiredStaff();
+    component.addRequiredStaff();
+  
+    expect(component.requiredStaff.length).toBe(2);
+  
+    component.removeRequiredStaff(0);
+  
+    expect(component.requiredStaff.length).toBe(1);
+  });
+  
+
+
+  
+
 
 });
