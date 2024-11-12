@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { CreateStaff } from '../model/staff/createStaff.model';
 import { Staff } from '../model/staff/staff.model';
+import { EditStaff } from '../model/staff/editStaff.model';
 
 @Injectable({ providedIn: 'root' })
 export class StaffService {
@@ -49,8 +50,8 @@ export class StaffService {
     );
   }
 
-  editStaff(staff: CreateStaff): Observable<Staff> {
-    return this.http.put<Staff>(this.url, staff);
+  editStaff(staffId: string, staff: EditStaff): Observable<Staff> {
+    return this.http.put<Staff>(`${this.url}/${staffId}`, staff);
   }
 
   deactivateStaff(staffId: string): Observable<Staff> {

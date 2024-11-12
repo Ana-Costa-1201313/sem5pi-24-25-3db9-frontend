@@ -26,6 +26,7 @@ import { Staff } from '../../model/staff/staff.model';
 import { SpecializationService } from '../../services/specialization.service';
 import { StaffService } from '../../services/staff.service';
 import { format } from 'date-fns';
+import { EditStaff } from '../../model/staff/editStaff.model';
 
 @Component({
   selector: 'app-staff',
@@ -197,9 +198,48 @@ export class StaffComponent implements OnInit {
   editStaff(): void {
     this.showEdit = false;
 
-    this.editStaffForm.reset();
-    this.editStaffForm.controls.availabilitySlots.clear();
-    this.addAvailabilitySlotToEdit();
+    if (this.currentStaff?.id == null) {
+      return;
+    }
+
+    const availabilitySlotsIso: string[] = [];
+
+    this.editStaffForm.get('availabilitySlots').value.forEach((slot) => {
+      if (slot != null) {
+        availabilitySlotsIso.push(
+          slot[0].toISOString() + '/' + slot[1].toISOString()
+        );
+      }
+    });
+
+    const request: EditStaff = {
+      ...this.editStaffForm.value,
+
+      id: this.currentStaff.id,
+
+      phone: this.editStaffForm.get('phone').value.toString(),
+
+      availabilitySlots: availabilitySlotsIso,
+    };
+
+    this.service.editStaff(this.currentStaff.id, request).subscribe({
+      next: () => {
+        this.loadStaffLazy(this.lazyEvent);
+        this.message = [
+          {
+            severity: 'success',
+            summary: 'Success!',
+            detail: 'Your Staff Profile was edited with success',
+          },
+        ];
+        this.editStaffForm.reset();
+        this.editStaffForm.controls.availabilitySlots.clear();
+        this.addAvailabilitySlotToEdit();
+      },
+      error: (error) => {
+        this.onFailure(error);
+      },
+    });
   }
 
   addAvailabilitySlotToEdit(): void {
