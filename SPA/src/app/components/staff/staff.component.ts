@@ -186,13 +186,17 @@ export class StaffComponent implements OnInit {
 
     this.editStaffForm.controls.availabilitySlots.clear();
 
-    this.currentStaff?.availabilitySlots.forEach((slot, index) => {
-      this.addAvailabilitySlotToEdit();
+    if (this.currentStaff?.availabilitySlots.length != 0) {
+      this.currentStaff?.availabilitySlots.forEach((slot, index) => {
+        this.addAvailabilitySlotToEdit();
 
-      this.editStaffForm.controls.availabilitySlots
-        .at(index)
-        .setValue(this.createAvailabilitySlot(slot));
-    });
+        this.editStaffForm.controls.availabilitySlots
+          .at(index)
+          .setValue(this.createAvailabilitySlot(slot));
+      });
+    } else {
+      this.addAvailabilitySlotToEdit();
+    }
   }
 
   editStaff(): void {
