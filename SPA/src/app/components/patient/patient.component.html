@@ -152,14 +152,6 @@
       <input pInputText type="text" id="fullName" [(ngModel)]="editingPatient.fullName" name="fullName" required />
     </div>
     <div class="form-group">
-      <label for="gender">Gender:</label>
-      <input pInputText type="text" id="gender" [(ngModel)]="editingPatient.gender" name="gender" />
-    </div>
-    <div class="form-group">
-      <label for="dateOfBirth">Date of Birth:</label>
-      <input pInputText type="date" id="dateOfBirth" [(ngModel)]="editingPatient.dateOfBirth" name="dateOfBirth" required />
-    </div>
-    <div class="form-group">
       <label for="email">Email:</label>
       <input pInputText type="email" id="email" [(ngModel)]="editingPatient.email" name="email" required />
     </div>
@@ -170,6 +162,10 @@
     <div class="form-group">
       <label for="emergencyContact">Emergency Contact:</label>
       <input pInputText type="text" id="emergencyContact" [(ngModel)]="editingPatient.emergencyContact" name="emergencyContact" />
+    </div>
+    <div class="form-group">
+      <label for="allergies">Allergies:</label>
+      <input pInputText type="text" id="allergies" [(ngModel)]="editingPatient.allergies" name="allergies" placeholder="Separate allergies with commas" />
     </div>
 
     <div class="text-center mt-4">

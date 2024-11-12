@@ -3,6 +3,7 @@ import { environment } from "../../environments/environment";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Patient } from "../model/patient.model";
+import { EditPatient } from "../model/editPatient.model";
 
 
 @Injectable({providedIn: 'root'})
@@ -18,7 +19,7 @@ export class PatientService{
         return this.http.post<Patient>(this.url, patient);
     }
 
-    updatePatient(patient: Patient): Observable<Patient> {
-        return this.http.patch<Patient>(`${this.url}/${patient.id}`, patient);
-    }
+    updatePatient(id: string, patient: EditPatient): Observable<Patient> {
+        return this.http.patch<Patient>(`${this.url}/${id}`, patient);
+      }
 }
