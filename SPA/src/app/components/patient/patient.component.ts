@@ -24,7 +24,7 @@ export class PatientComponent implements OnInit {
   showCreate: boolean = false;
   showEdit: boolean = false;
   newPatient: Partial<Patient> = {};
-  editingPatient: Patient | null = null;
+  editingPatient: Patient = {} as Patient;
   matchModeOptions: SelectItem[] = [];
 
   constructor(private patientService: PatientService) { }
@@ -51,6 +51,7 @@ export class PatientComponent implements OnInit {
     this.currentPatient = patient;
     this.showDetails = true;
   }
+
   openEditModal(patient: Patient){
     this.editingPatient = {...patient};
     this.showEdit = true;
@@ -68,10 +69,22 @@ export class PatientComponent implements OnInit {
       }
     )
   }
-
-  submitEditedPatient(){
-    if(this.editingPatient){
-      this.patientService
-    }
+ 
+  submitEditPatient(): void {
+    this.patientService.updatePatient(this.editingPatient).subscribe(
+      (updatedPatient) => {
+        const index = this.patientList.findIndex(p => p.id === updatedPatient.id);
+        if (index !== -1) {
+          this.patientList[index] = updatedPatient;
+          this.filteredPatientList = [...this.patientList];
+        }
+        this.showEdit = false;
+      },
+      (error) => {
+        console.error('Erro ao atualizar o patient profile', error);
+      }
+    );
   }
+  
+  
 }

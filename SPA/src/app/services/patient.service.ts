@@ -17,5 +17,8 @@ export class PatientService{
     createPatient(patient: Partial<Patient>): Observable<Patient>{
         return this.http.post<Patient>(this.url, patient);
     }
-    
+
+    updatePatient(patient: Patient): Observable<Patient> {
+        return this.http.patch<Patient>(`${this.url}/${patient.id}`, patient);
+    }
 }
