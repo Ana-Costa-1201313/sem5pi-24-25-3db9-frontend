@@ -51,7 +51,7 @@ describe('OperationtypeComponent', () => {
     expect(component.showDetails).toBe(true);
   });
 
-    it('should populate operationTypeList, filteredOperationTypeList, specializations, and specializationsNames in ngOnInit', () => {
+  it('should populate operationTypeList, filteredOperationTypeList, specializations, and specializationsNames in ngOnInit', () => {
     const mockOperationTypes: OperationType[] = [
       {
         id: '1',
@@ -63,28 +63,28 @@ describe('OperationtypeComponent', () => {
         active: true,
       }
     ];
-  
+
     const mockSpecializations: Specialization[] = [
-      { name: 'Nurse' , active: true},
+      { name: 'Nurse', active: true },
       { name: 'Surgeon', active: true }
     ];
-  
+
     spyOn(service, 'getOperationTypeList').and.returnValue(of(mockOperationTypes));
     spyOn(specService, 'getSpecializationList').and.returnValue(of(mockSpecializations));
-  
+
     component.ngOnInit();
-  
+
     expect(component.operationTypeList).toEqual([
       {
         ...mockOperationTypes[0],
-        specialization: 'Nurse',  
+        specialization: 'Nurse',
       }
     ]);
-  
+
     expect(component.filteredOperationTypeList).toEqual(component.operationTypeList);
-  
+
     expect(component.specializations).toEqual(mockSpecializations);
-  
+
     expect(component.specializationsNames).toEqual(['Nurse', 'Surgeon']);
   });
 
@@ -214,10 +214,22 @@ describe('OperationtypeComponent', () => {
   });
 
   it('should add required staff', () => {
-  component.addRequiredStaff();
+    component.addRequiredStaff();
 
-  expect(component.requiredStaff.length).toBe(1);
-});
+    expect(component.requiredStaff.length).toBe(1);
+  });
+
+  // it('should add required staff', () => {
+  //   // Ensure requiredStaff array is accessed through the form's get method
+  //   const requiredStaffArray = component.requiredStaff;
+  
+  //   // Add required staff to the form array
+  //   component.addRequiredStaff();
+  
+  //   // Check that the requiredStaff form array length has increased to 1
+  //   expect(requiredStaffArray.length).toBe(1);
+  // });
+  
 
 
 
@@ -273,17 +285,17 @@ describe('OperationtypeComponent', () => {
   it('should remove required staff at specified index', () => {
     component.addRequiredStaff();
     component.addRequiredStaff();
-  
+
     expect(component.requiredStaff.length).toBe(2);
-  
+
     component.removeRequiredStaff(0);
-  
+
     expect(component.requiredStaff.length).toBe(1);
   });
-  
 
 
-  
+
+
 
 
 });
