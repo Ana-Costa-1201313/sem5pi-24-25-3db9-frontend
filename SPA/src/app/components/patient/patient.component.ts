@@ -21,6 +21,7 @@ export class PatientComponent implements OnInit {
   filteredPatientList: Patient[] = [];
   currentPatient: Patient | null = null;
   showDetails: boolean = false;
+  showCreate: boolean = false;
   matchModeOptions: SelectItem[] = [];
 
   constructor(private patientService: PatientService) { }
@@ -34,13 +35,15 @@ export class PatientComponent implements OnInit {
       }));
       this.filteredPatientList = [...this.patientList];
     });
-
+   
     // Opções de filtro
     this.matchModeOptions = [
       { label: 'Contains', value: FilterMatchMode.CONTAINS }
     ];
   }
-
+  openCreateModal(): void {
+    this.showCreate = true;
+  }
   openDetailsModal(patient: Patient): void {
     this.currentPatient = patient;
     this.showDetails = true;
