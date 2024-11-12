@@ -14,4 +14,8 @@ export class PatientService{
     getPatientList(): Observable<Patient[]>{
         return this.http.get<Patient[]>(this.url);
     }
+    createPatient(patient: Partial<Patient>): Observable<Patient>{
+        return this.http.post<Patient>(this.url, patient);
+    }
+    
 }

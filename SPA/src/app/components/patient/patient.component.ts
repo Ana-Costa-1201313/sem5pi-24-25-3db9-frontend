@@ -22,6 +22,9 @@ export class PatientComponent implements OnInit {
   currentPatient: Patient | null = null;
   showDetails: boolean = false;
   showCreate: boolean = false;
+  showEdit: boolean = false;
+  newPatient: Partial<Patient> = {};
+  editingPatient: Patient | null = null;
   matchModeOptions: SelectItem[] = [];
 
   constructor(private patientService: PatientService) { }
@@ -31,21 +34,44 @@ export class PatientComponent implements OnInit {
     this.patientService.getPatientList().subscribe((patients) => {
       this.patientList = patients.map(patient => ({
         ...patient,
-        dateOfBirth: new Date(patient.dateOfBirth), // ou outro formato desejado
+        dateOfBirth: new Date(patient.dateOfBirth), 
       }));
       this.filteredPatientList = [...this.patientList];
     });
-   
-    // Opções de filtro
     this.matchModeOptions = [
       { label: 'Contains', value: FilterMatchMode.CONTAINS }
     ];
   }
+
   openCreateModal(): void {
+    this.newPatient = {};
     this.showCreate = true;
   }
   openDetailsModal(patient: Patient): void {
     this.currentPatient = patient;
     this.showDetails = true;
+  }
+  openEditModal(patient: Patient){
+    this.editingPatient = {...patient};
+    this.showEdit = true;
+  }
+
+  submitNewPatient(): void{
+    this.patientService.createPatient(this.newPatient).subscribe(
+      (newPatient) => {
+        this.patientList.push(newPatient);
+        this.filteredPatientList = [...this.patientList];
+        this.showCreate = false;
+      },
+      (error) => {
+        console.error('Erro ao criar o patient profile',error);
+      }
+    )
+  }
+
+  submitEditedPatient(){
+    if(this.editingPatient){
+      this.patientService
+    }
   }
 }
