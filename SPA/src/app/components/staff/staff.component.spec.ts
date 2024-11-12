@@ -3,12 +3,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Role } from '../../model/role.model';
-import { Staff } from '../../model/staff.model';
 import { StaffService } from '../../services/staff.service';
 import { StaffComponent } from './staff.component';
 import { of, throwError } from 'rxjs';
 import { Specialization } from '../../model/specialization.model';
 import { SpecializationService } from '../../services/specialization.service';
+import { Staff } from '../../model/staff/staff.model';
 
 describe('StaffComponent', () => {
   let component: StaffComponent;
@@ -73,7 +73,7 @@ describe('StaffComponent', () => {
       licenseNumber: 123,
       email: 'email',
       phone: '999999999',
-      specialization: spec,
+      specialization: 'spec',
       availabilitySlots: [''],
       role: Role.Nurse,
       mechanographicNum: 'N123',
@@ -130,7 +130,7 @@ describe('StaffComponent', () => {
       licenseNumber: 123,
       email: 'email',
       phone: '999999999',
-      specialization: spec,
+      specialization: 'spec',
       availabilitySlots: [''],
       role: Role.Nurse,
       mechanographicNum: 'N123',
@@ -230,7 +230,7 @@ describe('StaffComponent', () => {
     expect(service.addStaff).toHaveBeenCalledOnceWith(request);
   });
 
-  it('add slot', () => {
+  it('should add slot', () => {
     component.addSlot();
 
     expect(
@@ -249,7 +249,10 @@ describe('StaffComponent', () => {
   });
 
   it('should send error 400', () => {
-    const error: HttpErrorResponse = { status: 400, error: {message: 'abc'} } as any;
+    const error: HttpErrorResponse = {
+      status: 400,
+      error: { message: 'abc' },
+    } as any;
 
     component.onFailure(error);
 
@@ -277,5 +280,72 @@ describe('StaffComponent', () => {
     expect(component.message).toEqual([
       { severity: 'error', summary: 'Failure!', detail: 'abc' },
     ]);
+  });
+
+  it('should open edit modal', () => {
+    const staff = component.currentStaff = {
+      id: 'id',
+      name: 'name',
+      phone: '999999999',
+      specialization: 'spec',
+      availabilitySlots: [],
+    } as any;
+
+    component.openEditModal(staff);
+
+    expect(component.showEdit).toBeTrue();
+  });
+
+  it('should edit staff', () => {
+    spyOn(service, 'editStaff').and.returnValue(of({} as any));
+    spyOn(component, 'loadStaffLazy');
+    spyOn(component, 'addAvailabilitySlotToEdit');
+
+    component.editStaffForm.get('phone').setValue('');
+
+    component.editStaffForm
+      .get('availabilitySlots')
+      .setValue([[new Date(), new Date()]]);
+
+    component.editStaff();
+
+    expect(component.showEdit).toBeFalse();
+  });
+
+  it('should send edited staff', () => {
+    component.currentStaff = {
+      id: 'id',
+      name: 'name',
+      phone: '999999999',
+      specialization: 'spec',
+    } as any;
+
+    spyOn(service, 'editStaff').and.returnValue(of({} as any));
+    spyOn(component, 'loadStaffLazy');
+    spyOn(component, 'addAvailabilitySlotToEdit');
+
+    const date1 = new Date();
+    const date2 = new Date();
+
+    component.editStaffForm.setValue({
+      phone: 999999993,
+      specialization: 'spec2',
+      availabilitySlots: [[date1, date2]],
+    });
+
+    const request = {
+      id: 'id',
+      ...component.editStaffForm.value,
+      phone: component.editStaffForm.get('phone').value.toString(),
+
+      availabilitySlots: [date1.toISOString() + '/' + date2.toISOString()],
+    };
+
+    component.editStaff();
+
+    expect(service.editStaff).toHaveBeenCalledOnceWith(
+      component.currentStaff.id,
+      request
+    );
   });
 });

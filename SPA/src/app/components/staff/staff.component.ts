@@ -289,7 +289,7 @@ export class StaffComponent implements OnInit {
 
     this.message = [
       {
-        severity: 'info',
+        severity: 'success',
         summary: 'Success!',
         detail: 'The Staff Profile was deactivated with success',
       },
