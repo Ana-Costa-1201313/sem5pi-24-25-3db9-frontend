@@ -101,7 +101,7 @@
     (click)="deactivate = false" />
 </p-dialog>
 
-<p-dialog header="Staff" [(visible)]="showCreate" [modal]="true" [style]="{ width: '26vw' }" [draggable]="false"
+<p-dialog header="OperationType" [(visible)]="showCreate" [modal]="true" [style]="{ width: '26vw' }" [draggable]="false"
   [resizable]="false">
   <ng-template pTemplate="header">
     <h4 class="fw-bold">Create Operation Type</h4>
@@ -140,11 +140,6 @@
           <p-inputNumber formControlName="total" placeholder="Total" [min]="1" />
           <label for="total">Total</label>
         </span>
-
-        <!-- <span class="p-float-label">
-          <input pInputText formControlName="specialization" placeholder="Specialization" />
-          <label for="specialization">Specialization</label>
-        </span> -->
 
         <p-dropdown class="d-block" placeholder="Specialization" formControlName="specialization"
           [options]="specializationsNames" [showClear]="true" autoWidth="false"
