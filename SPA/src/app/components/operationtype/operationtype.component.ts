@@ -242,5 +242,42 @@ export class OperationtypeComponent implements OnInit {
     this.updateRequiredStaff.removeAt(index);
   }
 
+  updateOperationType(): void {
+    if (this.updateOperationTypeForm.invalid) return;
+  
+    this.showUpdate = false;
+  
+    const updatedData: OperationType = {
+      ...this.currentOpType,
+      ...this.updateOperationTypeForm.value,
+      requiredStaff: this.updateOperationTypeForm.value.requiredStaff as RequiredStaff[]
+    };
+  
+    this.service.updateOperationType(updatedData).subscribe({
+      next: () => {
+        // Success message
+        this.message = [
+          {
+            severity: 'success',
+            summary: 'Success!',
+            detail: 'Operation Type updated successfully!',
+          },
+        ];
+  
+        // Refresh the operation type list
+        this.service.getOperationTypeList().subscribe((op) => {
+          this.operationTypeList = op.map(opType => ({
+            ...opType,
+            specialization: opType.requiredStaff
+              ?.map(staff => staff.specialization)
+              .filter(Boolean)
+              .join(', ')
+          }));
+          this.filteredOperationTypeList = [...this.operationTypeList];
+        });
+      },
+      error: (error) => this.onFailure(error),
+    });
+  }
 
 }
