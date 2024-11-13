@@ -21,4 +21,8 @@ export class OperationTypeService {
   addOperationType(opType: OperationType): Observable<OperationType>{
     return this.http.post<OperationType>(this.url, opType);
   }
+
+  updateOperationType(opType: OperationType): Observable<OperationType>{
+    return this.http.put<OperationType>(`${this.url}/${opType.id}`, opType);
+  } 
 }

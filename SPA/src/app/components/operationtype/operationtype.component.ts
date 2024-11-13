@@ -38,11 +38,13 @@ export class OperationtypeComponent implements OnInit {
   lazyEvent: any;
   message: Message[] = [];
   showCreate = false;
+  showUpdate = false;
   specializations: Specialization[] = [];
   specializationsNames: string[] = [];
 
 
   createOperationTypeForm: FormGroup;
+  updateOperationTypeForm: FormGroup;
 
   constructor(
     private service: OperationTypeService,
@@ -57,6 +59,15 @@ export class OperationtypeComponent implements OnInit {
       cleaningInMinutes: [null, Validators.required],
       requiredStaff: this.fb.array([])  // FormArray for dynamic required staff
     });
+
+    this.updateOperationTypeForm = this.fb.group({
+      name: ['', Validators.required],
+      anesthesiaPatientPreparationInMinutes: [null, Validators.required],
+      surgeryInMinutes: [null, Validators.required],
+      cleaningInMinutes: [null, Validators.required],
+      requiredStaff: this.fb.array([])  // FormArray for dynamic required staff
+    })
+
   }
 
   ngOnInit(): void {
@@ -109,6 +120,11 @@ export class OperationtypeComponent implements OnInit {
   openDeactivateModal(opType: OperationType): void {
     this.currentOpType = opType;
     this.deactivate = true;
+  }
+
+  openUpdateModal(opType: OperationType):void{
+    this.currentOpType = opType;
+    this.showUpdate = true;
   }
 
   deactivateOperationType(): void {
@@ -192,4 +208,10 @@ export class OperationtypeComponent implements OnInit {
       },
     ];
   }
+
+updateOperationType():void{
+
+
+}
+
 }
