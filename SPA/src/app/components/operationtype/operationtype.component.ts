@@ -88,7 +88,7 @@ export class OperationtypeComponent implements OnInit {
 
     this.specService.getSpecializationList().subscribe((s) => {
       this.specializations = s;
-      
+
       const names: string[] = [];
 
       this.specializations.forEach((spec) => names.push(spec.name));
@@ -120,11 +120,6 @@ export class OperationtypeComponent implements OnInit {
   openDeactivateModal(opType: OperationType): void {
     this.currentOpType = opType;
     this.deactivate = true;
-  }
-
-  openUpdateModal(opType: OperationType):void{
-    this.currentOpType = opType;
-    this.showUpdate = true;
   }
 
   deactivateOperationType(): void {
@@ -209,9 +204,32 @@ export class OperationtypeComponent implements OnInit {
     ];
   }
 
-updateOperationType():void{
+  openUpdateModal(opType: OperationType): void {
+    this.currentOpType = opType;
+    this.showUpdate = true;
+
+    this.updateOperationTypeForm.reset();
+    this.updateRequiredStaff.clear();
+
+    this.updateOperationTypeForm.patchValue({
+      name: opType.name,
+      anesthesiaPatientPreparationInMinutes: opType.anesthesiaPatientPreparationInMinutes,
+      surgeryInMinutes: opType.surgeryInMinutes,
+      cleaningInMinutes: opType.cleaningInMinutes,
+    });
+
+    opType.requiredStaff.forEach(staff => {
+      this.updateRequiredStaff.push(this.fb.group({
+        specialization: [staff.specialization, Validators.required],
+        total: [staff.total, [Validators.required, Validators.min(1)]]
+      }));
+    });
+  }
+
+  get updateRequiredStaff(): FormArray {
+    return this.updateOperationTypeForm.get('requiredStaff') as FormArray;
+  }
 
 
-}
 
 }

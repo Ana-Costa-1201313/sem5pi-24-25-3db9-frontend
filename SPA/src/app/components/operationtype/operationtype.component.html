@@ -190,7 +190,6 @@
     <div formArrayName="requiredStaff">
       <h5 class="mt-3">Required Staff</h5>
     
-      <!-- Loop through requiredStaff form array -->
       <div *ngFor="let staff of updateRequiredStaff.controls; let i = index" [formGroupName]="i"
         class="d-flex align-items-center gap-2 mb-4 mt-4">
     
