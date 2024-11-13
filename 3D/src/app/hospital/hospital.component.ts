@@ -5,6 +5,8 @@ import RoomComponent from '../room/room.component';
 import { hospitalFloorData, wallData, wallWoodPanelData, doorData, roomFloorData, lampData, shibaData, humanData, instrumentsData, tableData, roomsJsonData } from "../defaul-data/defaul-data.component";
 import { SpriteComponent } from '../sprite/sprite.component';
 import FloorComponent from '../floor/floor.component';
+import { AppointmentService } from '../service/appointment.service';
+import { Appointment } from '../model/appointment.model';
 
 @Component({
   selector: 'app-hospital',
@@ -14,6 +16,7 @@ import FloorComponent from '../floor/floor.component';
 export class HospitalComponent implements OnInit {
   @ViewChild('myCanvas') private canvasRef!: ElementRef;
   private rooms: RoomComponent[] = [];
+  apList: Appointment[] = [];
 
   roomsJson: any;
 
@@ -155,7 +158,16 @@ export class HospitalComponent implements OnInit {
     }
   }
 
+  constructor(private service: AppointmentService) { }
+
   ngOnInit(): void {
+
+    this.service.getAppointmentList().subscribe((ap) => {
+      
+      console.log(ap);
+      
+    });
+
     fetch('/assets/json/rooms.json')
       .then(response => response.json())
       .then(data => {
