@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { EditStaffDto } from '../model/staff/dto/editStaffDto';
+import { EditStaffDto } from '../model/staff/editStaffDto';
 import { Staff } from '../model/staff/staff.model';
 import { CreateStaffDto } from '../model/staff/dto/createStaffDto';
 
