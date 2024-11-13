@@ -9,6 +9,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { format } from 'date-fns';
 import { FilterMatchMode, Message, SelectItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -21,12 +22,11 @@ import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
 import { Role } from '../../model/role.model';
 import { Specialization } from '../../model/specialization.model';
-import { CreateStaff } from '../../model/staff/createStaff.model';
 import { Staff } from '../../model/staff/staff.model';
 import { SpecializationService } from '../../services/specialization.service';
 import { StaffService } from '../../services/staff.service';
-import { format } from 'date-fns';
-import { EditStaff } from '../../model/staff/editStaff.model';
+import { EditStaffDto } from '../../model/staff/dto/editStaffDto';
+import { CreateStaffDto } from '../../model/staff/dto/createStaffDto';
 
 @Component({
   selector: 'app-staff',
@@ -119,7 +119,7 @@ export class StaffComponent implements OnInit {
       }
     });
 
-    const request: CreateStaff = {
+    const request: CreateStaffDto = {
       ...this.createStaffForm.value,
 
       phone: this.createStaffForm.get('phone').value.toString(),
@@ -216,7 +216,7 @@ export class StaffComponent implements OnInit {
       }
     });
 
-    const request: EditStaff = {
+    const request: EditStaffDto = {
       ...this.editStaffForm.value,
 
       id: this.currentStaff.id,

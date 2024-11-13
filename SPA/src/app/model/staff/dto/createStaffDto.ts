@@ -1,6 +1,6 @@
-import { Role } from "../role.model";
+import { Role } from "../../role.model";
 
-export type CreateStaff = {
+export type CreateStaffDto = {
   name?: string;
   licenseNumber?: number;
   phone?: string;
