@@ -230,6 +230,17 @@ export class OperationtypeComponent implements OnInit {
     return this.updateOperationTypeForm.get('requiredStaff') as FormArray;
   }
 
+  addUpdateRequiredStaff(): void {
+    const staffGroup = this.fb.group({
+      specialization: ['', Validators.required],
+      total: [1, [Validators.required, Validators.min(1)]]
+    });
+    this.updateRequiredStaff.push(staffGroup);
+  }
+  
+  removeUpdateRequiredStaff(index: number): void {
+    this.updateRequiredStaff.removeAt(index);
+  }
 
 
 }
