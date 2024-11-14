@@ -1,7 +1,12 @@
 <div class="text-center">
   <h1 class="fw-bold mt-2 main-title mb-4">
     Staff
-    <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="openCreateModal()" />
+    <p-button
+      icon="pi pi-plus"
+      class="me-3 ms-3"
+      (click)="openCreateModal()"
+      id="buttonCreate"
+    />
   </h1>
 </div>
 
@@ -82,6 +87,7 @@
             class="me-2"
             [text]="true"
             (click)="openDetailsModal(staff)"
+            id="buttonDetails"
           />
           <p-button
             icon="pi pi-pencil"
