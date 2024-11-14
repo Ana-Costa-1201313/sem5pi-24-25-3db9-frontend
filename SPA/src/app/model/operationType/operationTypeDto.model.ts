@@ -1,6 +1,6 @@
 import { RequiredStaff } from "./requiredStaff.model";
 
-export type CreateOperationType = {
+export type OperationTypeDto = {
     name?: string;
     anesthesiaPatientPreparationInMinutes?: number;
     surgeryInMinutes?: number;

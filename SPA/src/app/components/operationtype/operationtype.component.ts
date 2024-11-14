@@ -11,7 +11,7 @@ import { MessagesModule } from 'primeng/messages';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { CreateOperationType } from '../../model/operationType/CreateOperationType.model';
+import { OperationTypeDto } from '../../model/operationType/operationTypeDto.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RequiredStaff } from '../../model/operationType/requiredStaff.model';
 import { Specialization } from '../../model/specialization.model';
@@ -160,7 +160,7 @@ export class OperationtypeComponent implements OnInit {
 
     this.showCreate = false;
 
-    const request: CreateOperationType = {
+    const request: OperationTypeDto = {
       ...this.createOperationTypeForm.value,
       requiredStaff: this.createOperationTypeForm.value.requiredStaff as RequiredStaff[]
     };
@@ -247,7 +247,7 @@ export class OperationtypeComponent implements OnInit {
   
     this.showUpdate = false;
   
-    const updatedData: OperationType = {
+    const updatedData: OperationTypeDto = {
       ...this.currentOpType,
       ...this.updateOperationTypeForm.value,
       requiredStaff: this.updateOperationTypeForm.value.requiredStaff as RequiredStaff[]
