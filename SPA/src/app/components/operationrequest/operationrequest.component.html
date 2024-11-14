@@ -34,15 +34,11 @@
           <th></th>
         </tr>
         <tr>
-          <th class=>Id</th>
           <th class=>Operation Type Name</th>
-          <th class=>Operation Type Id</th>
           <th class=>Deadline</th>
           <th class=>Priority</th>
           <th class=>Patient Name</th>
-          <th class=>Patient Id</th>
           <th class=>Doctor Name</th>
-          <th class=>Doctor Id</th>
           <th class=>Status</th>
           <th class=>Description</th>
           <th class=></th>
@@ -50,17 +46,13 @@
       </ng-template>
       <ng-template pTemplate="body" let-opReq>
         <tr>
-          <td>{{ opReq.Id }}</td>
-          <td>{{ opReq.OpTypeName }}</td>
-          <td>{{ opReq.OpTypeId }}</td>
-          <td>{{ opReq.Deadline }}</td>
-          <td>{{ opReq.Priority }}</td>
-          <td>{{ opReq.PatientName }}</td>
-          <td>{{ opReq.PatientId }}</td>
-          <td>{{ opReq.DoctorName }}</td>
-          <td>{{ opReq.DoctorId }}</td>
-          <td>{{ opReq.Status }}</td>
-          <td>{{ opReq.Description }}</td>
+          <td>{{ opReq.opTypeName }}</td>
+          <td>{{ opReq.deadlineDate }}</td>
+          <td>{{ opReq.priority }}</td>
+          <td>{{ opReq.patientName }}</td>
+          <td>{{ opReq.doctorName }}</td>
+          <td>{{ opReq.status }}</td>
+          <td>{{ opReq.description }}</td>
           <td class="text-center">
   
   
@@ -76,23 +68,23 @@
   <p-dialog header="Operation Request" [(visible)]="showDetails" [modal]="true" [style]="{ width: '50vw' }"
     [draggable]="false" [resizable]="false">
     <ng-template pTemplate="header">
-      <h4 class="fw-bold">{{ currentOpRequest?.Id }}</h4>
+      <h4 class="fw-bold">{{ currentOpRequest?.id }}</h4>
     </ng-template>
     <div class="container">
       <h5 class="title-separator separator">General Information</h5>
       <hr class="line-separator separator" />
       <div class="row">
-        <label for="Id"><b>Id:</b> {{ currentOpRequest?.Id }}</label>
-        <label for="OpTypeName"><b>OpTypeName:</b> {{ currentOpRequest?.OpTypeName }}</label>
-        <label for="OpTypeId" class="mt-2"><b>OpTypeId:</b> {{ currentOpRequest?.OpTypeId }}</label>
-        <label for="Deadline" class="mt-2"><b>Deadline:</b> {{ currentOpRequest?.Deadline }}</label>
-        <label for="Priority" class="mt-2"><b>Priority:</b> {{ currentOpRequest?.Priority }}</label>
-        <label for="PatientName" class="mt-2"><b>PatientName:</b> {{ currentOpRequest?.PatientName }}</label>
-        <label for="PatientId" class="mt-2"><b>PatientId:</b> {{ currentOpRequest?.PatientId }}</label>
-        <label for="DoctorName" class="mt-2"><b>DoctorName:</b> {{ currentOpRequest?.DoctorName }}</label>
-        <label for="DoctorId" class="mt-2"><b>DoctorId:</b> {{ currentOpRequest?.DoctorId }}</label>
-        <label for="Status" class="mt-2"><b>Status:</b> {{ currentOpRequest?.Status }}</label>
-        <label for="Description" class="mt-2"><b>Description:</b> {{ currentOpRequest?.Description }}</label>
+        <label for="Id"><b>Id:</b> {{ currentOpRequest?.id }}</label>
+        <label for="OpTypeName"><b>OpTypeName:</b> {{ currentOpRequest?.opTypeName }}</label>
+        <label for="OpTypeId" class="mt-2"><b>OpTypeId:</b> {{ currentOpRequest?.opTypeId }}</label>
+        <label for="Deadline" class="mt-2"><b>Deadline:</b> {{ currentOpRequest?.deadlineDate }}</label>
+        <label for="Priority" class="mt-2"><b>Priority:</b> {{ currentOpRequest?.priority }}</label>
+        <label for="PatientName" class="mt-2"><b>PatientName:</b> {{ currentOpRequest?.patientName }}</label>
+        <label for="PatientId" class="mt-2"><b>PatientId:</b> {{ currentOpRequest?.patientId }}</label>
+        <label for="DoctorName" class="mt-2"><b>DoctorName:</b> {{ currentOpRequest?.doctorName }}</label>
+        <label for="DoctorId" class="mt-2"><b>DoctorId:</b> {{ currentOpRequest?.doctorId }}</label>
+        <label for="Status" class="mt-2"><b>Status:</b> {{ currentOpRequest?.status }}</label>
+        <label for="Description" class="mt-2"><b>Description:</b> {{ currentOpRequest?.description }}</label>
       </div>
     </div>
   </p-dialog>

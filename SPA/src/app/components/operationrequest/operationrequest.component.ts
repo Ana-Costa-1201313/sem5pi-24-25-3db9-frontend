@@ -28,11 +28,11 @@ export class OperationrequestComponent implements OnInit {
   ngOnInit(): void {
     this.service.getOperationRequestList().subscribe((op) => {
       this.operationRequestList = op.map(opReq => ({
-        ...opReq
+        ...opReq,
       }));
-      console.log(this.operationRequestList)
-    });
-    this.filteredOperationRequestList = [...this.operationRequestList];
+      this.filteredOperationRequestList = [...this.operationRequestList];
+      });
+    
     this.matchModeOptions = [
       { label: 'Contains', value: FilterMatchMode.CONTAINS }
     ]
@@ -41,6 +41,8 @@ export class OperationrequestComponent implements OnInit {
   openDetailsModal(opRequest: OperationRequest): void {
     this.currentOpRequest = opRequest;
     this.showDetails = true;
+    console.log(opRequest);
+    console.log(this.currentOpRequest);
   }
 
 }

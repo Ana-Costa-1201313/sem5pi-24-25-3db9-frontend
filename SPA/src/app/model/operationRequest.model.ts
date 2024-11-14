@@ -1,13 +1,13 @@
 export type OperationRequest = {
-    Id: string | null | undefined;
-    OpTypeName: string | null | undefined;
-    OpTypeId: string | null | undefined;
-    Deadline: string | null | undefined;
-    Priority: string | null | undefined;
-    PatientName: string | null | undefined;
-    PatientId: string | null | undefined;
-    DoctorName: string | null | undefined;
-    DoctorId: string | null | undefined;
-    Status: string | null | undefined;
-    Description: string | null | undefined;
+    deadlineDate: string | null | undefined;
+    description: string | null | undefined;
+    doctorId: string | null | undefined;
+    doctorName: string | null | undefined;
+    id: string | null | undefined;
+    opTypeId: string | null | undefined;
+    opTypeName: string | null | undefined;
+    patientId: string | null | undefined;
+    patientName: string | null | undefined;
+    priority: string | null | undefined;
+    status: string | null | undefined;
 }
