@@ -8,6 +8,7 @@ import { OperationType } from '../../model/operationType/operationType.model';
 import { of, throwError } from 'rxjs';
 import { SpecializationService } from '../../services/specialization.service';
 import { Specialization } from '../../model/specialization.model';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 describe('OperationtypeComponent', () => {
   let component: OperationtypeComponent;
@@ -219,20 +220,6 @@ describe('OperationtypeComponent', () => {
     expect(component.requiredStaff.length).toBe(1);
   });
 
-  // it('should add required staff', () => {
-  //   // Ensure requiredStaff array is accessed through the form's get method
-  //   const requiredStaffArray = component.requiredStaff;
-  
-  //   // Add required staff to the form array
-  //   component.addRequiredStaff();
-  
-  //   // Check that the requiredStaff form array length has increased to 1
-  //   expect(requiredStaffArray.length).toBe(1);
-  // });
-  
-
-
-
   it('should send error 500', () => {
     const error: HttpErrorResponse = { status: 500 } as any;
 
@@ -294,8 +281,133 @@ describe('OperationtypeComponent', () => {
   });
 
 
+  it('should open update modal', () => {
+
+    const opType: OperationType = {
+      id: 'id',
+      name: 'name',
+      anesthesiaPatientPreparationInMinutes: 10,
+      surgeryInMinutes: 10,
+      cleaningInMinutes: 20,
+      requiredStaff: [],
+      active: true,
+    };
+
+    component.openUpdateModal(opType);
+
+    expect(component.showUpdate).toBeTrue();
+  });
+
+  it('should add a required staff to updateRequiredStaff array', () => {
+    expect(component.updateRequiredStaff.length).toBe(0);
+  
+    component.addUpdateRequiredStaff();
+  
+    expect(component.updateRequiredStaff.length).toBe(1);
+    expect(component.updateRequiredStaff.at(0).get('specialization')?.value).toBe('');
+    expect(component.updateRequiredStaff.at(0).get('total')?.value).toBe(1);
+  });
+  
+  it('should remove required staff at specified index in updateRequiredStaff array', () => {
+    component.addUpdateRequiredStaff();
+    component.addUpdateRequiredStaff();
+    expect(component.updateRequiredStaff.length).toBe(2);
+  
+    component.removeUpdateRequiredStaff(0);
+  
+    expect(component.updateRequiredStaff.length).toBe(1);
+    expect(component.updateRequiredStaff.at(0).get('specialization')?.value).toBe('');
+    expect(component.updateRequiredStaff.at(0).get('total')?.value).toBe(1);
+  });
+
+  it('should update operation type', () => {
+    spyOn(service, 'updateOperationType').and.returnValue(of({} as any));
+    spyOn(component, 'addUpdateRequiredStaff');
 
 
+    component.updateOperationTypeForm
+      .get('requiredStaff');
+
+    component.updateOperationType();
+
+    expect(component.showUpdate).toBeFalse();
+  });
+
+
+  it('should send updated operation type', () => {
+    spyOn(service, 'updateOperationType').and.returnValue(of({} as any));
+
+    component.updateOperationTypeForm.setValue({
+      name: 'name',
+      anesthesiaPatientPreparationInMinutes: 20,
+      surgeryInMinutes: 30,
+      cleaningInMinutes: 10,
+      requiredStaff: []  
+    });
+    
+    const requiredStaffArray = component.updateOperationTypeForm.get('requiredStaff') as FormArray;
+    requiredStaffArray.push(
+      new FormGroup({
+        specialization: new FormControl('spec'),
+        total: new FormControl(2)
+      })
+    );
+    
+    expect(requiredStaffArray.length).toBe(1);
+  
+    const expectedRequest = {
+      name: 'name',
+      anesthesiaPatientPreparationInMinutes: 20,
+      surgeryInMinutes: 30,
+      cleaningInMinutes: 10,
+      requiredStaff: [
+        {
+          specialization: 'spec',
+          total: 2
+        }
+      ]
+    };
+  
+    component.updateOperationType();
+  
+    expect(service.updateOperationType).toHaveBeenCalledWith(expectedRequest);
+  });
+
+  it('should send error updating operation type', () => {
+    spyOn(service, 'updateOperationType').and.returnValue(
+      throwError(() => ({
+        status: 400,
+        error: { message: 'abc' },
+      }))
+    );
+  
+    component.updateOperationTypeForm.setValue({
+      name: 'Test Operation',
+      anesthesiaPatientPreparationInMinutes: 20,
+      surgeryInMinutes: 30,
+      cleaningInMinutes: 10,
+      requiredStaff: [] 
+    });
+  
+    component.addUpdateRequiredStaff();
+  
+    const requiredStaffArray = component.updateOperationTypeForm.get('requiredStaff') as FormArray;
+    expect(requiredStaffArray.length).toBe(1);
+  
+    requiredStaffArray.at(0).setValue({
+      specialization: 'spec',
+      total: 2,
+    });
+  
+    component.updateOperationType();
+  
+    expect(component.message).toEqual([
+      { severity: 'error', summary: 'Failure!', detail: 'abc' },
+    ]);
+  });
+  
+  
+  
 
 
 });
