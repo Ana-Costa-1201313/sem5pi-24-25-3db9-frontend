@@ -24,7 +24,7 @@
         *ngIf="currentStaff?.specialization"
         ><b>Specialization: </b> {{ currentStaff?.specialization }}</label
       >
-      <label for="licenseNumber" class="mt-2" *ngIf="currentStaff?.active"
+      <label for="licenseNumber" class="mt-2" id="licenseNumber" *ngIf="currentStaff?.active"
         ><b>License Number: </b>{{ currentStaff?.licenseNumber }}</label
       >
       <label for="mechanographicNumber" class="mt-2"
@@ -54,7 +54,7 @@
 
     <div class="row">
       <label for="email"><b>Email:</b> {{ currentStaff?.email }}</label>
-      <label for="phone" class="mt-2" *ngIf="currentStaff?.phone"
+      <label for="phone" class="mt-2" id="phone" *ngIf="currentStaff?.phone"
         ><b>Phone: </b> {{ currentStaff?.phone }}
       </label>
     </div>

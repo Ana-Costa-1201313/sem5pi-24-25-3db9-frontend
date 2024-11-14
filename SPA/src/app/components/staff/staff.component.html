@@ -11,7 +11,7 @@
 </div>
 
 <div class="container">
-  <p-messages [(value)]="message" />
+  <p-messages [(value)]="message" id="message" />
 
   <p-table
     [value]="staffList"
@@ -95,6 +95,7 @@
             [disabled]="!staff.active"
             [text]="true"
             (click)="openEditModal(staff)"
+            id="buttonEdit"
           />
           <p-button
             icon="pi pi-trash"
@@ -102,6 +103,7 @@
             [text]="true"
             [disabled]="!staff.active"
             (click)="openDeactivateModal(staff)"
+            id="buttonDeactivate"
           />
         </td>
       </tr>
