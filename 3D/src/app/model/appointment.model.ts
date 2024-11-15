@@ -1,8 +1,9 @@
 
 export type Appointment = {
-    id?: string;
-    id1?: string;
-    id2?: string;
-    id3?: string;
-    id4?: string;
+    appointmentId?: string;
+    dateTime?: string;
+    opRequestId?: string;
+    status?: string;
+    surgeryRoomId?: string;
+    surgeryRoomNumber?: string;
 };
