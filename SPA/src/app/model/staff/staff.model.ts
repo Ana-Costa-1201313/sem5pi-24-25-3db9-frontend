@@ -1,5 +1,4 @@
-import { Role } from './role.model';
-import { Specialization } from './specialization.model';
+import { Role } from '../role.model';
 
 export type Staff = {
   id?: string;
@@ -7,7 +6,7 @@ export type Staff = {
   licenseNumber?: number;
   email?: string;
   phone?: string;
-  specialization?: Specialization;
+  specialization?: string;
   availabilitySlots?: string[];
   role?: Role;
   mechanographicNum?: string;
