@@ -1,16 +1,16 @@
 {
   "rooms": [
     {
-      "name": "Room 101"
+      "name": "101"
     },
     {
-      "name": "Room 102"
+      "name": "102"
     },
     {
-      "name": "Room 103"
+      "name": "103"
     },
     {
-      "name": "Room 104"
+      "name": "104"
     }
   ]
 }

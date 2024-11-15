@@ -25,7 +25,7 @@ export class HospitalComponent implements OnInit {
   @Input() public cameraZ: number = 20;
   @Input() public fieldOfView: number = 30;
   @Input('nearClipping') public nearClippingPlane: number = 1;
-  @Input('farClipping') public farClippingPlane: number = 1000;
+  @Input('farClipping') public farClippingPlane: number = 10000;
 
   //helper
   private get canvas(): HTMLCanvasElement {
@@ -127,7 +127,7 @@ export class HospitalComponent implements OnInit {
       this.nearClippingPlane,
       this.farClippingPlane
     );
-    this.camera.position.set(20, 50, 50);
+    this.camera.position.set(-160, 60, 100);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
