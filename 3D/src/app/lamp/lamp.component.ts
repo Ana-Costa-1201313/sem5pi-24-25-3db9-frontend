@@ -4,7 +4,7 @@ import * as THREE from 'three';
 export class LampComponent extends THREE.Group {
   private spotLight: THREE.SpotLight;
   private target: THREE.Object3D;
-  private isLightOn: boolean = true;
+  private isLightOn: boolean = false;
   private audioClick: HTMLAudioElement;
 
 
@@ -15,7 +15,7 @@ export class LampComponent extends THREE.Group {
 
     const gltfLoader = new GLTFLoader();
     gltfLoader.load(modelPath, (gltfScene) => {
-      gltfScene.scene.scale.set(0.02, 0.02, 0.02);
+      gltfScene.scene.scale.set(0.01, 0.01, 0.01);
       gltfScene.scene.position.set(6, 30.5, -2.5);
 
       gltfScene.scene.traverse((child) => {
@@ -39,6 +39,7 @@ export class LampComponent extends THREE.Group {
     this.target = new THREE.Object3D();
     this.target.position.set(6, 0, -2);
     this.spotLight.target = this.target;
+    this.spotLight.intensity = 0;
 
     this.add(this.spotLight);
     this.add(this.target);

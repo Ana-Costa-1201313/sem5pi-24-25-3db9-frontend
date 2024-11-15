@@ -9,7 +9,9 @@ export class TableComponent extends THREE.Group {
     super();
 
     const gltfLoader = new GLTFLoader();
+
     gltfLoader.load(modelPath, (gltfScene) => {
+
       gltfScene.scene.scale.set(10, 10, 10);
       gltfScene.scene.position.set(0, 0, 0);
       gltfScene.scene.traverse((child) => {
@@ -22,6 +24,7 @@ export class TableComponent extends THREE.Group {
       
       this.human = new HumanComponent(humanModelPath);
       this.human.visible = cirurgy;
+      this.human.position.set(-2,20,-6);
       this.add(this.human);
     });
   }

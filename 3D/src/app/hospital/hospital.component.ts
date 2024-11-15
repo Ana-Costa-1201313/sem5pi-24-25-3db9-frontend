@@ -2,7 +2,7 @@ import { AfterViewInit, OnInit, Component, ElementRef, Input, ViewChild } from '
 import * as THREE from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import RoomComponent from '../room/room.component';
-import { hospitalFloorData, wallData, wallWoodPanelData, doorData, roomFloorData, lampData, shibaData, humanData, instrumentsData, tableData, roomsJsonData } from "../defaul-data/defaul-data.component";
+import { hospitalFloorData, wallData, wallWoodPanelData, doorData, roomFloorData, lampData, humanData, tableData, roomsJsonData } from "../defaul-data/defaul-data.component";
 import { SpriteComponent } from '../sprite/sprite.component';
 import FloorComponent from '../floor/floor.component';
 import { AppointmentService } from '../service/appointment.service';
@@ -52,8 +52,6 @@ export class HospitalComponent implements OnInit {
           roomFloorData.texturePath,
           roomFloorData.floorWidth,
           roomFloorData.floorDepth,
-          shibaData.audioPath,
-          shibaData.modelPath,
           tableData.modelPath,
           humanData.modelPath,
           doorData.audioOpenPath,
@@ -61,7 +59,6 @@ export class HospitalComponent implements OnInit {
           doorData.modelPath,
           lampData.audioPath,
           lampData.modelPath,
-          instrumentsData.modelPath,
           wallData.frontTexturePath,
           wallData.rearTexturePath,
           wallData.frontColor,
@@ -70,7 +67,7 @@ export class HospitalComponent implements OnInit {
           wallWoodPanelData.rearTexturePath,
           wallWoodPanelData.frontColor,
           wallWoodPanelData.rearColor,
-          false,
+          true,
           roomData.name
         );
 
@@ -98,19 +95,19 @@ export class HospitalComponent implements OnInit {
   private setupLights() {
     const ambientLight = new THREE.AmbientLight(0xffffff, 1);
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(10, 10, 20);
+    directionalLight.position.set(500, 500, 500);
     //shadow inactive
-    directionalLight.castShadow = false;
+    directionalLight.castShadow = true;
 
-    directionalLight.shadow.mapSize.width = 1024;
-    directionalLight.shadow.mapSize.height = 1024;
+    directionalLight.shadow.mapSize.width = 2048;
+    directionalLight.shadow.mapSize.height = 2048;
 
-    directionalLight.shadow.camera.near = 0.5;
-    directionalLight.shadow.camera.far = 50;
-    directionalLight.shadow.camera.left = -10;
-    directionalLight.shadow.camera.right = 10;
-    directionalLight.shadow.camera.top = 10;
-    directionalLight.shadow.camera.bottom = -10;
+    directionalLight.shadow.camera.near = 1;
+    directionalLight.shadow.camera.far = 2000;
+    directionalLight.shadow.camera.left = -500;
+    directionalLight.shadow.camera.right = 500;
+    directionalLight.shadow.camera.top = 500;
+    directionalLight.shadow.camera.bottom = -500;
 
     this.scene.add(ambientLight);
     this.scene.add(directionalLight);

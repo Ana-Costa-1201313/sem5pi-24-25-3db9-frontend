@@ -1,11 +1,11 @@
 Model Information:
-* title:	Celling lamp
-* source:	https://sketchfab.com/3d-models/celling-lamp-dee2b4b1cbc64a2bbea0d6886fa36817
-* author:	DDZ production (https://sketchfab.com/ddzk)
+* title:	Lamp Ceiling - FNaF
+* source:	https://sketchfab.com/3d-models/lamp-ceiling-fnaf-a6d01988a7cb458aa6360936978fd531
+* author:	Glitch5970 (https://sketchfab.com/Glitch5970)
 
 Model License:
 * license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 * requirements:	Author must be credited. Commercial use is allowed.
 
 If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
-This work is based on "Celling lamp" (https://sketchfab.com/3d-models/celling-lamp-dee2b4b1cbc64a2bbea0d6886fa36817) by DDZ production (https://sketchfab.com/ddzk) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+This work is based on "Lamp Ceiling - FNaF" (https://sketchfab.com/3d-models/lamp-ceiling-fnaf-a6d01988a7cb458aa6360936978fd531) by Glitch5970 (https://sketchfab.com/Glitch5970) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

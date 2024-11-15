@@ -2,17 +2,14 @@ import * as THREE from "three";
 import WallComponent from "../wall/wall.component";
 import InteriorWallComponent from "../interior-wall/interior-wall.component";
 import FloorComponent from "../floor/floor.component";
-import { ShibaComponent } from "../shiba/shiba.component";
 import { TableComponent } from "../table/table.component";
 import { DoorComponent } from "../door/door.component";
 import { LampComponent } from "../lamp/lamp.component";
-import { InstrumentsComponent } from "../instruments/instruments.component";
 
 export default class RoomComponent extends THREE.Group {
 
   public roomName: string;
   private door: DoorComponent;
-  private shiba: ShibaComponent;
   private lamp: LampComponent;
   public table: TableComponent;
 
@@ -20,8 +17,6 @@ export default class RoomComponent extends THREE.Group {
     floorTexturePath: string,
     floorWidth: number,
     floorDepth: number,
-    shibaAudioPath: string,
-    shibaModelPath: string,
     tableModelPath: string,
     humanModelPath: string,
     doorAudioOpenPath: string,
@@ -29,7 +24,6 @@ export default class RoomComponent extends THREE.Group {
     doorModelPath: string,
     lampAudioPath: string,
     lampModelPath: string,
-    instrumentsModelPath: string,
     wallFrontTexturePath: string,
     wallRearTexturePath: string,
     wallFrontColor: number,
@@ -49,10 +43,8 @@ export default class RoomComponent extends THREE.Group {
     floor.position.set(7, 0, -3);
     this.add(floor);
 
-    this.shiba = new ShibaComponent(shibaAudioPath, shibaModelPath);
-    this.add(this.shiba);
-
     this.table = new TableComponent(tableModelPath, humanModelPath, cirurgy);
+    this.table.position.set(9,-10.6,-3);
     this.add(this.table);
 
     this.door = new DoorComponent(doorAudioOpenPath, doorAudioClosePath, doorModelPath);
@@ -60,9 +52,6 @@ export default class RoomComponent extends THREE.Group {
 
     this.lamp = new LampComponent(lampAudioPath, lampModelPath);
     this.add(this.lamp);
-
-    const tools = new InstrumentsComponent(instrumentsModelPath);
-    this.add(tools);
 
     this.addWalls(
       wallFrontTexturePath,
@@ -88,12 +77,6 @@ export default class RoomComponent extends THREE.Group {
     const doorIntersects = raycaster.intersectObject(this.door.pivot, true);
     if (doorIntersects.length > 0) {
       this.door.isOpen ? this.door.close() : this.door.open();
-      return true;
-    }
-
-    const shibaIntersects = raycaster.intersectObject(this.shiba, true);
-    if (shibaIntersects.length > 0) {
-      this.shiba.playClickSound();
       return true;
     }
 

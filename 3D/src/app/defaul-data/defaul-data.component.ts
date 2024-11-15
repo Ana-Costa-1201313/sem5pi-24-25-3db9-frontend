@@ -37,17 +37,8 @@ export const lampData = {
   modelPath: "./assets/lamp/scene.gltf"
 }
 
-export const shibaData = {
-  audioPath: "./assets/sounds/dog.mp3",
-  modelPath: "./assets/shiba/scene.gltf"
-}
-
 export const humanData = {
   modelPath: "./assets/human/scene.gltf",
-}
-
-export const instrumentsData = {
-  modelPath: "./assets/tools/scene.gltf",
 }
 
 export const tableData = {
