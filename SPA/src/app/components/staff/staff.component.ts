@@ -1,14 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import {
-  FormArray,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterMatchMode, Message, SelectItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -19,12 +12,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
-import { CreateStaff } from '../../model/createStaff.model';
-import { Role } from '../../model/role.model';
-import { Staff } from '../../model/staff.model';
-import { StaffService } from '../../services/staff.service';
 import { Specialization } from '../../model/specialization.model';
+import { Staff } from '../../model/staff/staff.model';
 import { SpecializationService } from '../../services/specialization.service';
+import { StaffService } from '../../services/staff.service';
+import { CreateStaffComponent } from './create-staff/create-staff.component';
+import { DeleteStaffComponent } from './delete-staff/delete-staff.component';
+import { DetailStaffComponent } from './detail-staff/detail-staff.component';
+import { EditStaffComponent } from './edit-staff/edit-staff.component';
 
 @Component({
   selector: 'app-staff',
@@ -42,6 +37,10 @@ import { SpecializationService } from '../../services/specialization.service';
     InputTextModule,
     InputNumberModule,
     CalendarModule,
+    DetailStaffComponent,
+    DeleteStaffComponent,
+    CreateStaffComponent,
+    EditStaffComponent,
   ],
   templateUrl: './staff.component.html',
   styleUrl: './staff.component.css',
@@ -53,22 +52,12 @@ export class StaffComponent implements OnInit {
   message: Message[] = [];
   staffList: Staff[] = [];
   currentStaff: Staff = null;
-  roles: Role[] = [Role.Doctor, Role.Nurse, Role.Technician];
   specializations: Specialization[] = [];
   specializationsNames: string[] = [];
   showCreate: boolean = false;
   showDetails: boolean = false;
   deactivate: boolean = false;
-
-  createStaffForm = new FormGroup({
-    name: new FormControl(null, Validators.required),
-    licenseNumber: new FormControl(null, Validators.required),
-    phone: new FormControl(null, Validators.required),
-    specialization: new FormControl<string | null>(null),
-    availabilitySlots: new FormArray([new FormControl<Date[]>(null)]),
-    role: new FormControl<Role | null>(null, Validators.required),
-    recruitmentYear: new FormControl(null, Validators.required),
-  });
+  showEdit: boolean = false;
 
   constructor(
     private service: StaffService,
@@ -93,66 +82,6 @@ export class StaffComponent implements OnInit {
     });
   }
 
-  openCreateModal(): void {
-    this.showCreate = true;
-  }
-
-  addStaff(): void {
-    this.showCreate = false;
-
-    const availabilitySlotsIso: string[] = [];
-
-    this.createStaffForm.get('availabilitySlots').value.forEach((slot) => {
-      if (slot != null) {
-        availabilitySlotsIso.push(
-          slot[0].toISOString() + '/' + slot[1].toISOString()
-        );
-      }
-    });
-
-    const request: CreateStaff = {
-      ...this.createStaffForm.value,
-
-      phone: this.createStaffForm.get('phone').value.toString(),
-
-      availabilitySlots: availabilitySlotsIso,
-
-      recruitmentYear: new Date(
-        this.createStaffForm.get('recruitmentYear').value
-      ).getFullYear(),
-    };
-
-    this.service.addStaff(request).subscribe({
-      next: () => {
-        this.loadStaffLazy(this.lazyEvent);
-        this.message = [
-          {
-            severity: 'success',
-            summary: 'Success!',
-            detail: 'Your Staff Profile was added with success',
-          },
-        ];
-        this.createStaffForm.reset();
-        this.createStaffForm.controls.availabilitySlots.clear();
-        this.addSlot();
-      },
-      error: (error) => {
-        this.onFailure(error);
-      },
-    });
-  }
-
-  addSlot(): void {
-    const availabilitySlot = new FormControl<Date[]>(null);
-
-    this.createStaffForm.controls.availabilitySlots.push(availabilitySlot);
-  }
-
-  openDetailsModal(staff: Staff): void {
-    this.currentStaff = staff;
-    this.showDetails = true;
-  }
-
   loadStaffLazy(event: any) {
     this.lazyEvent = event;
 
@@ -167,27 +96,58 @@ export class StaffComponent implements OnInit {
       .subscribe((s: Staff[]) => (this.staffList = s));
   }
 
+  openCreateModal(): void {
+    this.showCreate = true;
+  }
+
+  openDetailsModal(staff: Staff): void {
+    this.currentStaff = staff;
+    this.showDetails = true;
+  }
+
+  openEditModal(staff: Staff): void {
+    this.currentStaff = null;
+    this.currentStaff = staff;
+    this.showEdit = true;
+  }
+
   openDeactivateModal(staff: Staff) {
     this.currentStaff = staff;
     this.deactivate = true;
   }
 
-  deactivateStaff() {
-    if (this.currentStaff?.id == null) {
-      return;
-    }
-
-    this.service.deactivateStaff(this.currentStaff.id).subscribe(() => {
-      this.loadStaffLazy(this.lazyEvent);
-    });
-
-    this.deactivate = false;
+  onAdd() {
+    this.loadStaffLazy(this.lazyEvent);
 
     this.message = [
       {
-        severity: 'info',
+        severity: 'success',
         summary: 'Success!',
-        detail: 'The Staff Profile was deactivated with success',
+        detail: 'Your Staff Profile was added with success',
+      },
+    ];
+  }
+
+  onEdit() {
+    this.loadStaffLazy(this.lazyEvent);
+
+    this.message = [
+      {
+        severity: 'success',
+        summary: 'Success!',
+        detail: 'Your Staff Profile was edited with success',
+      },
+    ];
+  }
+
+  onDeactivate() {
+    this.loadStaffLazy(this.lazyEvent);
+
+    this.message = [
+      {
+        severity: 'success',
+        summary: 'Success!',
+        detail: 'Your Staff Profile was deactivated with success',
       },
     ];
   }

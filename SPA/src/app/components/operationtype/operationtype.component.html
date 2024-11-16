@@ -1,11 +1,11 @@
 <div class="text-center">
   <h1 class="fw-bold mt-2 main-title mb-4">Operation Type
-    <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="openCreateModal()" />
+    <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="openCreateModal()" id="buttonCreateOperationType"/>
   </h1>
 </div>
 
 <div class="container">
-  <p-messages [(value)]="message" />
+  <p-messages [(value)]="message" id="message"/>
 
   <p-table [value]="filteredOperationTypeList" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '20rem' }">
     <ng-template pTemplate="header">
@@ -110,23 +110,23 @@
   <form [formGroup]="createOperationTypeForm" (ngSubmit)="addOperationType()">
 
     <span class="p-float-label mt-4">
-      <input pInputText formControlName="name" autoWidth="false" [style]="{ minWidth: '530px', maxWidth: '530px' }"/>
+      <input pInputText formControlName="name" id="name" autoWidth="false" [style]="{ minWidth: '530px', maxWidth: '530px' }"/>
       <label for="name">Name</label>
     </span>
 
     <span class="p-float-label mt-4">
-      <p-inputNumber inputId="integeronly" formControlName="anesthesiaPatientPreparationInMinutes" autoWidth="false"
+      <p-inputNumber inputId="integeronly" id="preparation" formControlName="anesthesiaPatientPreparationInMinutes" autoWidth="false"
         [min]="1" />
       <label for="anesthesiaPatientPreparationInMinutes">Anesthesia duration</label>
     </span>
 
     <span class="p-float-label mt-4">
-      <p-inputNumber inputId="integeronly" formControlName="surgeryInMinutes" autoWidth="false" [min]="1" />
+      <p-inputNumber inputId="integeronly" id="surgery" formControlName="surgeryInMinutes" autoWidth="false" [min]="1" />
       <label for="surgeryInMinutes">Surgery duration</label>
     </span>
 
     <span class="p-float-label mt-4">
-      <p-inputNumber inputId="integeronly" formControlName="cleaningInMinutes" autoWidth="false" [min]="1" />
+      <p-inputNumber inputId="integeronly" id="cleaning" formControlName="cleaningInMinutes" autoWidth="false" [min]="1" />
       <label for="cleaningInMinutes">Cleaning duration</label>
     </span>
 
@@ -138,11 +138,11 @@
         class="d-flex align-items-center gap-2 mb-4 mt-4">
 
         <span class="p-float-label">
-          <p-inputNumber formControlName="total" placeholder="Total" [min]="1" />
+          <p-inputNumber id="total{{i}}" formControlName="total" placeholder="Total" [min]="1" />
           <label for="total">Total</label>
         </span>
 
-        <p-dropdown class="d-block" placeholder="Specialization" formControlName="specialization"
+        <p-dropdown class="d-block" id="specialization{{i}}" placeholder="Specialization" formControlName="specialization"
           [options]="specializationsNames" [showClear]="true" autoWidth="false"
           [style]="{ minWidth: '300px', maxWidth: '300px' }" />
 
@@ -150,9 +150,9 @@
           (click)="removeRequiredStaff(i)" aria-label="Remove"></button>
       </div>
 
-      <button pButton icon="pi pi-plus" class="p-button-secondary" type="button" (click)="addRequiredStaff()"
+      <button pButton icon="pi pi-plus" id="buttonCreateRequiredStaff" class="p-button-secondary" type="button" (click)="addRequiredStaff()"
         label="Add Required Staff"></button>
-      <p-button class="mt-4 d-block" type="Submit" label="Submit" [disabled]="createOperationTypeForm.invalid" />
+      <p-button class="mt-4 d-block" id="buttonCreateSubmit" type="Submit" label="Submit" [disabled]="createOperationTypeForm.invalid" />
     </div>
 
   </form>
