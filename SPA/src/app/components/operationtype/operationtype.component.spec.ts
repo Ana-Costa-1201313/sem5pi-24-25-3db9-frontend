@@ -31,7 +31,6 @@ describe('OperationtypeComponent', () => {
     component = fixture.componentInstance;
     service = fixture.debugElement.injector.get(OperationTypeService);
     specService = fixture.debugElement.injector.get(SpecializationService);
-    fixture.detectChanges();
   });
 
   it('should open details', () => {
@@ -153,10 +152,24 @@ describe('OperationtypeComponent', () => {
 
   it('should not deactivate operation type', () => {
     spyOn(service, 'deactivateOperationType').and.returnValue(of({} as any));
+    const mockOperationTypeList: OperationType[] = [
+      {
+        id: '1',
+        name: 'Updated Operation',
+        anesthesiaPatientPreparationInMinutes: 10,
+        surgeryInMinutes: 20,
+        cleaningInMinutes: 30,
+        requiredStaff: [{ specialization: 'Surgeon', total: 1 }],
+        active: false,
+      },
+    ];
+
+    spyOn(service, 'getOperationTypeList').and.returnValue(of(mockOperationTypeList));
 
     component.deactivateOperationType();
 
     expect(service.deactivateOperationType).toHaveBeenCalledTimes(0);
+    expect(service.getOperationTypeList).toHaveBeenCalledTimes(0);
   });
 
   it('should open create modal', () => {
@@ -169,6 +182,19 @@ describe('OperationtypeComponent', () => {
     spyOn(service, 'addOperationType').and.returnValue(of({} as any));
     spyOn(component, 'addRequiredStaff');
 
+    const mockOperationTypeList: OperationType[] = [
+      {
+        id: '1',
+        name: 'Updated Operation',
+        anesthesiaPatientPreparationInMinutes: 10,
+        surgeryInMinutes: 20,
+        cleaningInMinutes: 30,
+        requiredStaff: [{ specialization: 'Surgeon', total: 1 }],
+        active: false,
+      },
+    ];
+
+    spyOn(service, 'getOperationTypeList').and.returnValue(of(mockOperationTypeList));
 
     component.createOperationTypeForm
       .get('requiredStaff');
@@ -181,6 +207,20 @@ describe('OperationtypeComponent', () => {
   it('should send operation type', () => {
     spyOn(service, 'addOperationType').and.returnValue(of({} as any));
     spyOn(component, 'addRequiredStaff').and.callThrough();
+
+    const mockOperationTypeList: OperationType[] = [
+      {
+        id: '1',
+        name: 'Updated Operation',
+        anesthesiaPatientPreparationInMinutes: 10,
+        surgeryInMinutes: 20,
+        cleaningInMinutes: 30,
+        requiredStaff: [{ specialization: 'Surgeon', total: 1 }],
+        active: false,
+      },
+    ];
+
+    spyOn(service, 'getOperationTypeList').and.returnValue(of(mockOperationTypeList));
 
     component.createOperationTypeForm.setValue({
       name: 'name',
@@ -248,6 +288,20 @@ describe('OperationtypeComponent', () => {
       }))
     );
 
+    const mockOperationTypeList: OperationType[] = [
+      {
+        id: '1',
+        name: 'Updated Operation',
+        anesthesiaPatientPreparationInMinutes: 10,
+        surgeryInMinutes: 20,
+        cleaningInMinutes: 30,
+        requiredStaff: [{ specialization: 'Surgeon', total: 1 }],
+        active: false,
+      },
+    ];
+
+    spyOn(service, 'getOperationTypeList').and.returnValue(of(mockOperationTypeList));
+
     component.createOperationTypeForm.setValue({
       name: 'Test Operation',
       anesthesiaPatientPreparationInMinutes: 20,
@@ -300,21 +354,21 @@ describe('OperationtypeComponent', () => {
 
   it('should add a required staff to updateRequiredStaff array', () => {
     expect(component.updateRequiredStaff.length).toBe(0);
-  
+
     component.addUpdateRequiredStaff();
-  
+
     expect(component.updateRequiredStaff.length).toBe(1);
     expect(component.updateRequiredStaff.at(0).get('specialization')?.value).toBe('');
     expect(component.updateRequiredStaff.at(0).get('total')?.value).toBe(1);
   });
-  
+
   it('should remove required staff at specified index in updateRequiredStaff array', () => {
     component.addUpdateRequiredStaff();
     component.addUpdateRequiredStaff();
     expect(component.updateRequiredStaff.length).toBe(2);
-  
+
     component.removeUpdateRequiredStaff(0);
-  
+
     expect(component.updateRequiredStaff.length).toBe(1);
     expect(component.updateRequiredStaff.at(0).get('specialization')?.value).toBe('');
     expect(component.updateRequiredStaff.at(0).get('total')?.value).toBe(1);
@@ -323,7 +377,20 @@ describe('OperationtypeComponent', () => {
   it('should update operation type', () => {
     spyOn(service, 'updateOperationType').and.returnValue(of({} as any));
     spyOn(component, 'addUpdateRequiredStaff');
+    
+    const mockOperationTypeList: OperationType[] = [
+      {
+        id: '1',
+        name: 'Updated Operation',
+        anesthesiaPatientPreparationInMinutes: 10,
+        surgeryInMinutes: 20,
+        cleaningInMinutes: 30,
+        requiredStaff: [{ specialization: 'Surgeon', total: 1 }],
+        active: false,
+      },
+    ];
 
+    spyOn(service, 'getOperationTypeList').and.returnValue(of(mockOperationTypeList));
 
     component.updateOperationTypeForm
       .get('requiredStaff');
@@ -337,14 +404,28 @@ describe('OperationtypeComponent', () => {
   it('should send updated operation type', () => {
     spyOn(service, 'updateOperationType').and.returnValue(of({} as any));
 
+    const mockOperationTypeList: OperationType[] = [
+      {
+        id: '1',
+        name: 'Updated Operation',
+        anesthesiaPatientPreparationInMinutes: 10,
+        surgeryInMinutes: 20,
+        cleaningInMinutes: 30,
+        requiredStaff: [{ specialization: 'Surgeon', total: 1 }],
+        active: false,
+      },
+    ];
+
+    spyOn(service, 'getOperationTypeList').and.returnValue(of(mockOperationTypeList));
+
     component.updateOperationTypeForm.setValue({
       name: 'name',
       anesthesiaPatientPreparationInMinutes: 20,
       surgeryInMinutes: 30,
       cleaningInMinutes: 10,
-      requiredStaff: []  
+      requiredStaff: []
     });
-    
+
     const requiredStaffArray = component.updateOperationTypeForm.get('requiredStaff') as FormArray;
     requiredStaffArray.push(
       new FormGroup({
@@ -352,9 +433,9 @@ describe('OperationtypeComponent', () => {
         total: new FormControl(2)
       })
     );
-    
+
     expect(requiredStaffArray.length).toBe(1);
-  
+
     const expectedRequest = {
       name: 'name',
       anesthesiaPatientPreparationInMinutes: 20,
@@ -367,9 +448,9 @@ describe('OperationtypeComponent', () => {
         }
       ]
     };
-  
+
     component.updateOperationType();
-  
+
     expect(service.updateOperationType).toHaveBeenCalledWith(expectedRequest);
   });
 
@@ -380,34 +461,45 @@ describe('OperationtypeComponent', () => {
         error: { message: 'abc' },
       }))
     );
-  
+
+    const mockOperationTypeList: OperationType[] = [
+      {
+        id: '1',
+        name: 'Updated Operation',
+        anesthesiaPatientPreparationInMinutes: 10,
+        surgeryInMinutes: 20,
+        cleaningInMinutes: 30,
+        requiredStaff: [{ specialization: 'Surgeon', total: 1 }],
+        active: false,
+      },
+    ];
+
+    spyOn(service, 'getOperationTypeList').and.returnValue(of(mockOperationTypeList));
+
+
     component.updateOperationTypeForm.setValue({
       name: 'Test Operation',
       anesthesiaPatientPreparationInMinutes: 20,
       surgeryInMinutes: 30,
       cleaningInMinutes: 10,
-      requiredStaff: [] 
+      requiredStaff: []
     });
-  
+
     component.addUpdateRequiredStaff();
-  
+
     const requiredStaffArray = component.updateOperationTypeForm.get('requiredStaff') as FormArray;
     expect(requiredStaffArray.length).toBe(1);
-  
+
     requiredStaffArray.at(0).setValue({
       specialization: 'spec',
       total: 2,
     });
-  
+
     component.updateOperationType();
-  
+
     expect(component.message).toEqual([
       { severity: 'error', summary: 'Failure!', detail: 'abc' },
     ]);
   });
-  
-  
-  
-
 
 });
