@@ -3,6 +3,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { FormsModule } from '@angular/forms';
+import { Role } from '../../model/role.model';
 
 @Component({
   selector: 'app-login',
@@ -41,22 +42,28 @@ export class LoginComponent {
 
     this.loginService.doLogin(this.email, this.password).subscribe(
       (response) => {
-        console.log('Login successful:', response);
+        //console.log('Login successful:', response);
+        //console.log('Login successful:', response?.value);
 
         // Update userStatus based on the response
         this.userStatus = this.email || 'Guest';
 
         const sessionData = {
-          username: response?.username,
+          username: response?.value?.username,
           loggedIn: true,
-          role: response?.role
+          role: response?.value?.role
         };
         localStorage.setItem('SessionUtilizadorInfo', JSON.stringify(sessionData));
-        console.log("Session data stored in localStorage:", JSON.parse(localStorage.getItem('session')!));
-        console.log("Boas ", sessionData.username, ", ", sessionData.role);
+
         this.cdr.detectChanges();
 
+
         // Redirect user to the home page or dashboard
+        //switch (response?.value?.role?.toUpperCase()) {
+        //  case Role.Admin:
+        //    this.router.navigate(['/dashboard'])
+            
+        //}
         //this.router.navigate(['/dashboard']);
       },
       (error) => {
