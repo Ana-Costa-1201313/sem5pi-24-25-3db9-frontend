@@ -112,7 +112,7 @@ E2E Tests will also check all the US flow, from the user interaction to the back
 
 The implementation of this US is according to the design, as can be seen in the SD and CD presented before.
 
-All commits referred the corresponding issue in GitHub, using the #26 tag, as well as a relevant commit message.
+All commits referred the corresponding issue in GitHub, using the #43 tag, as well as a relevant commit message.
 
 It was implemented in the branch feature/6.2.20-frontend-admin-deactivate-operation-types.
 

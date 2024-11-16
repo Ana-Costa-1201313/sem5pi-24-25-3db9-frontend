@@ -13,4 +13,8 @@ export class SpecializationService {
   getSpecializationList(): Observable<Specialization[]> {
     return this.http.get<Specialization[]>(this.url);
   }
+
+  addSpecialization(specialization: Specialization): Observable<Specialization> {
+    return this.http.post<Specialization>(this.url, specialization);
+  }
 }
