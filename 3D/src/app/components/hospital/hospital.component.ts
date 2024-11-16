@@ -26,6 +26,12 @@ export class HospitalComponent implements OnInit {
   private rooms: RoomComponent[] = [];
   apList: Appointment[] = [];
 
+  private renderer!: THREE.WebGLRenderer;
+  private scene: THREE.Scene = new THREE.Scene();
+  private camera!: THREE.PerspectiveCamera;
+  private camera2!: THREE.PerspectiveCamera;
+  private controls!: OrbitControls;
+
   roomsJson: any;
 
   // Stage properties
@@ -39,19 +45,13 @@ export class HospitalComponent implements OnInit {
     return this.canvasRef.nativeElement;
   }
 
-  private renderer!: THREE.WebGLRenderer;
-  private scene: THREE.Scene = new THREE.Scene();
-  private camera!: THREE.PerspectiveCamera;
-  private camera2!: THREE.PerspectiveCamera;
-  private controls!: OrbitControls;
-
   private getAspectRatio(): number {
     return this.canvas.clientWidth / this.canvas.clientHeight;
   }
 
   // Creating the scene
   private createScene(): void {
-    this.scene.background = new THREE.Color(0x0099ff);
+    this.scene.background = new THREE.Color(0x89cff0);
 
     // this.apList.forEach((appointment, index) => {
     //   console.log(`Appointment ${index + 1}:`);
@@ -64,6 +64,7 @@ export class HospitalComponent implements OnInit {
     // });
 
     var size = 0;
+
     if (this.roomsJson && this.roomsJson.rooms) {
       this.roomsJson.rooms.forEach((roomData: any, index: number) => {
         const isRoomOccupied = this.apList.some(
@@ -114,10 +115,27 @@ export class HospitalComponent implements OnInit {
         floor3.position.set(7 + 85 * index, -0.01, 0);
         this.scene.add(floor3);
       });
+
+      setTimeout(() => {
+        this.updateCamera2Position();
+      }, 100);
     }
 
     // Setup lights
     this.setupLights();
+  }
+
+  private updateCamera2Position(): void {
+    if (this.rooms.length > 0) {
+      const lastRoom = this.rooms[this.rooms.length - 1];
+
+      this.camera2.position.set(
+        lastRoom.position.x + 160,
+        60,
+        lastRoom.position.z + 100
+      );
+      this.camera2.lookAt(lastRoom.position);
+    }
   }
 
   private setupLights() {
@@ -154,9 +172,9 @@ export class HospitalComponent implements OnInit {
     this.renderer.setScissorTest(true);
     this.renderer.render(this.scene, this.camera);
 
-    const smallViewportWidth = width / 4; // 1/4 da largura do ecrã
-    const smallViewportHeight = height / 4; // 1/4 da altura do ecrã
-    const offsetX = width - smallViewportWidth; // Desloca para a direita
+    const smallViewportWidth = width / 4;
+    const smallViewportHeight = height / 4;
+    const offsetX = width - smallViewportWidth;
 
     this.renderer.setViewport(
       offsetX,
@@ -191,7 +209,7 @@ export class HospitalComponent implements OnInit {
       this.nearClippingPlane,
       this.farClippingPlane
     );
-    this.camera2.position.set(160, 60, 100);
+    this.camera2.position.set(100, 140, 100);
     this.camera2.lookAt(new THREE.Vector3(0, 0, 0));
 
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
