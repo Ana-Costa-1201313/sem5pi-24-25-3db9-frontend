@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Appointment } from '../../model/appointment.model';
@@ -17,7 +11,7 @@ import {
   roomFloorData,
   tableData,
   wallData,
-  wallWoodPanelData
+  wallWoodPanelData,
 } from '../defaul-data/defaul-data.component';
 import FloorComponent from '../floor/floor.component';
 import RoomComponent from '../room/room.component';
@@ -48,6 +42,7 @@ export class HospitalComponent implements OnInit {
   private renderer!: THREE.WebGLRenderer;
   private scene: THREE.Scene = new THREE.Scene();
   private camera!: THREE.PerspectiveCamera;
+  private camera2!: THREE.PerspectiveCamera;
   private controls!: OrbitControls;
 
   private getAspectRatio(): number {
@@ -147,9 +142,36 @@ export class HospitalComponent implements OnInit {
   }
 
   private render() {
-    this.controls.update();
     requestAnimationFrame(() => this.render());
+
+    const width = this.canvas.clientWidth;
+    const height = this.canvas.clientHeight;
+
+    this.controls.update();
+
+    this.renderer.setViewport(0, 0, width, height);
+    this.renderer.setScissor(0, 0, width, height);
+    this.renderer.setScissorTest(true);
     this.renderer.render(this.scene, this.camera);
+
+    const smallViewportWidth = width / 4; // 1/4 da largura do ecrã
+    const smallViewportHeight = height / 4; // 1/4 da altura do ecrã
+    const offsetX = width - smallViewportWidth; // Desloca para a direita
+
+    this.renderer.setViewport(
+      offsetX,
+      0,
+      smallViewportWidth,
+      smallViewportHeight
+    );
+    this.renderer.setScissor(
+      offsetX,
+      0,
+      smallViewportWidth,
+      smallViewportHeight
+    );
+    this.renderer.setScissorTest(true);
+    this.renderer.render(this.scene, this.camera2);
   }
 
   private renderScene() {
@@ -162,6 +184,15 @@ export class HospitalComponent implements OnInit {
     );
     this.camera.position.set(-160, 60, 100);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+    this.camera2 = new THREE.PerspectiveCamera(
+      this.fieldOfView,
+      aspectRatio,
+      this.nearClippingPlane,
+      this.farClippingPlane
+    );
+    this.camera2.position.set(160, 60, 100);
+    this.camera2.lookAt(new THREE.Vector3(0, 0, 0));
 
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     this.renderer.setPixelRatio(devicePixelRatio);
