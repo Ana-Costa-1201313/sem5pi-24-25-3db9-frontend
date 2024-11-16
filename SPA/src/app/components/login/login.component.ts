@@ -31,7 +31,7 @@ export class LoginComponent {
   }
 
   getSession() {
-    const session = localStorage.getItem('session');
+    const session = localStorage.getItem('SessionUtilizadorInfo');
     return session ? JSON.parse(session) : null;
   }
 
@@ -51,18 +51,23 @@ export class LoginComponent {
         const sessionData = {
           username: response?.value?.username,
           loggedIn: true,
-          role: response?.value?.role
+          role: response?.value?.role,
         };
-        localStorage.setItem('SessionUtilizadorInfo', JSON.stringify(sessionData));
+
+        // expira quando é fechada a pagina correspondente
+        sessionStorage.setItem('SessionUtilizadorInfo', JSON.stringify(sessionData));
 
         this.cdr.detectChanges();
 
+        this.setJwtCookie(response?.value?.jwt);
+
+        console.log('Cookies:', document.cookie);
 
         // Redirect user to the home page or dashboard
         //switch (response?.value?.role?.toUpperCase()) {
         //  case Role.Admin:
         //    this.router.navigate(['/dashboard'])
-            
+
         //}
         //this.router.navigate(['/dashboard']);
       },
@@ -81,5 +86,21 @@ export class LoginComponent {
   onRegister() {
     // Navigate to the registration page
     this.router.navigate(['/register']);
+  }
+
+  private setJwtCookie(jwt: string | null): void {
+    // Set the expiration time to 5 hours from now
+    const expirationDate = new Date();
+    expirationDate.setTime(expirationDate.getTime() + (5 * 60 * 60 * 1000));  // 5 hours in milliseconds
+
+    // Set the JWT token in a cookie with HttpOnly, Secure, SameSite, and expiry
+    document.cookie = `jwt=${jwt}; expires=${expirationDate.toUTCString()}; path=/; Secure; HttpOnly; SameSite=Strict`;
+  }
+
+  private getCookie(name: string): string | undefined {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()!.split(';').shift();
+    return undefined;
   }
 }

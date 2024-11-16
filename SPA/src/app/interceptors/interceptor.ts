@@ -8,3 +8,30 @@ export const authenticationInterceptor: HttpInterceptorFn = (req: HttpRequest<un
 
     return next(modifiedReq);
 };
+
+export const authenticationInterceptor2: HttpInterceptorFn = (req: HttpRequest<unknown>, next:
+  HttpHandlerFn) => {
+
+  // Function to get the JWT token from cookies
+  const getCookie = (name: string): string | undefined => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()!.split(';').shift();
+    return undefined;
+  };
+
+  // Get  JWT token cookie
+  const token = getCookie('jwt');
+
+  // token exists, clone request add Authorization header
+  if (token) {
+    const modifiedReq = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return next(modifiedReq); // Send request with token
+  }
+
+  return next(req); // If no token, send the request as is
+};
