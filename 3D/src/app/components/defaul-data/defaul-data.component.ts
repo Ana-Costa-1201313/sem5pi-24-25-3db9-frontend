@@ -1,5 +1,5 @@
 export const wallData = {
-  frontTexturePath: './assets/textures/wall1.png',
+  frontTexturePath: './assets/textures/wall2.jpg',
   rearTexturePath: './assets/textures/whitefloor.png',
   frontColor: 0xa1ddfc,
   rearColor: 0xffffff,
