@@ -3,7 +3,7 @@ import { HttpHandlerFn, HttpInterceptorFn, HttpRequest } from "@angular/common/h
 export const authenticationInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next:
     HttpHandlerFn) => {
     const modifiedReq = req.clone({
-        headers: req.headers.set('Authorization', `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhZG1pbkBob3RtYWlsLmNvbSIsInJvbGUiOiJBZG1pbiIsImp0aSI6IjFkNzQ1MGEyLTFmYWYtNDE5MC1hNDIwLTExZTYwNDA5Yjg0YSIsImlhdCI6MTczMTc3NzQwNSwibmJmIjoxNzMxNzc3NDA1LCJleHAiOjE3MzIwMzY2MDUsImlzcyI6IkF1dGhfQmFja09mZmljIiwiYXVkIjoiQVVUSCJ9.j5Vd4c9LRz2iySclDtLanNgHH64o_ADx9AW_oHxyk6w`),
+        headers: req.headers.set('Authorization', `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhZG1pbkBob3RtYWlsLmNvbSIsInJvbGUiOiJBZG1pbiIsImp0aSI6Ijg4YzQ3MzY2LWMwN2EtNDkyOS1iNzkzLTRjZWU2OWY3NDZkYSIsImlhdCI6MTczMTc4NDEwNCwibmJmIjoxNzMxNzg0MTA0LCJleHAiOjE3MzIwNDMzMDQsImlzcyI6IkF1dGhfQmFja09mZmljIiwiYXVkIjoiQVVUSCJ9.MIWanAnzQri2oHvZ9H4QCiVJGTlEKZ59yrfE70dxJBY`),
     });
 
     return next(modifiedReq);
