@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { HospitalComponent } from './hospital/hospital.component';
+import { HospitalComponent } from './components/hospital/hospital.component';
 
 export const routes: Routes = [
 
