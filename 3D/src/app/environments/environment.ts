@@ -6,6 +6,7 @@ export const environment = {
       operationTypes: '/OperationTypes',
       specialization: '/Specializations',
       appointment: '/Appointment',
+      appointmentByDate: '/Appointment/byDate',
       room: '/SurgeryRoom'
     },
   };

@@ -6,11 +6,11 @@ import { environment } from '../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AppointmentService {
-  url = `${environment.apiUrl}${environment.endpoints.appointment}`;
+  url = `${environment.apiUrl}${environment.endpoints.appointmentByDate}`;
 
   constructor(private http: HttpClient) {}
 
-  getAppointmentList(): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(this.url);
+  getAppointmentList(date: string): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(`${this.url}/${date}`);
   }
 }

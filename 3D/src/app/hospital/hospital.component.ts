@@ -45,24 +45,26 @@ export class HospitalComponent implements OnInit {
   private createScene(): void {
     this.scene.background = new THREE.Color(0x0099ff);
 
-    this.apList.forEach((appointment, index) => {
-      console.log(`Appointment ${index + 1}:`);
-      console.log(`  Appointment ID: ${appointment.appointmentId}`);
-      console.log(`  Date & Time: ${appointment.dateTime}`);
-      console.log(`  OP Request ID: ${appointment.opRequestId}`);
-      console.log(`  Status: ${appointment.status}`);
-      console.log(`  Surgery Room ID: ${appointment.surgeryRoomId}`);
-      console.log(`  Surgery Room Number: ${appointment.surgeryRoomNumber}`);
-    });
+    // this.apList.forEach((appointment, index) => {
+    //   console.log(`Appointment ${index + 1}:`);
+    //   console.log(`  Appointment ID: ${appointment.appointmentId}`);
+    //   console.log(`  Date & Time: ${appointment.dateTime}`);
+    //   console.log(`  OP Request ID: ${appointment.opRequestId}`);
+    //   console.log(`  Status: ${appointment.status}`);
+    //   console.log(`  Surgery Room ID: ${appointment.surgeryRoomId}`);
+    //   console.log(`  Surgery Room Number: ${appointment.surgeryRoomNumber}`);
+    // });
 
     var size = 0;
     if (this.roomsJson && this.roomsJson.rooms) {
       this.roomsJson.rooms.forEach((roomData: any, index: number) => {
 
-        // Check if apList contains an appointment matching the room number
         const isRoomOccupied = this.apList.some(appointment =>
-          appointment.surgeryRoomNumber === roomData.roomNumber
+          String(appointment.surgeryRoomNumber) === String(roomData.name)
         );
+
+
+        console.log(isRoomOccupied);
 
         const room = new RoomComponent(
           roomFloorData.texturePath,
@@ -175,7 +177,7 @@ export class HospitalComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.service.getAppointmentList().subscribe((ap) => {
+    this.service.getAppointmentList("2024-12-11").subscribe((ap) => {
       this.apList = ap;
       console.log(ap);
 
