@@ -43,61 +43,67 @@ describe('Operation Type Tests', () => {
         });
     });
 
-    // it('Update Operation Type Test', () => {
-    //   cy.visit('/staff');
+    it('Get Operation Type Details Test', () => {
+        cy.visit('/operationtype');
+  
+        cy.get('input[aria-label="Filter Name"]').type(randomName+'{enter}');
+  
+        cy.get('.p-datatable-striped tbody')
+          .contains('tr', randomName)
+          .within(() => {
+            cy.get('#buttonDetailOperationType').click();
+          });
+  
+          cy.get('#name').should('contain.text', randomName);
+          cy.get('#preparation').should('contain.text', '20');
+          cy.get('#surgery').should('contain.text', '50');
+          cy.get('#cleaning').should('contain.text', '25');
+        });
 
-    //   cy.get('input[aria-label="Filter Name"]').type('TestName{enter}');
+    it('Update Operation Type Test', () => {
+      cy.visit('/operationtype');
 
-    //   cy.get('.p-datatable-striped tbody')
-    //     .contains('tr', 'TestName')
-    //     .within(() => {
-    //       cy.get('#buttonEdit').click();
-    //     });
-    //   cy.get('#phone').type('992945969');
+      cy.get('input[aria-label="Filter Name"]').type(randomName+'{enter}');
 
-    //   cy.get('#buttonSubmit').find('button').click({ force: true });
+      cy.get('.p-datatable-striped tbody')
+        .contains('tr', randomName)
+        .within(() => {
+          cy.get('#buttonUpdateOperationType').click();
+        });
+      cy.get('#name').clear().type(randomName+"123");
+      cy.get('#preparation').clear().type("10");
+      cy.get('#surgery').clear().type("100");
+      cy.get('#cleaning').clear().type("20");
 
-    //   cy.get('#message').should(($div) => {
-    //     const text = $div.text();
+      cy.get('#buttonUpdateSubmit').find('button').click({ force: true });
 
-    //     expect('Success!Your Staff Profile was edited with success').equal(text);
-    //   });
-    // });
+      cy.get('#message').should(($div) => {
+        const text = $div.text();
 
-    // it('Get Operation Type Details Test', () => {
-    //   cy.visit('/staff');
+        expect('Success!Operation Type updated successfully!').equal(text);
+      });
+    });
 
-    //   cy.get('input[aria-label="Filter Name"]').type('TestName{enter}');
+    it('Deactivate Operation Type Test', () => {
+      cy.visit('/operationtype');
 
-    //   cy.get('.p-datatable-striped tbody')
-    //     .contains('tr', 'TestName')
-    //     .within(() => {
-    //       cy.get('#buttonDetails').click();
-    //     });
+      cy.get('input[aria-label="Filter Name"]').type(randomName+"123"+'{enter}');
 
-    //     cy.get('#licenseNumber').should('contain.text', '17825');
-    //   });
+      cy.get('.p-datatable-striped tbody')
+        .contains('tr', randomName+"123")
+        .within(() => {
+          cy.get('#buttonDeactivateOperationType').click();
+        });
 
-    // it('Deactivate Operation Type Test', () => {
-    //   cy.visit('/staff');
+      cy.get('#buttonConfirmDeactivate').click();
 
-    //   cy.get('input[aria-label="Filter Name"]').type('TestName{enter}');
+      cy.get('#message').should(($div) => {
+        const text = $div.text();
 
-    //   cy.get('.p-datatable-striped tbody')
-    //     .contains('tr', 'TestName')
-    //     .within(() => {
-    //       cy.get('#buttonDeactivate').click();
-    //     });
-
-    //   cy.get('#buttonConfirmDelete').click();
-
-    //   cy.get('#message').should(($div) => {
-    //     const text = $div.text();
-
-    //     expect('Success!Your Staff Profile was deactivated with success').equal(
-    //       text
-    //     );
-    //   });
-    // });
+        expect('Success!The Operation Type "'+ randomName + "123" +'" was deactivated with success').equal(
+          text
+        );
+      });
+    });
 });
 

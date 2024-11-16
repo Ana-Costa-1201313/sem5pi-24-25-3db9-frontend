@@ -46,11 +46,11 @@
         <td class="text-center">
 
 
-          <p-button icon="pi pi-eye" class="me-3" [rounded]="true" [text]="true" (click)="openDetailsModal(opType)" />
+          <p-button icon="pi pi-eye" class="me-3" [rounded]="true" [text]="true" (click)="openDetailsModal(opType)" id="buttonDetailOperationType"/>
           <p-button icon="pi pi-pencil" class="me-3" [rounded]="true" [text]="true" [disabled]="!opType.active"
-            (click)="openUpdateModal(opType)" />
+            (click)="openUpdateModal(opType)" id="buttonUpdateOperationType"/>
           <p-button icon="pi pi-trash" class="me-3" [rounded]="true" [text]="true" [disabled]="!opType.active"
-            (click)="openDeactivateModal(opType)" />
+            (click)="openDeactivateModal(opType)" id="buttonDeactivateOperationType"/>
         </td>
       </tr>
     </ng-template>
@@ -66,11 +66,11 @@
     <h5 class="title-separator separator">General Information</h5>
     <hr class="line-separator separator" />
     <div class="row">
-      <label for="name"><b>Name:</b> {{ currentOpType?.name }}</label>
-      <label for="preparation" class="mt-2"><b>Anesthesia/Preparation:</b> {{
+      <label id="name" for="name"><b>Name:</b> {{ currentOpType?.name }}</label>
+      <label id="preparation" for="preparation" class="mt-2"><b>Anesthesia/Preparation:</b> {{
         currentOpType?.anesthesiaPatientPreparationInMinutes }} min</label>
-      <label for="surgery" class="mt-2"><b>Surgery:</b> {{ currentOpType?.surgeryInMinutes }} min</label>
-      <label for="cleaning" class="mt-2"><b>Cleaning:</b> {{ currentOpType?.cleaningInMinutes }} min</label>
+      <label id="surgery" for="surgery" class="mt-2"><b>Surgery:</b> {{ currentOpType?.surgeryInMinutes }} min</label>
+      <label id="cleaning" for="cleaning" class="mt-2"><b>Cleaning:</b> {{ currentOpType?.cleaningInMinutes }} min</label>
       <label for="requiredStaff" class="mt-2"><b>Required Staff:</b>
       </label>
       <ul class="ps-5">
@@ -97,7 +97,7 @@
 
   <div class="mt-2 mb-4">Are you sure you want to deactivate this operation type?</div>
   <p-button label="Confirm" icon="pi pi-check" class="me-3" [rounded]="true" [text]="true"
-    (click)="deactivateOperationType()" />
+    (click)="deactivateOperationType()" id="buttonConfirmDeactivate"/>
   <p-button label="Cancel" icon="pi pi-times" class="me-3" [rounded]="true" [text]="true" severity="danger"
     (click)="deactivate = false" />
 </p-dialog>
@@ -166,24 +166,24 @@
   <form [formGroup]="updateOperationTypeForm" (ngSubmit)="updateOperationType()">
 
     <span class="p-float-label mt-4">
-      <input pInputText formControlName="name" autoWidth="false" [style]="{ minWidth: '530px', maxWidth: '530px' }"/>
+      <input pInputText id="name" formControlName="name" autoWidth="false" [style]="{ minWidth: '530px', maxWidth: '530px' }"/>
       <label for="name">{{ currentOpType?.name }}</label>
     </span>
 
     <span class="p-float-label mt-4">
-      <p-inputNumber inputId="integeronly" formControlName="anesthesiaPatientPreparationInMinutes" autoWidth="false"
+      <p-inputNumber inputId="integeronly" id="preparation" formControlName="anesthesiaPatientPreparationInMinutes" autoWidth="false"
         [min]="1" />
       <label for="anesthesiaPatientPreparationInMinutes">{{
         currentOpType?.anesthesiaPatientPreparationInMinutes}}</label>
     </span>
 
     <span class="p-float-label mt-4">
-      <p-inputNumber inputId="integeronly" formControlName="surgeryInMinutes" autoWidth="false" [min]="1" />
+      <p-inputNumber inputId="integeronly" id="surgery" formControlName="surgeryInMinutes" autoWidth="false" [min]="1" />
       <label for="surgeryInMinutes">{{ currentOpType?.surgeryInMinutes }}</label>
     </span>
 
     <span class="p-float-label mt-4">
-      <p-inputNumber inputId="integeronly" formControlName="cleaningInMinutes" autoWidth="false" [min]="1" />
+      <p-inputNumber inputId="integeronly" id="cleaning" formControlName="cleaningInMinutes" autoWidth="false" [min]="1" />
       <label for="cleaningInMinutes">{{ currentOpType?.cleaningInMinutes }}</label>
     </span>
 
@@ -208,7 +208,7 @@
     
       <button pButton icon="pi pi-plus" class="p-button-secondary" type="button" (click)="addUpdateRequiredStaff()"
         label="Add Required Staff"></button>
-      <p-button class="mt-4 d-block" type="Submit" label="Submit" [disabled]="updateOperationTypeForm.invalid" />
+      <p-button class="mt-4 d-block" id="buttonUpdateSubmit" type="Submit" label="Submit" [disabled]="updateOperationTypeForm.invalid" />
     </div>
     
   </form>
