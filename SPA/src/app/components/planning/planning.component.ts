@@ -16,6 +16,8 @@ import { RoomService } from '../../services/room.service';
 import { Room } from '../../model/room.model';
 import { OperationRequestService } from '../../services/operationRequest.service';
 import { OperationRequest } from '../../model/operationRequest.model';
+import { PlanningDTO } from '../../model/planningDto.model';
+import { PlanningService } from '../../services/planning.service';
 
 @Component({
   selector: 'app-planning',
@@ -43,7 +45,8 @@ export class PlanningComponent implements OnInit {
 
   constructor(
     private roomService: RoomService,
-    private opReqService: OperationRequestService
+    private opReqService: OperationRequestService,
+    private planningService: PlanningService
   ) { }
 
 
@@ -238,7 +241,7 @@ export class PlanningComponent implements OnInit {
     const isDateSelected = !!this.date;
     const isOpRequestSelected = this.selectedOpRequests.length > 0;
     const isValueSelected = !!this.planType;
-    const isValueSelected2 = this.planType !== 'off'; 
+    const isValueSelected2 = this.planType !== 'off';
 
 
     if (!isRoomNumberSelected || !isDateSelected || !isOpRequestSelected || !isValueSelected || !isValueSelected2) {
@@ -258,13 +261,15 @@ export class PlanningComponent implements OnInit {
 
 
   submitForm() {
-    const formData = [
-      { field: 'planType', value: this.planType },
-      { field: 'selectedRoomNumber', value: this.selectedRoomNumber },
-      { field: 'date', value: this.date },
-      { field: 'selectedOpRequests', value: this.selectedOpRequests },
-    ];
 
+    const planningData = new PlanningDTO(
+      this.planType,
+      this.selectedRoomNumber,
+      this.date,
+      this.selectedOpRequests
+    );
+    console.log(planningData);
+    this.planningService.postPlanning(planningData);
   }
 
 }
