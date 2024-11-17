@@ -1,1 +1,47 @@
-<p>planning works!</p>
+<div class="text-center">
+    <h1 class="fw-bold mt-2 main-title mb-4">Planning</h1>
+</div>
+
+<div class="container pt-5">
+    <form>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <p-dropdown class="d-block" placeholder="Room Number" [options]="roomNumbers" [showClear]="true"
+                        autoWidth="false" [style]="{ minWidth: '100%' }" name="roomNumber"></p-dropdown>
+                </div>
+
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <p-calendar [(ngModel)]="date1" name="date1" [showIcon]="true" inputId="buttondisplay"
+                            [showOnFocus]="true" display="block" autoWidth="false"
+                            [style]="{ minWidth: '100%' }"></p-calendar>
+                    </span>
+                </div>
+
+                <div class="mb-4">
+                    <span class="p-float-label w-100">
+                        <p-selectButton [options]="stateOptions" [(ngModel)]="value" name="stateOptions"
+                            optionLabel="label" optionValue="value" display="block" autoWidth="false">
+                        </p-selectButton>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <span class="p-float-label">
+                        <p-listbox [options]="cities" [(ngModel)]="selectedCities" name="selectedCities"
+                            optionLabel="name" [multiple]="true" [metaKeySelection]="false"
+                            [listStyle]="{ 'max-height': '400px', 'height': '400px' }"
+                            [style]="{ width: '100%' }"></p-listbox>
+                    </span>
+                </div>
+                <div class="mb-4">
+                    <p-messages [(value)]="message" id="message" />
+                </div>
+            </div>
+        </div>
+        <p-button class="mt-4 d-block" id="buttonCreateSubmit" type="Submit" label="Create Planning" />
+    </form>
+</div>

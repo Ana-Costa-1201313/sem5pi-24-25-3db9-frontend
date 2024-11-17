@@ -3,6 +3,7 @@ import { HomeComponent } from './components/home/home.component';
 import { StaffComponent } from './components/staff/staff.component';
 import { OperationtypeComponent } from './components/operationtype/operationtype.component';
 import { SpecializationComponent } from './components/specialization/specialization.component';
+import { PlanningComponent } from './components/planning/planning.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,11 @@ export const routes: Routes = [
     path: 'specialization',
     component: SpecializationComponent,
     title: 'Specialization page',
+  },
+  {
+    path: 'planning',
+    component: PlanningComponent,
+    title: 'Planning page',
   },
   {
     path: '**',
