@@ -14,6 +14,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { RoomService } from '../../services/room.service';
 import { Room } from '../../model/room.model';
+import { OperationRequestService } from '../../services/operationRequest.service';
+import { OperationRequest } from '../../model/operationRequest.model';
 
 interface City {
   name: string;
@@ -43,7 +45,10 @@ interface City {
 })
 export class PlanningComponent implements OnInit {
 
-  constructor(private service: RoomService) {
+  constructor(
+    private roomService: RoomService,
+    private opReqService: OperationRequestService
+  ) {
 
   }
 
@@ -51,9 +56,14 @@ export class PlanningComponent implements OnInit {
   rooms: Room[] = [];
   roomNumbers: string[] = [];
   message: Message[] = [];
+  opRequest: OperationRequest[] = [];
 
 
+  selectedRoomNumber: string = '';
   date1: Date | undefined;
+
+
+
   stateOptions: any[] = [
     { label: 'Best Planning', value: 'best' },
     { label: 'Good Planning', value: 'good' },
@@ -64,7 +74,7 @@ export class PlanningComponent implements OnInit {
 
   ngOnInit() {
 
-    this.service.getRoomList().subscribe((room) => {
+    this.roomService.getRoomList().subscribe((room) => {
       this.rooms = room.map(r => ({
         ...r
       }));
@@ -75,6 +85,15 @@ export class PlanningComponent implements OnInit {
 
       this.rooms.forEach((roomN) => numbers.push(roomN.roomNumber));
       this.roomNumbers = numbers;
+
+      this.rooms.forEach((room, index) => {
+
+        if (room.maintenanceSlots) {
+          const duration = this.calculateMaintenanceDifference(room.maintenanceSlots);
+          console.log(`Maintenance duration for Room ${index + 1}: ${duration} minutes`);
+        }
+      });
+
     });
 
 
@@ -95,4 +114,57 @@ export class PlanningComponent implements OnInit {
       },
     ];
   }
+
+  onRoomNumberChange() {
+    if (this.selectedRoomNumber && this.date1) {
+      this.getOperationTypeList();
+    }
+  }
+
+  onDateChange() {
+    if (this.selectedRoomNumber && this.date1) {
+      this.getOperationTypeList();
+    }
+  }
+
+  getOperationTypeList() {
+    if (!this.selectedRoomNumber || !this.date1) {
+      return;
+    }
+    
+    this.opReqService.getOperationRequestList().subscribe((opReq) => {
+      this.opRequest = opReq;
+      console.log(this.opRequest);
+    });
+  }
+
+  calculateMaintenanceDifference(maintenanceSlots: string[]): number {
+    if (!maintenanceSlots || maintenanceSlots.length === 0) {
+      return 0;
+    }
+
+    const slotString = maintenanceSlots[0];
+
+    if (!slotString || typeof slotString !== 'string' || slotString.trim() === '') {
+      return 0;
+    }
+
+    const [start, end] = slotString.split(' - ');
+
+    const startDate = new Date(
+      start.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2/$1/$3')
+    );
+    const endDate = new Date(
+      end.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2/$1/$3')
+    );
+
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      console.error(`Invalid maintenance slot format: ${slotString}`);
+      return 0;
+    }
+
+    const duration = (endDate.getTime() - startDate.getTime()) / (1000 * 60);
+    return duration;
+  }
+
 }

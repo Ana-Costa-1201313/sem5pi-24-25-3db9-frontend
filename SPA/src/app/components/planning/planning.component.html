@@ -8,14 +8,14 @@
             <div class="col-md-6">
                 <div class="mb-4">
                     <p-dropdown class="d-block" placeholder="Room Number" [options]="roomNumbers" [showClear]="true"
-                        autoWidth="false" [style]="{ minWidth: '100%' }" name="roomNumber"></p-dropdown>
+                        autoWidth="false" [style]="{ minWidth: '100%' }" name="roomNumber" [(ngModel)]="selectedRoomNumber" (ngModelChange)="onRoomNumberChange()"></p-dropdown>
                 </div>
 
                 <div class="mb-4">
                     <span class="p-float-label">
                         <p-calendar [(ngModel)]="date1" name="date1" [showIcon]="true" inputId="buttondisplay"
                             [showOnFocus]="true" display="block" autoWidth="false"
-                            [style]="{ minWidth: '100%' }"></p-calendar>
+                            [style]="{ minWidth: '100%' }" (ngModelChange)="onDateChange()"></p-calendar>
                     </span>
                 </div>
 
@@ -38,7 +38,7 @@
                     </span>
                 </div>
                 <div class="mb-4">
-                    <p-messages [(value)]="message" id="message" />
+                    <p-messages [(value)]="message" id="message" [closable]="false"/>
                 </div>
             </div>
         </div>

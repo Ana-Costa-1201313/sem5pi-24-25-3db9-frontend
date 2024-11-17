@@ -6,5 +6,7 @@ export const environment = {
     operationTypes: '/OperationTypes',
     specialization: '/Specializations',
     rooms: '/SurgeryRoom',
+    operationRequest: '/OperationRequest',
+    operationRequestFilterByStatus:"/OperationRequest/list/?status=Picked"
   },
 };
