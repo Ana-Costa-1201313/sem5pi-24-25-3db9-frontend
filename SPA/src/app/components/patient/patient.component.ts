@@ -103,5 +103,21 @@ export class PatientComponent implements OnInit {
   isAllergiesArray(allergies: any): boolean {
   return Array.isArray(allergies);
 }
+
+deletePatient(patient: Patient): void{
+  if(confirm(`Are you sure you want to delete ${patient.fullName} profile?`)){
+    this.patientService.deletePatient(patient.id).subscribe(
+      () => {
+        this.patientList = this.patientList.filter(p => p.id !== patient.id);
+        this.filteredPatientList = [...this.patientList];
+        alert(`${patient.fullName} profile has been deleted successfully.`);
+      },
+      (error) => {
+        console.error('Error deleting the patient profile', error);
+        alert('There was an error deleting the patient profile. Please try again.');
+      }
+    );
+  }
+}
   
 }

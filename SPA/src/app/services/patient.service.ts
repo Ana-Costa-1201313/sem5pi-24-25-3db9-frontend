@@ -22,4 +22,8 @@ export class PatientService{
     updatePatient(id: string, patient: EditPatient): Observable<Patient> {
         return this.http.patch<Patient>(`${this.url}/${id}`, patient);
       }
+    
+    deletePatient(id: string): Observable<void>{
+        return this.http.delete<void>(`${this.url}/${id}`);
+    }
 }
