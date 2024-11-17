@@ -18,7 +18,7 @@
 
                 <div class="mb-4">
                     <span class="p-float-label">
-                        <p-calendar [(ngModel)]="date1" name="date1" [showIcon]="true" inputId="buttondisplay"
+                        <p-calendar [(ngModel)]="date" name="date" [showIcon]="true" inputId="buttondisplay"
                             [showOnFocus]="true" display="block" autoWidth="false" [style]="{ minWidth: '100%' }"
                             (ngModelChange)="onDateChange()"></p-calendar>
                     </span>
@@ -26,8 +26,8 @@
 
                 <div class="mb-4">
                     <span class="p-float-label w-100">
-                        <p-selectButton [options]="stateOptions" [(ngModel)]="value" name="stateOptions"
-                            optionLabel="label" optionValue="value" display="block" autoWidth="false">
+                        <p-selectButton [options]="stateOptions" [(ngModel)]="planType" name="stateOptions"
+                            optionLabel="label" optionValue="planType" display="block" autoWidth="false">
                         </p-selectButton>
                     </span>
                 </div>

@@ -56,16 +56,16 @@ export class PlanningComponent implements OnInit {
 
 
   selectedRoomNumber: string = '';
-  date1: Date | undefined;
+  date: Date | undefined;
 
 
 
   stateOptions: any[] = [
-    { label: 'Best Planning', value: 'best' },
-    { label: 'Good Planning', value: 'good' },
+    { label: 'Best Planning', planType: 'best' },
+    { label: 'Good Planning', planType: 'good' },
   ];
 
-  value: string = 'off';
+  planType: string = 'off';
 
   ngOnInit() {
 
@@ -105,19 +105,19 @@ export class PlanningComponent implements OnInit {
   }
 
   onRoomNumberChange() {
-    if (this.selectedRoomNumber && this.date1) {
+    if (this.selectedRoomNumber && this.date) {
       this.getOperationTypeList();
     }
   }
 
   onDateChange() {
-    if (this.selectedRoomNumber && this.date1) {
+    if (this.selectedRoomNumber && this.date) {
       this.getOperationTypeList();
     }
   }
 
   getOperationTypeList() {
-    if (!this.selectedRoomNumber || !this.date1) {
+    if (!this.selectedRoomNumber || !this.date) {
       return;
     }
 
@@ -127,7 +127,7 @@ export class PlanningComponent implements OnInit {
       const filteredRequests = this.opRequest.filter((req) => {
         const deadline = new Date(req.deadlineDate);
 
-        return this.isSameDay(deadline, this.date1);
+        return this.isSameDay(deadline, this.date);
       });
 
       console.log(filteredRequests);
@@ -235,10 +235,10 @@ export class PlanningComponent implements OnInit {
   isSubmitDisabled(): boolean {
     const selectedRoom = this.selectedRoom;
     const isRoomNumberSelected = !!this.selectedRoomNumber;
-    const isDateSelected = !!this.date1;
+    const isDateSelected = !!this.date;
     const isOpRequestSelected = this.selectedOpRequests.length > 0;
-    const isValueSelected = !!this.value;
-    const isValueSelected2 = this.value !== 'off';
+    const isValueSelected = !!this.planType;
+    const isValueSelected2 = this.planType !== 'off'; 
 
 
     if (!isRoomNumberSelected || !isDateSelected || !isOpRequestSelected || !isValueSelected || !isValueSelected2) {
@@ -258,14 +258,13 @@ export class PlanningComponent implements OnInit {
 
 
   submitForm() {
-    const formData = {
-      value: this.value,
-      selectedRoomNumber: this.selectedRoomNumber,
-      date1: this.date1,
-      selectedOpRequests: this.selectedOpRequests,
-    };
+    const formData = [
+      { field: 'planType', value: this.planType },
+      { field: 'selectedRoomNumber', value: this.selectedRoomNumber },
+      { field: 'date', value: this.date },
+      { field: 'selectedOpRequests', value: this.selectedOpRequests },
+    ];
 
-    console.log('Form submitted', formData);
   }
 
 }
