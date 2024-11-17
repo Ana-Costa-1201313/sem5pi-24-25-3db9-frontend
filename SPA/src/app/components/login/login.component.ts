@@ -91,6 +91,7 @@ export class LoginComponent {
       },
       error => {
         console.error('Registration failed', error);
+        alert('Registration failed. Please check your credentials.');
         // Handle error appropriately
       }
     );
