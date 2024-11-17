@@ -5,5 +5,6 @@ export const environment = {
     totalRecordsStaff: '/totalRecords',
     operationTypes: '/OperationTypes',
     specialization: '/Specializations',
+    rooms: '/SurgeryRoom',
   },
 };

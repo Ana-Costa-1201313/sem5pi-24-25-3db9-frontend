@@ -12,6 +12,8 @@ import { ListboxModule } from 'primeng/listbox';
 import { MessagesModule } from 'primeng/messages';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
+import { RoomService } from '../../services/room.service';
+import { Room } from '../../model/room.model';
 
 interface City {
   name: string;
@@ -41,6 +43,12 @@ interface City {
 })
 export class PlanningComponent implements OnInit {
 
+  constructor(private service: RoomService) {
+
+  }
+
+
+  rooms: Room[] = [];
   roomNumbers: string[] = [];
   message: Message[] = [];
 
@@ -55,6 +63,22 @@ export class PlanningComponent implements OnInit {
   selectedCities!: City[];
 
   ngOnInit() {
+
+    this.service.getRoomList().subscribe((room) => {
+      this.rooms = room.map(r => ({
+        ...r
+      }));
+
+      console.log(this.rooms);
+
+      const numbers: string[] = []
+
+      this.rooms.forEach((roomN) => numbers.push(roomN.roomNumber));
+      this.roomNumbers = numbers;
+    });
+
+
+
     this.cities = [
       { name: 'New York', code: 'NY' },
       { name: 'Rome', code: 'RM' },
