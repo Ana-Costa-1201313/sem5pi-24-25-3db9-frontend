@@ -28,6 +28,7 @@ export const authenticationInterceptor: HttpInterceptorFn = (req: HttpRequest<un
     const modifiedReq = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json; charset=utf-8',
       },
     });
     return next(modifiedReq); // Send request with token
