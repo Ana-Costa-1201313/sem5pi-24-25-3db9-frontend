@@ -48,15 +48,15 @@ export class PlanningComponent implements OnInit {
   constructor(
     private roomService: RoomService,
     private opReqService: OperationRequestService
-  ) {
-
-  }
+  ) {}
 
 
   rooms: Room[] = [];
   roomNumbers: string[] = [];
   message: Message[] = [];
   opRequest: OperationRequest[] = [];
+  filteredOpRequest: OperationRequest[] = [];
+  selectedOpRequests!: OperationRequest[];
 
 
   selectedRoomNumber: string = '';
@@ -70,7 +70,7 @@ export class PlanningComponent implements OnInit {
   ];
   value: string = 'off';
   cities!: City[];
-  selectedCities!: City[];
+
 
   ngOnInit() {
 
@@ -131,11 +131,26 @@ export class PlanningComponent implements OnInit {
     if (!this.selectedRoomNumber || !this.date1) {
       return;
     }
-    
+  
     this.opReqService.getOperationRequestList().subscribe((opReq) => {
       this.opRequest = opReq;
-      console.log(this.opRequest);
+  
+      const filteredRequests = this.opRequest.filter((req) => {
+        const deadline = new Date(req.deadlineDate); 
+
+        return this.isSameDay(deadline, this.date1);
+      });
+  
+      console.log(filteredRequests);
+      this.filteredOpRequest = filteredRequests;
     });
+  }
+  
+  isSameDay(date1: Date, date2: Date): boolean {
+    const d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+    const d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
+  
+    return d1.getTime() === d2.getTime();
   }
 
   calculateMaintenanceDifference(maintenanceSlots: string[]): number {

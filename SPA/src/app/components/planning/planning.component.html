@@ -8,14 +8,15 @@
             <div class="col-md-6">
                 <div class="mb-4">
                     <p-dropdown class="d-block" placeholder="Room Number" [options]="roomNumbers" [showClear]="true"
-                        autoWidth="false" [style]="{ minWidth: '100%' }" name="roomNumber" [(ngModel)]="selectedRoomNumber" (ngModelChange)="onRoomNumberChange()"></p-dropdown>
+                        autoWidth="false" [style]="{ minWidth: '100%' }" name="roomNumber"
+                        [(ngModel)]="selectedRoomNumber" (ngModelChange)="onRoomNumberChange()"></p-dropdown>
                 </div>
 
                 <div class="mb-4">
                     <span class="p-float-label">
                         <p-calendar [(ngModel)]="date1" name="date1" [showIcon]="true" inputId="buttondisplay"
-                            [showOnFocus]="true" display="block" autoWidth="false"
-                            [style]="{ minWidth: '100%' }" (ngModelChange)="onDateChange()"></p-calendar>
+                            [showOnFocus]="true" display="block" autoWidth="false" [style]="{ minWidth: '100%' }"
+                            (ngModelChange)="onDateChange()"></p-calendar>
                     </span>
                 </div>
 
@@ -31,14 +32,20 @@
             <div class="col-md-6">
                 <div class="mb-4">
                     <span class="p-float-label">
-                        <p-listbox [options]="cities" [(ngModel)]="selectedCities" name="selectedCities"
-                            optionLabel="name" [multiple]="true" [metaKeySelection]="false"
-                            [listStyle]="{ 'max-height': '400px', 'height': '400px' }"
-                            [style]="{ width: '100%' }"></p-listbox>
+                        <p-listbox [options]="filteredOpRequest" [(ngModel)]="selectedOpRequests"
+                            name="selectedOpRequests" [multiple]="true" [metaKeySelection]="false"
+                            [listStyle]="{ 'max-height': '400px', 'height': '400px' }" [style]="{ width: '100%' }">
+
+                            <ng-template let-item pTemplate="item">
+                                <div>
+                                    <span>{{ item.patientName }} / {{ item.opTypeName.name }}</span>
+                                </div>
+                            </ng-template>
+                        </p-listbox>
                     </span>
                 </div>
                 <div class="mb-4">
-                    <p-messages [(value)]="message" id="message" [closable]="false"/>
+                    <p-messages [(value)]="message" id="message" [closable]="false" />
                 </div>
             </div>
         </div>
