@@ -46,7 +46,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-opReq>
         <tr>
-          <td>{{ opReq.opTypeName }}</td>
+          <td>{{ opReq.opTypeName.name }}</td>
           <td>{{ opReq.deadlineDate }}</td>
           <td>{{ opReq.priority }}</td>
           <td>{{ opReq.patientName }}</td>
@@ -75,7 +75,7 @@
       <hr class="line-separator separator" />
       <div class="row">
         <label for="Id"><b>Id:</b> {{ currentOpRequest?.id }}</label>
-        <label for="OpTypeName"><b>OpTypeName:</b> {{ currentOpRequest?.opTypeName }}</label>
+        <label for="OpTypeName"><b>OpTypeName:</b> {{ currentOpRequest?.opTypeName.name }}</label>
         <label for="OpTypeId" class="mt-2"><b>OpTypeId:</b> {{ currentOpRequest?.opTypeId }}</label>
         <label for="Deadline" class="mt-2"><b>Deadline:</b> {{ currentOpRequest?.deadlineDate }}</label>
         <label for="Priority" class="mt-2"><b>Priority:</b> {{ currentOpRequest?.priority }}</label>

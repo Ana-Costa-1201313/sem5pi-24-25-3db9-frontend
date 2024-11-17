@@ -41,8 +41,6 @@ export class OperationrequestComponent implements OnInit {
   openDetailsModal(opRequest: OperationRequest): void {
     this.currentOpRequest = opRequest;
     this.showDetails = true;
-    console.log(opRequest);
-    console.log(this.currentOpRequest);
   }
 
 }
