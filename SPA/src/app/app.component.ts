@@ -13,21 +13,21 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     // Check if 'session' already exists in localStorage
-    const session = localStorage.getItem('session');
+    //const session = localStorage.getItem('session');
 
     // If no session is found, set a default value
-    if (!session) {
-      const defaultSession = {
-        email: 'guest@example.com',
-        loggedIn: false,
-        role: 'guest'
-      };
-      localStorage.setItem('session', JSON.stringify(defaultSession));
+    //if (!session) {
+    //  const defaultSession = {
+    //    email: 'guest@example.com',
+    //    loggedIn: false,
+    //    role: 'guest'
+    //  };
+    //  localStorage.setItem('session', JSON.stringify(defaultSession));
 
-    } else {
+    //} else {
       // Optionally: you can parse the session and perform additional checks if needed
-      const parsedSession = JSON.parse(session);
-      console.log('Session info:', parsedSession);
-    }
+      //const parsedSession = JSON.parse(session);
+      //console.log('Session info:', parsedSession);
+    //}
   }
 }

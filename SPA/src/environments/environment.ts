@@ -3,6 +3,7 @@ export const environment = {
   authApiUrl: 'https://localhost:7058',
   endpoints: {
     staff: '/Staff',
-    login: '/Auth/Login/loginDto'
+    login: '/Auth/Login/loginDto',
+    registerNewPatientUser: '/users/createPatient'
   },
 };

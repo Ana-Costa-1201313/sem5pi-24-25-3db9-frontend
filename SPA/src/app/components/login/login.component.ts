@@ -21,17 +21,12 @@ export class LoginComponent {
                 private router: Router,
                 private loginService: LoginService,
                 private cdr: ChangeDetectorRef
-              ) {
-    const userSession = this.getSession();
-    if (userSession?.email == 'guest@example.com') {
-      this.userStatus = 'Guest';
-    } else {
-      this.userStatus = userSession.email;
-    }
+  ) {
+    if (this.getSession() != null) this.router.navigate(['/']);
   }
 
-  getSession() {
-    const session = localStorage.getItem('SessionUtilizadorInfo');
+  private getSession() {
+    const session = sessionStorage.getItem('SessionUtilizadorInfo');
     return session ? JSON.parse(session) : null;
   }
 
@@ -54,8 +49,11 @@ export class LoginComponent {
           role: response?.value?.role,
         };
 
+
         // expira quando é fechada a pagina correspondente
         sessionStorage.setItem('SessionUtilizadorInfo', JSON.stringify(sessionData));
+
+        console.log(sessionStorage.getItem('SessionUtilizadorInfo'));
 
         this.cdr.detectChanges();
 
@@ -63,13 +61,13 @@ export class LoginComponent {
 
         console.log('Cookies:', document.cookie);
 
-        // Redirect user to the home page or dashboard
+         //Redirect user to the home page
         //switch (response?.value?.role?.toUpperCase()) {
         //  case Role.Admin:
         //    this.router.navigate(['/dashboard'])
 
         //}
-        //this.router.navigate(['/dashboard']);
+        this.router.navigate(['/']);
       },
       (error) => {
         console.error('Login failed:', error);
@@ -85,7 +83,18 @@ export class LoginComponent {
 
   onRegister() {
     // Navigate to the registration page
-    this.router.navigate(['/register']);
+    this.loginService.doRegister(this.email, this.email).subscribe(
+      response => {
+        console.log('Registration successful', response);
+        // Navigate to the registration page or another view
+        this.router.navigate(['/']);
+      },
+      error => {
+        console.error('Registration failed', error);
+        // Handle error appropriately
+      }
+    );
+    this.router.navigate(['/']);
   }
 
   private setJwtCookie(jwt: string | null): void {
@@ -94,7 +103,8 @@ export class LoginComponent {
     expirationDate.setTime(expirationDate.getTime() + (5 * 60 * 60 * 1000));  // 5 hours in milliseconds
 
     // Set the JWT token in a cookie with HttpOnly, Secure, SameSite, and expiry
-    document.cookie = `jwt=${jwt}; expires=${expirationDate.toUTCString()}; path=/; Secure; HttpOnly; SameSite=Strict`;
+    //document.cookie = `jwt=${jwt}; expires=${expirationDate.toUTCString()}; path=/; Secure; HttpOnly; SameSite=Strict`;
+    document.cookie = `jwt=${jwt}; expires=${expirationDate.toUTCString()}; path=/; Secure; SameSite=Strict`;
   }
 
   private getCookie(name: string): string | undefined {
