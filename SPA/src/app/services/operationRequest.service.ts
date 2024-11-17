@@ -6,11 +6,11 @@ import { OperationRequest } from '../model/operationRequest.model';
 
 @Injectable({ providedIn: 'root' })
 export class OperationRequestService {
-    url = `${environment.apiUrl}${environment.endpoints.operationRequestFilterByStatus}`;
+    url = `${environment.apiUrl}${environment.endpoints.operationRequest}`;
 
     constructor(private http: HttpClient) { }
 
-    getOperationRequestList(): Observable<OperationRequest[]> {
-        return this.http.get<OperationRequest[]>(this.url);
+    getPickedOperationRequestList(): Observable<OperationRequest[]> {
+        return this.http.get<OperationRequest[]>(this.url+"/list/?status=Picked");
     }
 }

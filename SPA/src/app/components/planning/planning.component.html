@@ -3,7 +3,11 @@
 </div>
 
 <div class="container pt-5">
-    <form>
+    <form (ngSubmit)="submitForm()">
+        <div class="mb-12">
+            <p-messages [(value)]="message" id="message" [closable]="false" [showTransitionOptions]="'0ms'"
+                [hideTransitionOptions]="'0ms'" />
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-4">
@@ -34,7 +38,8 @@
                     <span class="p-float-label">
                         <p-listbox [options]="filteredOpRequest" [(ngModel)]="selectedOpRequests"
                             name="selectedOpRequests" [multiple]="true" [metaKeySelection]="false"
-                            [listStyle]="{ 'max-height': '400px', 'height': '400px' }" [style]="{ width: '100%' }">
+                            [listStyle]="{ 'max-height': '400px', 'height': '400px' }" [style]="{ width: '100%' }"
+                            (onChange)="handleSelectionChange($event)">
 
                             <ng-template let-item pTemplate="item">
                                 <div>
@@ -44,11 +49,9 @@
                         </p-listbox>
                     </span>
                 </div>
-                <div class="mb-4">
-                    <p-messages [(value)]="message" id="message" [closable]="false" />
-                </div>
             </div>
         </div>
-        <p-button class="mt-4 d-block" id="buttonCreateSubmit" type="Submit" label="Create Planning" />
+        <p-button class="mt-4 d-block" id="buttonCreateSubmit" type="Submit" label="Create Planning"
+            [disabled]="isSubmitDisabled()" />
     </form>
 </div>

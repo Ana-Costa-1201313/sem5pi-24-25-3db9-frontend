@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Message } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -16,11 +16,6 @@ import { RoomService } from '../../services/room.service';
 import { Room } from '../../model/room.model';
 import { OperationRequestService } from '../../services/operationRequest.service';
 import { OperationRequest } from '../../model/operationRequest.model';
-
-interface City {
-  name: string;
-  code: string;
-}
 
 @Component({
   selector: 'app-planning',
@@ -45,10 +40,11 @@ interface City {
 })
 export class PlanningComponent implements OnInit {
 
+
   constructor(
     private roomService: RoomService,
     private opReqService: OperationRequestService
-  ) {}
+  ) { }
 
 
   rooms: Room[] = [];
@@ -56,7 +52,7 @@ export class PlanningComponent implements OnInit {
   message: Message[] = [];
   opRequest: OperationRequest[] = [];
   filteredOpRequest: OperationRequest[] = [];
-  selectedOpRequests!: OperationRequest[];
+  selectedOpRequests: OperationRequest[] = [];
 
 
   selectedRoomNumber: string = '';
@@ -68,9 +64,8 @@ export class PlanningComponent implements OnInit {
     { label: 'Best Planning', value: 'best' },
     { label: 'Good Planning', value: 'good' },
   ];
-  value: string = 'off';
-  cities!: City[];
 
+  value: string = 'off';
 
   ngOnInit() {
 
@@ -91,26 +86,20 @@ export class PlanningComponent implements OnInit {
         if (room.maintenanceSlots) {
           const duration = this.calculateMaintenanceDifference(room.maintenanceSlots);
           console.log(`Maintenance duration for Room ${index + 1}: ${duration} minutes`);
+
+          const a = this.calculateRoomAvailability(room.maintenanceSlots);
+          console.log(a);
+
         }
       });
 
     });
 
-
-
-    this.cities = [
-      { name: 'New York', code: 'NY' },
-      { name: 'Rome', code: 'RM' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Paris', code: 'PRS' },
-    ];
-
     this.message = [
       {
         severity: 'info',
-        summary: '',
-        detail: 'The % of total time occupied is X',
+        summary: 'Selection Updated',
+        detail: `Current total time is 0% of the room's available time.`,
       },
     ];
   }
@@ -131,25 +120,25 @@ export class PlanningComponent implements OnInit {
     if (!this.selectedRoomNumber || !this.date1) {
       return;
     }
-  
-    this.opReqService.getOperationRequestList().subscribe((opReq) => {
+
+    this.opReqService.getPickedOperationRequestList().subscribe((opReq) => {
       this.opRequest = opReq;
-  
+
       const filteredRequests = this.opRequest.filter((req) => {
-        const deadline = new Date(req.deadlineDate); 
+        const deadline = new Date(req.deadlineDate);
 
         return this.isSameDay(deadline, this.date1);
       });
-  
+
       console.log(filteredRequests);
       this.filteredOpRequest = filteredRequests;
     });
   }
-  
+
   isSameDay(date1: Date, date2: Date): boolean {
     const d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
     const d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
-  
+
     return d1.getTime() === d2.getTime();
   }
 
@@ -180,6 +169,103 @@ export class PlanningComponent implements OnInit {
 
     const duration = (endDate.getTime() - startDate.getTime()) / (1000 * 60);
     return duration;
+  }
+
+  calculateRoomAvailability(maintenanceSlots: string[]): number {
+    const maintenanceDuration = this.calculateMaintenanceDifference(maintenanceSlots);
+
+    const availableTime = 1440 - maintenanceDuration;
+    return availableTime;
+  }
+
+  calculateTotalSelectedTime(selectedRequests: OperationRequest[]): number {
+    return selectedRequests.reduce((total, request) => {
+      return total + ((request.opTypeName.anesthesiaPatientPreparationInMinutes + request.opTypeName.surgeryInMinutes + request.opTypeName.cleaningInMinutes) || 0);
+    }, 0);
+  }
+
+  canSelectMore(operationDuration: number): boolean {
+    const totalSelectedTime = this.calculateTotalSelectedTime(this.selectedOpRequests);
+    const availableTime = this.calculateRoomAvailability(this.rooms.find(room => room.roomNumber === this.selectedRoomNumber)?.maintenanceSlots || []);
+    const allowedTime = availableTime * 0.8;
+    return (totalSelectedTime + operationDuration) <= allowedTime;
+  }
+
+  handleSelectionChange(event: any) {
+    const selectedRequests: OperationRequest[] = event.value;
+
+    const availableTime = this.calculateRoomAvailability(
+      this.rooms.find(room => room.roomNumber === this.selectedRoomNumber)?.maintenanceSlots || []
+    );
+
+    const allowedTime = availableTime * 0.8;
+
+    const totalSelectedTime = this.calculateTotalSelectedTime(selectedRequests);
+
+    const percentageUsed = Math.floor((totalSelectedTime / availableTime) * 100);
+
+    if (totalSelectedTime > allowedTime) {
+      this.message = [
+        {
+          severity: 'warn',
+          summary: '80% Limit Exceeded',
+          detail: `Current total time is ${percentageUsed}% of the room's available time.`,
+        },
+      ];
+
+      event.value = this.selectedOpRequests;
+    } else {
+      this.selectedOpRequests = [...selectedRequests];
+      this.message = [
+        {
+          severity: 'info',
+          summary: 'Selection Updated',
+          detail: `Current total time is ${percentageUsed}% of the room's available time.`,
+        },
+      ];
+    }
+  }
+
+
+
+  get selectedRoom(): Room | undefined {
+    return this.rooms.find(room => room.roomNumber === this.selectedRoomNumber);
+  }
+
+  isSubmitDisabled(): boolean {
+    const selectedRoom = this.selectedRoom;
+    const isRoomNumberSelected = !!this.selectedRoomNumber;
+    const isDateSelected = !!this.date1;
+    const isOpRequestSelected = this.selectedOpRequests.length > 0;
+    const isValueSelected = !!this.value;
+    const isValueSelected2 = this.value !== 'off';
+
+
+    if (!isRoomNumberSelected || !isDateSelected || !isOpRequestSelected || !isValueSelected || !isValueSelected2) {
+      return true;
+    }
+
+    if (!selectedRoom || !selectedRoom.maintenanceSlots) {
+      return true;
+    }
+
+    const availableTime = this.calculateRoomAvailability(selectedRoom.maintenanceSlots);
+    const allowedTime = availableTime * 0.8;
+    const totalSelectedTime = this.calculateTotalSelectedTime(this.selectedOpRequests || []);
+
+    return totalSelectedTime > allowedTime;
+  }
+
+
+  submitForm() {
+    const formData = {
+      value: this.value,
+      selectedRoomNumber: this.selectedRoomNumber,
+      date1: this.date1,
+      selectedOpRequests: this.selectedOpRequests,
+    };
+
+    console.log('Form submitted', formData);
   }
 
 }
