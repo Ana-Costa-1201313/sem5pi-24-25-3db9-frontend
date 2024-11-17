@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FilterMatchMode, Message, SelectItem } from 'primeng/api';
 import { Button, ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
 import { Patient } from '../../model/patient.model';
 import { PatientService } from '../../services/patient.service';
@@ -13,7 +13,7 @@ import { EditPatient } from '../../model/editPatient.model';
 @Component({
   selector: 'app-patient',
   standalone: true,
-  imports: [CommonModule, TableModule, DialogModule, FormsModule, ButtonModule],
+  imports: [CommonModule, TableModule, DialogModule, FormsModule, ButtonModule,MessagesModule],
   templateUrl: './patient.component.html',
   styleUrl: './patient.component.css'
 })
@@ -27,6 +27,8 @@ export class PatientComponent implements OnInit {
   newPatient: Partial<Patient> = {};
   editingPatient: Patient = {} as Patient;
   matchModeOptions: SelectItem[] = [];
+  showDeleteConfirm: boolean = false;
+  message: Message[] = [];
 
   constructor(private patientService: PatientService) { }
 
@@ -56,6 +58,9 @@ export class PatientComponent implements OnInit {
   openEditModal(patient: Patient){
     this.editingPatient = {...patient};
     this.showEdit = true;
+  }
+  openDeleteModal(patient: Patient): void {
+    this.currentPatient = patient;
   }
 
   submitNewPatient(): void{
@@ -101,17 +106,37 @@ export class PatientComponent implements OnInit {
 }
 
 
-deletePatient(patient: Patient): void{
-  if(confirm(`Are you sure you want to delete ${patient.fullName} profile?`)){
-    this.patientService.deletePatient(patient.id).subscribe(
+deletePatient(patient: Patient): void {
+  this.currentPatient = patient;
+  this.showDeleteConfirm = true; 
+}
+
+confirmDeletePatient(): void {
+  if (this.currentPatient) {
+    this.patientService.deletePatient(this.currentPatient.id).subscribe(
       () => {
-        this.patientList = this.patientList.filter(p => p.id !== patient.id);
+        // Atualizando a lista de pacientes
+        this.patientList = this.patientList.filter(p => p.id !== this.currentPatient?.id);
         this.filteredPatientList = [...this.patientList];
-        alert(`${patient.fullName} profile has been deleted successfully.`);
+        this.showDeleteConfirm = false;
+
+        // Adicionando a mensagem de sucesso
+        this.message = [{
+          severity: 'success',
+          summary: 'Success',
+          detail: `${this.currentPatient.fullName}'s profile has been deleted successfully.`
+        }];
       },
       (error) => {
         console.error('Error deleting the patient profile', error);
-        alert('There was an error deleting the patient profile. Please try again.');
+        this.showDeleteConfirm = false;
+
+        // Adicionando a mensagem de erro
+        this.message = [{
+          severity: 'error',
+          summary: 'Error',
+          detail: 'There was an error deleting the patient profile. Please try again.'
+        }];
       }
     );
   }

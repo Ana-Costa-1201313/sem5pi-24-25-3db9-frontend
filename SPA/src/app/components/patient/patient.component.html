@@ -7,6 +7,7 @@
 </div>
 
 <div class="container">
+  <p-messages [(value)]="message" />
   <p-table [value]="filteredPatientList" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '20rem' }">
     <ng-template pTemplate="header">
       <tr>
@@ -171,4 +172,12 @@
       <button pButton type="button" label="Cancel" icon="pi pi-times" (click)="showEdit = false" class="p-button-secondary ms-2"></button>
     </div>
   </form>
+</p-dialog>
+
+<p-dialog header="Confirm Deletion" [(visible)]="showDeleteConfirm" [modal]="true" [style]="{ width: '30vw' }" [closable]="false">
+  <p>Are you sure you want to delete the profile of <b>{{ currentPatient?.fullName }}</b>?</p>
+  <div class="text-center mt-3">
+    <button pButton label="Yes" icon="pi pi-check" class="p-button-danger me-2" (click)="confirmDeletePatient()" ></button>
+    <button pButton label="No" icon="pi pi-times" class="p-button-secondary" (click)="showDeleteConfirm = false" ></button>
+  </div>
 </p-dialog>
