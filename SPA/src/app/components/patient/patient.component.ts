@@ -100,9 +100,6 @@ export class PatientComponent implements OnInit {
   );
 }
 
-  isAllergiesArray(allergies: any): boolean {
-  return Array.isArray(allergies);
-}
 
 deletePatient(patient: Patient): void{
   if(confirm(`Are you sure you want to delete ${patient.fullName} profile?`)){
