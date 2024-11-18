@@ -104,6 +104,8 @@ export class HospitalComponent implements OnInit {
             String(appointment.surgeryRoomNumber) === String(roomData.name)
         );
 
+        console.log(isRoomOccupied);
+
         const room = new RoomComponent(
           roomFloorData.texturePath,
           roomFloorData.floorWidth,
@@ -271,6 +273,7 @@ export class HospitalComponent implements OnInit {
 
     this.service.getAppointmentList('2024-12-11').subscribe((ap) => {
       this.apList = ap;
+      console.log(this.apList);
     });
 
     fetch('/assets/json/rooms.json')
