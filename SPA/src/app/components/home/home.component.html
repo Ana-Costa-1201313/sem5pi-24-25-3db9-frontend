@@ -4,7 +4,7 @@
 
 <div class="container">
   <div class="row mt-5 text-center">
-    <div class="col">
+    <div class="col" *ngIf="role == 'Admin'">
       <div class="card card-border">
         <div class="card-body">
           <h5 class="card-title fw-bold card-title">User</h5>
@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col" *ngIf="role == 'Admin'">
       <div class="card card-border">
         <div class="card-body">
           <h5 class="card-title fw-bold card-title">Patient</h5>
@@ -24,7 +24,7 @@
     </div>
   </div>
   <div class="row mt-5 text-center">
-    <div class="col">
+    <div class="col" *ngIf="role == 'Admin'">
       <div class="card card-border" routerLink="/staff">
         <div class="card-body">
           <h5 class="card-title fw-bold card-title">Staff</h5>
@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col" *ngIf="role == 'Admin'">
       <div class="card card-border" routerLink="/specialization">
         <div class="card-body">
           <h5 class="card-title fw-bold card-title">Specialization</h5>
@@ -44,7 +44,7 @@
     </div>
   </div>
   <div class="row mt-5 text-center">
-    <div class="col">
+    <div class="col" *ngIf="role == 'Admin'">
       <div class="card card-border" routerLink="/operationtype">
         <div class="card-body">
           <h5 class="card-title fw-bold card-title">Operation Type</h5>
@@ -55,7 +55,7 @@
       </div>
     </div>
     <div class="col">
-      <div class="card card-border">
+      <div class="card card-border" *ngIf="role == 'Admin' || role == 'Doctor'">
         <div class="card-body">
           <h5 class="card-title fw-bold card-title">Operation Request</h5>
           <p class="card-text">
