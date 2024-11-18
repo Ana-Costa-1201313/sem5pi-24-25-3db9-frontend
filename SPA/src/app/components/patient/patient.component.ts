@@ -69,6 +69,12 @@ export class PatientComponent implements OnInit {
         this.patientList.push(newPatient);
         this.filteredPatientList = [...this.patientList];
         this.showCreate = false;
+
+        this.message = [{
+          severity: 'success',
+          summary: 'Success',
+          detail: `${this.newPatient.fullName}'s profile has been created successfully.`
+        }];
       },
       (error) => {
         console.error('Erro ao criar o patient profile',error);
@@ -96,6 +102,12 @@ export class PatientComponent implements OnInit {
       if (index !== -1) {
         this.patientList[index] = updatedPatient;
         this.filteredPatientList = [...this.patientList];
+
+        this.message = [{
+          severity: 'success',
+          summary: 'Success',
+          detail: `${this.editingPatient.fullName}'s profile has been edited successfully.`
+        }];
       }
       this.showEdit = false; 
     },
@@ -115,12 +127,12 @@ confirmDeletePatient(): void {
   if (this.currentPatient) {
     this.patientService.deletePatient(this.currentPatient.id).subscribe(
       () => {
-        // Atualizando a lista de pacientes
+        
         this.patientList = this.patientList.filter(p => p.id !== this.currentPatient?.id);
         this.filteredPatientList = [...this.patientList];
         this.showDeleteConfirm = false;
 
-        // Adicionando a mensagem de sucesso
+      
         this.message = [{
           severity: 'success',
           summary: 'Success',
@@ -131,7 +143,7 @@ confirmDeletePatient(): void {
         console.error('Error deleting the patient profile', error);
         this.showDeleteConfirm = false;
 
-        // Adicionando a mensagem de erro
+       
         this.message = [{
           severity: 'error',
           summary: 'Error',
