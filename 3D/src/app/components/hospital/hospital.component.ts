@@ -30,7 +30,9 @@ export class HospitalComponent implements OnInit {
   private scene: THREE.Scene = new THREE.Scene();
   private camera!: THREE.PerspectiveCamera;
   private camera2!: THREE.PerspectiveCamera;
-  private controls!: OrbitControls;
+  private controls1!: OrbitControls;
+  private controls2!: OrbitControls;
+  private activeControls!: OrbitControls;
 
   roomsJson: any;
 
@@ -39,6 +41,46 @@ export class HospitalComponent implements OnInit {
   @Input() public fieldOfView: number = 30;
   @Input('nearClipping') public nearClippingPlane: number = 1;
   @Input('farClipping') public farClippingPlane: number = 10000;
+
+  private toggleControl(): void {
+    if (this.activeControls === this.controls1) {
+      this.controls1.enabled = false; 
+      this.controls2.enabled = true;  
+      this.activeControls = this.controls2;
+    } else {
+      this.controls2.enabled = false; 
+      this.controls1.enabled = true;  
+      this.activeControls = this.controls1;
+    }
+  }
+
+  private setupControls(): void {
+    // Controls for the first camera
+    this.controls1 = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls1.mouseButtons = {
+      LEFT: THREE.MOUSE.PAN,
+      MIDDLE: THREE.MOUSE.DOLLY,
+      RIGHT: THREE.MOUSE.ROTATE,
+    };
+    this.controls1.enableDamping = true;
+    this.controls1.dampingFactor = 0.1;
+
+    // Controls for the second camera
+    this.controls2 = new OrbitControls(this.camera2, this.renderer.domElement);
+    this.controls2.mouseButtons = {
+      LEFT: THREE.MOUSE.PAN,
+      MIDDLE: THREE.MOUSE.DOLLY,
+      RIGHT: THREE.MOUSE.ROTATE,
+    };
+    this.controls2.enableDamping = true;
+    this.controls2.dampingFactor = 0.1;
+
+    // Default active camera and controls
+    this.controls1.enabled = true;
+    this.controls2.enabled = false;
+
+    this.activeControls = this.controls1;
+  }
 
   //helper
   private get canvas(): HTMLCanvasElement {
@@ -53,16 +95,6 @@ export class HospitalComponent implements OnInit {
   private createScene(): void {
     this.scene.background = new THREE.Color(0x89cff0);
 
-    // this.apList.forEach((appointment, index) => {
-    //   console.log(`Appointment ${index + 1}:`);
-    //   console.log(`  Appointment ID: ${appointment.appointmentId}`);
-    //   console.log(`  Date & Time: ${appointment.dateTime}`);
-    //   console.log(`  OP Request ID: ${appointment.opRequestId}`);
-    //   console.log(`  Status: ${appointment.status}`);
-    //   console.log(`  Surgery Room ID: ${appointment.surgeryRoomId}`);
-    //   console.log(`  Surgery Room Number: ${appointment.surgeryRoomNumber}`);
-    // });
-
     var size = 0;
 
     if (this.roomsJson && this.roomsJson.rooms) {
@@ -71,8 +103,6 @@ export class HospitalComponent implements OnInit {
           (appointment) =>
             String(appointment.surgeryRoomNumber) === String(roomData.name)
         );
-
-        console.log(isRoomOccupied);
 
         const room = new RoomComponent(
           roomFloorData.texturePath,
@@ -165,7 +195,7 @@ export class HospitalComponent implements OnInit {
     const width = this.canvas.clientWidth;
     const height = this.canvas.clientHeight;
 
-    this.controls.update();
+    this.activeControls.update();
 
     this.renderer.setViewport(0, 0, width, height);
     this.renderer.setScissor(0, 0, width, height);
@@ -218,12 +248,9 @@ export class HospitalComponent implements OnInit {
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.mouseButtons = {
-      LEFT: THREE.MOUSE.PAN,
-      MIDDLE: THREE.MOUSE.DOLLY,
-      RIGHT: THREE.MOUSE.ROTATE,
-    };
+    this.setupControls();
+
+
 
     this.render();
   }
@@ -237,25 +264,32 @@ export class HospitalComponent implements OnInit {
     }
   }
 
-  constructor(private service: AppointmentService) {}
+  constructor(private service: AppointmentService) { }
 
   ngOnInit(): void {
+
+
     this.service.getAppointmentList('2024-12-11').subscribe((ap) => {
       this.apList = ap;
-      console.log(ap);
     });
 
     fetch('/assets/json/rooms.json')
       .then((response) => response.json())
       .then((data) => {
         this.roomsJson = data;
-        console.log('Rooms Data Loaded:', this.roomsJson);
 
         this.createScene();
         this.renderScene();
         window.addEventListener('click', (event) =>
           this.handleRoomClick(event)
         );
+
+        window.addEventListener('keydown', (event) => {
+          if (event.key === 'c') {
+            this.toggleControl(); // Switch camera controls
+          }
+        });
+
       })
       .catch((error) => {
         console.error('Error loading rooms data:', error);
