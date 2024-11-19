@@ -57,12 +57,22 @@
 </div>
 
 <p-dialog [(visible)]="isDialogVisible" [closable]="false" [modal]="true" [blockScroll]="true"
-    header="Processing Request" [draggable]="false">
+    header="Planning" [draggable]="false">
     <ng-container *ngIf="loading; else responseContent">
         <p>Loading, please wait...</p>
     </ng-container>
     <ng-template #responseContent>
-        <p *ngIf="responseData; else errorTemplate">Response: {{ responseData | json }}</p>
+        <div *ngIf="responseDataArray.length; else errorTemplate">
+            <ul>
+                <li *ngFor="let appointment of responseDataArray">
+                    <p><strong>Appointment DateTime:</strong> {{ appointment.dateTime }}</p>
+                    <p><strong>Status:</strong> {{ appointment.status }}</p>
+                    <p><strong>Surgery Room Number:</strong> {{ appointment.surgeryRoomNumber }}</p>
+                    <hr />
+                </li>
+            </ul>
+        </div>
+
         <ng-template #errorTemplate>
             <p>Error: {{ errorMessage }}</p>
         </ng-template>

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { PlanningDTO } from '../model/planningDto.model';
+import { AppointmentDto } from '../model/appointmentDto.model';
 
 @Injectable({ providedIn: 'root' })
 export class PlanningService {
@@ -10,7 +11,7 @@ export class PlanningService {
 
     constructor(private http: HttpClient) { }
 
-    postPlanning(plan: PlanningDTO): Observable<PlanningDTO[]> {
-        return this.http.post<PlanningDTO[]>(this.url, plan);
+    postPlanning(plan: PlanningDTO): Observable<AppointmentDto[]> {
+        return this.http.post<AppointmentDto[]>(this.url, plan);
     }
 }

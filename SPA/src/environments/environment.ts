@@ -9,5 +9,6 @@ export const environment = {
     operationRequest: '/OperationRequest',
     operationRequestFilterByStatus: "/OperationRequest/list/?status=Picked",
     planning: "/Planning",
+    appointment: "/Appointment",
   },
 };

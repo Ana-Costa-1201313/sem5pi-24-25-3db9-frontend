@@ -18,6 +18,8 @@ import { OperationRequestService } from '../../services/operationRequest.service
 import { OperationRequest } from '../../model/operationRequest.model';
 import { PlanningDTO } from '../../model/planningDto.model';
 import { PlanningService } from '../../services/planning.service';
+import { AppointmentDto } from '../../model/appointmentDto.model';
+import { AppointmentService } from '../../services/appointment.service';
 
 @Component({
   selector: 'app-planning',
@@ -46,7 +48,8 @@ export class PlanningComponent implements OnInit {
   constructor(
     private roomService: RoomService,
     private opReqService: OperationRequestService,
-    private planningService: PlanningService
+    private planningService: PlanningService,
+    private appointmentService: AppointmentService
   ) { }
 
 
@@ -66,6 +69,7 @@ export class PlanningComponent implements OnInit {
   loading = true;
   responseData: any;
   errorMessage: string | null = null;
+  responseDataArray: AppointmentDto[] = [];
 
 
 
@@ -265,30 +269,23 @@ export class PlanningComponent implements OnInit {
     return totalSelectedTime > allowedTime;
   }
 
-
-  // submitForm() {
-
-  //   const planningData = new PlanningDTO(
-  //     this.planType,
-  //     this.selectedRoomNumber,
-  //     this.date,
-  //     this.selectedOpRequests
-  //   );
-  //   console.log(planningData);
-  //   this.planningService.postPlanning(planningData);
-  // }
-
   submitForm() {
-    
 
-    // Open the dialog
+    //   const planningData = new PlanningDTO(
+    //     this.planType,
+    //     this.selectedRoomNumber,
+    //     this.date,
+    //     this.selectedOpRequests
+    //   );
+
     this.isDialogVisible = true;
 
-    // Send the data and wait for the response
-    this.roomService.getRoomList().subscribe(
-      (response) => {
+    //REQUEST TEM DE SER MUDADO PARA 
+    //this.planningService.postPlanning(planningData).subscribe(
+    this.appointmentService.getAppointmentList().subscribe(
+      (response: AppointmentDto[]) => {
         this.loading = false;
-        this.responseData = response;
+        this.responseDataArray = response;
       },
       (error) => {
         this.loading = false;
@@ -298,7 +295,6 @@ export class PlanningComponent implements OnInit {
   }
 
   onClose() {
-    // Close the dialog
     this.isDialogVisible = false;
 
     window.location.reload();
