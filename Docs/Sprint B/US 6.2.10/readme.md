@@ -130,6 +130,8 @@ The following tests are to be developed:
 - the created staff must have the same data as the input.
 - an error message should be displayed when the input is invalid or mandatory.
 - the page must reload to show the new staff.
+- a success message should be shown after creation.
+- the availability slots must have the right format.
 
 
 Unitary tests to the component will be implemented.
