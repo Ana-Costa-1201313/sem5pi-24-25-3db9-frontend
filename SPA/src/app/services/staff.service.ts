@@ -1,14 +1,20 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Staff } from '../model/staff.model';
 import { environment } from '../../environments/environment';
+import { EditStaffDto } from '../model/staff/editStaffDto';
+import { Staff } from '../model/staff/staff.model';
+import { CreateStaffDto } from '../model/staff/dto/createStaffDto';
 
 @Injectable({ providedIn: 'root' })
 export class StaffService {
   url = `${environment.apiUrl}${environment.endpoints.staff}`;
 
   constructor(private http: HttpClient) {}
+
+  addStaff(staff: CreateStaffDto): Observable<Staff> {
+    return this.http.post<Staff>(this.url, staff);
+  }
 
   getStaffList(
     name: string,
@@ -42,6 +48,10 @@ export class StaffService {
     return this.http.get<number>(
       `${this.url}${environment.endpoints.totalRecordsStaff}`
     );
+  }
+
+  editStaff(staffId: string, staff: EditStaffDto): Observable<Staff> {
+    return this.http.put<Staff>(`${this.url}/${staffId}`, staff);
   }
 
   deactivateStaff(staffId: string): Observable<Staff> {

@@ -1,13 +1,17 @@
 <div class="text-center">
   <h1 class="fw-bold mt-2 main-title mb-4">
     Staff
-    <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="openCreateModal()"
+    <p-button
+      icon="pi pi-plus"
+      class="me-3 ms-3"
+      (click)="openCreateModal()"
+      id="buttonCreate"
     />
   </h1>
 </div>
 
 <div class="container">
-  <p-messages [(value)]="message" />
+  <p-messages [(value)]="message" id="message" />
 
   <p-table
     [value]="staffList"
@@ -52,11 +56,22 @@
           <p-columnFilter
             type="text"
             field="specialization"
-            placeholder="Search by specialization"
             ariaLabel="Filter Specialization"
             [matchModeOptions]="matchModeOptions"
             matchMode="contains"
-          />
+            ><ng-template
+              pTemplate="filter"
+              let-value
+              let-filter="filterCallback"
+            >
+              <p-dropdown
+                [ngModel]="value"
+                [options]="specializationsNames"
+                (onChange)="filter($event.value)"
+                placeholder="Search by specialization"
+              >
+              </p-dropdown> </ng-template
+          ></p-columnFilter>
         </th>
         <th></th>
       </tr>
@@ -72,12 +87,15 @@
             class="me-2"
             [text]="true"
             (click)="openDetailsModal(staff)"
+            id="buttonDetails"
           />
           <p-button
             icon="pi pi-pencil"
             class="me-2"
             [disabled]="!staff.active"
             [text]="true"
+            (click)="openEditModal(staff)"
+            id="buttonEdit"
           />
           <p-button
             icon="pi pi-trash"
@@ -85,6 +103,7 @@
             [text]="true"
             [disabled]="!staff.active"
             (click)="openDeactivateModal(staff)"
+            id="buttonDeactivate"
           />
         </td>
       </tr>
@@ -92,113 +111,28 @@
   </p-table>
 </div>
 
-<p-dialog
-  header="Staff"
-  [(visible)]="showCreate"
-  [modal]="true"
-  [style]="{ width: '50vw' }"
-  [draggable]="false"
-  [resizable]="false"
->
-  <ng-template pTemplate="header">
-    <h4 class="fw-bold">Create Staff Profile</h4>
-  </ng-template>
+<app-detail-staff
+  [(showDetails)]="showDetails"
+  [currentStaff]="currentStaff"
+></app-detail-staff>
 
-  <form>
+<app-delete-staff
+  [(deactivate)]="deactivate"
+  [currentStaff]="currentStaff"
+  (onDeactivate)="onDeactivate()"
+></app-delete-staff>
 
+<app-create-staff
+  [(showCreate)]="showCreate"
+  [specializationsNames]="specializationsNames"
+  (onAdd)="onAdd()"
+  (onFailure)="onFailure($event)"
+></app-create-staff>
 
-    
-  </form>
-</p-dialog>
-
-<p-dialog
-  header="Staff"
-  [(visible)]="showDetails"
-  [modal]="true"
-  [style]="{ width: '50vw' }"
-  [draggable]="false"
-  [resizable]="false"
->
-  <ng-template pTemplate="header">
-    <h4 class="fw-bold">{{ currentStaff?.name }}</h4>
-  </ng-template>
-
-  <div class="container">
-    <h5 class="title-separator separator">General Information</h5>
-    <hr class="line-separator separator" />
-
-    <div class="row">
-      <label for="role"> <b>Role:</b> {{ currentStaff?.role }}</label>
-
-      <label
-        for="specialization"
-        class="mt-2"
-        *ngIf="currentStaff?.specialization"
-        ><b>Specialization: </b> {{ currentStaff?.specialization }}</label
-      >
-      <label for="licenseNumber" class="mt-2" *ngIf="currentStaff?.active"
-        ><b>License Number: </b>{{ currentStaff?.licenseNumber }}</label
-      >
-      <label for="mechanographicNumber" class="mt-2"
-        ><b>Mechanographic Number:</b>
-        {{ currentStaff?.mechanographicNum }}</label
-      >
-      <label for="active" class="mt-2"
-        ><b>Active: </b>
-        <span *ngIf="currentStaff?.active">Yes</span>
-        <span *ngIf="!currentStaff?.active">No</span>
-      </label>
-      <label
-        for="availabilitySlots"
-        class="mt-2"
-        *ngIf="currentStaff?.availabilitySlots?.length > 0"
-        ><b>Availability Slots: </b>
-        <ul class="ps-4">
-          <li *ngFor="let slot of currentStaff?.availabilitySlots">
-            {{ slot }}
-          </li>
-        </ul>
-      </label>
-    </div>
-
-    <h5 class="title-separator mt-4 separator">Contact Information</h5>
-    <hr class="line-separator separator" />
-
-    <div class="row">
-      <label for="email"><b>Email:</b> {{ currentStaff?.email }}</label>
-      <label for="phone" class="mt-2" *ngIf="currentStaff?.phone"
-        ><b>Phone: </b> {{ currentStaff?.phone }}
-      </label>
-    </div>
-  </div>
-</p-dialog>
-
-<p-dialog
-  header="Staff"
-  [(visible)]="deactivate"
-  [modal]="true"
-  [style]="{ width: '50vw' }"
-  [draggable]="false"
-  [resizable]="false"
->
-  <ng-template pTemplate="header">
-    <h4 class="fw-bold">Deactivate Staff Profile</h4>
-  </ng-template>
-  <div class="mt-2 mb-4">Are you sure you want to deactivate this staff?</div>
-  <p-button
-    label="Confirm"
-    icon="pi pi-check"
-    class="me-3"
-    [text]="true"
-    (click)="deactivateStaff()"
-  />
-
-  <p-button
-    label="Cancel"
-    icon="pi pi-times"
-    class="me-3"
-    [text]="true"
-    severity="danger"
-    (click)="deactivate = false"
-  />
-</p-dialog>
+<app-edit-staff
+  [(showEdit)]="showEdit"
+  [currentStaff]="currentStaff"
+  [specializationsNames]="specializationsNames"
+  (onEdit)="onEdit()"
+  (onFailure)="onFailure($event)"
+></app-edit-staff>

@@ -1,23 +1,27 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { provideHttpClient } from '@angular/common/http';
+import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { of, throwError } from 'rxjs';
 import { Role } from '../../model/role.model';
-import { Staff } from '../../model/staff.model';
+import { Specialization } from '../../model/specialization.model';
+import { Staff } from '../../model/staff/staff.model';
+import { SpecializationService } from '../../services/specialization.service';
 import { StaffService } from '../../services/staff.service';
 import { StaffComponent } from './staff.component';
-import { of } from 'rxjs';
 
 describe('StaffComponent', () => {
   let component: StaffComponent;
   let fixture: ComponentFixture<StaffComponent>;
   let service: StaffService;
+  let specService: SpecializationService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [StaffComponent],
       providers: [
         StaffService,
+        SpecializationService,
         provideHttpClientTesting(),
         provideHttpClient(),
       ],
@@ -26,6 +30,7 @@ describe('StaffComponent', () => {
     fixture = TestBed.createComponent(StaffComponent);
     component = fixture.componentInstance;
     service = fixture.debugElement.injector.get(StaffService);
+    specService = fixture.debugElement.injector.get(SpecializationService);
   });
 
   it('should create', () => {
@@ -35,13 +40,33 @@ describe('StaffComponent', () => {
   it('should get total records', () => {
     spyOn(service, 'getTotalRecords').and.returnValue(of(2));
 
+    spyOn(specService, 'getSpecializationList').and.returnValue(of([]));
+
     component.ngOnInit();
 
     expect(component.totalRecords).toBe(2);
     expect(service.getTotalRecords).toHaveBeenCalledTimes(1);
   });
 
+  it('should get specialization list', () => {
+    spyOn(service, 'getTotalRecords').and.returnValue(of(2));
+
+    const specList: Specialization[] = [{ id: '1' }, { id: '2' }] as any;
+
+    spyOn(specService, 'getSpecializationList').and.returnValue(of(specList));
+
+    component.ngOnInit();
+
+    expect(component.specializations).toEqual(specList);
+    expect(specService.getSpecializationList).toHaveBeenCalledTimes(1);
+  });
+
   it('should open details', () => {
+    const spec: Specialization = {
+      name: 'specName',
+      active: true,
+    };
+
     const staff: Staff = {
       id: 'id',
       name: 'name',
@@ -94,6 +119,11 @@ describe('StaffComponent', () => {
   });
 
   it('should open deactivation confirmation', () => {
+    const spec: Specialization = {
+      name: 'specName',
+      active: true,
+    };
+
     const staff: Staff = {
       id: 'id',
       name: 'name',
@@ -113,34 +143,46 @@ describe('StaffComponent', () => {
     expect(component.deactivate).toBeTrue();
   });
 
-  it('should deactivate staff', () => {
-    const staff = { id: '1' } as any;
-    component.currentStaff = staff;
+  it('should open create modal', () => {
+    component.openCreateModal();
 
-    spyOn(service, 'deactivateStaff').and.returnValue(of({} as any));
-    spyOn(component, 'loadStaffLazy');
-
-    component.deactivateStaff();
-
-    const message = [
-      {
-        severity: 'info',
-        summary: 'Success!',
-        detail: 'The Staff Profile was deactivated with success',
-      },
-    ];
-
-    expect(component.deactivate).toBeFalse();
-    expect(component.message).toEqual(message);
-    expect(service.deactivateStaff).toHaveBeenCalledTimes(1);
-    expect(component.loadStaffLazy).toHaveBeenCalledTimes(1);
+    expect(component.showCreate).toBeTrue();
   });
 
-  it('should not deactivate staff', () => {
-    spyOn(service, 'deactivateStaff').and.returnValue(of({} as any));
+  it('should send error 500', () => {
+    const error: HttpErrorResponse = { status: 500 } as any;
 
-    component.deactivateStaff();
+    component.onFailure(error);
 
-    expect(service.deactivateStaff).toHaveBeenCalledTimes(0);
+    expect(component.message).toEqual([
+      { severity: 'error', summary: 'Failure!', detail: 'Server error' },
+    ]);
+  });
+
+  it('should send error 400', () => {
+    const error: HttpErrorResponse = {
+      status: 400,
+      error: { message: 'abc' },
+    } as any;
+
+    component.onFailure(error);
+
+    expect(component.message).toEqual([
+      { severity: 'error', summary: 'Failure!', detail: 'abc' },
+    ]);
+  });
+
+  it('should open edit modal', () => {
+    const staff = (component.currentStaff = {
+      id: 'id',
+      name: 'name',
+      phone: '999999999',
+      specialization: 'spec',
+      availabilitySlots: [],
+    } as any);
+
+    component.openEditModal(staff);
+
+    expect(component.showEdit).toBeTrue();
   });
 });
