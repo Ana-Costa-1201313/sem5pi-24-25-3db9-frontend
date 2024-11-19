@@ -55,3 +55,18 @@
             [disabled]="isSubmitDisabled()" />
     </form>
 </div>
+
+<p-dialog [(visible)]="isDialogVisible" [closable]="false" [modal]="true" [blockScroll]="true"
+    header="Processing Request" [draggable]="false">
+    <ng-container *ngIf="loading; else responseContent">
+        <p>Loading, please wait...</p>
+    </ng-container>
+    <ng-template #responseContent>
+        <p *ngIf="responseData; else errorTemplate">Response: {{ responseData | json }}</p>
+        <ng-template #errorTemplate>
+            <p>Error: {{ errorMessage }}</p>
+        </ng-template>
+        <button pButton label="Close" class="mt-2" (click)="isDialogVisible = false" (click)="onClose()"></button>
+
+    </ng-template>
+</p-dialog>

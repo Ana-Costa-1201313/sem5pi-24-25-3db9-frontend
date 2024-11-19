@@ -61,6 +61,12 @@ export class PlanningComponent implements OnInit {
   selectedRoomNumber: string = '';
   date: Date | undefined;
 
+  //dialog box
+  isDialogVisible = false;
+  loading = true;
+  responseData: any;
+  errorMessage: string | null = null;
+
 
 
   stateOptions: any[] = [
@@ -260,16 +266,42 @@ export class PlanningComponent implements OnInit {
   }
 
 
-  submitForm() {
+  // submitForm() {
 
-    const planningData = new PlanningDTO(
-      this.planType,
-      this.selectedRoomNumber,
-      this.date,
-      this.selectedOpRequests
+  //   const planningData = new PlanningDTO(
+  //     this.planType,
+  //     this.selectedRoomNumber,
+  //     this.date,
+  //     this.selectedOpRequests
+  //   );
+  //   console.log(planningData);
+  //   this.planningService.postPlanning(planningData);
+  // }
+
+  submitForm() {
+    
+
+    // Open the dialog
+    this.isDialogVisible = true;
+
+    // Send the data and wait for the response
+    this.roomService.getRoomList().subscribe(
+      (response) => {
+        this.loading = false;
+        this.responseData = response;
+      },
+      (error) => {
+        this.loading = false;
+        this.errorMessage = error.message;
+      }
     );
-    console.log(planningData);
-    this.planningService.postPlanning(planningData);
+  }
+
+  onClose() {
+    // Close the dialog
+    this.isDialogVisible = false;
+
+    window.location.reload();
   }
 
 }
