@@ -56,10 +56,16 @@
     </form>
 </div>
 
-<p-dialog [(visible)]="isDialogVisible" [closable]="false" [modal]="true" [blockScroll]="true"
-    header="Planning" [draggable]="false">
+<p-dialog [(visible)]="isDialogVisible" [closable]="false" [modal]="true" [blockScroll]="true" header="Planning"
+    [draggable]="false">
     <ng-container *ngIf="loading; else responseContent">
-        <p>Loading, please wait...</p>
+        <div class="loading-container">
+            <p>Generating plan, please wait...</p>
+            <div class="d-flex justify-content-center align-items-center">
+                <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+                    animationDuration="1s" />
+            </div>
+        </div>
     </ng-container>
     <ng-template #responseContent>
         <div *ngIf="responseDataArray.length; else errorTemplate">
