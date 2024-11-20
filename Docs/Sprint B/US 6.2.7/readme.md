@@ -2,7 +2,7 @@
 
 ## 1. Context
 
-This task appears in the start of the project's development, to be able to edit a patient profile.
+This task appears in the middle of the project's development, to be able to edit a patient profile.
 
 
 ## 2. Requirements
