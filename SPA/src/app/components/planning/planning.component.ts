@@ -77,7 +77,8 @@ export class PlanningComponent implements OnInit {
 
   stateOptions: any[] = [
     { label: 'Best Planning', planType: 'best' },
-    { label: 'Good Planning', planType: 'good' },
+    { label: 'Last Surgery Time Planning', planType: 'heuristic1' },
+    { label: 'Occupied Time Planning', planType: 'heuristic2' },
   ];
 
   planType: string = 'off';
