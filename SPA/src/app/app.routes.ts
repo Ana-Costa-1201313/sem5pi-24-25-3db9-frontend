@@ -1,11 +1,13 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { StaffComponent } from './components/staff/staff.component';
-import { LoginComponent } from './components/login/login.component';
+import { PatientComponent } from './components/patient/patient.component';
 import { OperationtypeComponent } from './components/operationtype/operationtype.component';
+import { SpecializationComponent } from './components/specialization/specialization.component';
+import { LoginComponent } from './components/login/login.component';
 
 export const routes: Routes = [
-	{
+  {
     path: '',
     component: LoginComponent,
     title: 'Login page',
@@ -14,6 +16,11 @@ export const routes: Routes = [
     path: 'staff',
     component: StaffComponent,
     title: 'Staff page',
+  },
+  {
+    path: 'patient',
+    component: PatientComponent,
+    title: 'Patient page',
   },
   {
     path: 'home',
@@ -26,8 +33,14 @@ export const routes: Routes = [
     title: 'Operation Type page',
   },
   {
+    path: 'specialization',
+    component: SpecializationComponent,
+    title: 'Specialization page',
+  },
+  {
     path: '**',
     component: LoginComponent,
     title: 'Login page',
   },
+
 ];

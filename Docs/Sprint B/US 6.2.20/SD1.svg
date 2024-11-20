@@ -24,28 +24,28 @@
       ><path d="M0 0 L330 0 L330 104 L0 104 L0 0 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath7"
-      ><path d="M72 4 L72 19 L20 19 L20 4 ZM271 30 L271 45 L53 45 L53 30 ZM259 63 L259 78 L64 78 L64 63 ZM0 0 L0 104 L88 104 L88 103 L238 103 L238 104 L330 104 L330 0 Z"
+      ><path d="M72 4 L72 19 L20 19 L20 4 ZM263 30 L263 45 L61 45 L61 30 ZM219 63 L219 78 L102 78 L102 63 ZM0 0 L0 104 L123 104 L123 103 L200 103 L200 104 L330 104 L330 0 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath8"
-      ><path d="M259 30 L259 45 L64 45 L64 30 ZM238 70 L238 85 L88 85 L88 70 ZM0 0 L0 104 L77 104 L77 101 L249 101 L249 104 L330 104 L330 0 L271 0 L271 12 L53 12 L53 0 Z"
+      ><path d="M219 30 L219 45 L102 45 L102 30 ZM200 70 L200 85 L123 85 L123 70 ZM0 0 L0 104 L77 104 L77 101 L249 101 L249 104 L330 104 L330 0 L263 0 L263 12 L61 12 L61 0 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath9"
-      ><path d="M238 30 L238 45 L88 45 L88 30 ZM249 61 L249 76 L77 76 L77 61 ZM0 0 L0 104 L330 104 L330 0 L259 0 L259 5 L64 5 L64 0 Z"
+      ><path d="M200 30 L200 45 L123 45 L123 30 ZM249 61 L249 76 L77 76 L77 61 ZM0 0 L0 104 L330 104 L330 0 L219 0 L219 5 L102 5 L102 0 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath10"
-      ><path d="M249 30 L249 45 L77 45 L77 30 ZM0 0 L0 104 L330 104 L330 0 L238 0 L238 14 L88 14 L88 0 Z"
+      ><path d="M249 30 L249 45 L77 45 L77 30 ZM0 0 L0 104 L330 104 L330 0 L200 0 L200 14 L123 14 L123 0 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath11"
       ><path d="M-172 -15 L344 -15 L344 30 L-172 30 L-172 -15 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath12"
-      ><path d="M-150 -15 L300 -15 L300 30 L-150 30 L-150 -15 Z"
+      ><path d="M-77 -15 L154 -15 L154 30 L-77 30 L-77 -15 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath13"
-      ><path d="M-195 -15 L390 -15 L390 30 L-195 30 L-195 -15 Z"
+      ><path d="M-117 -15 L234 -15 L234 30 L-117 30 L-117 -15 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath14"
-      ><path d="M-218 -15 L436 -15 L436 30 L-218 30 L-218 -15 Z"
+      ><path d="M-202 -15 L404 -15 L404 30 L-202 30 L-202 -15 Z"
       /></clipPath
     ></defs
     ><g fill="white" text-rendering="geometricPrecision" fill-opacity="1" stroke-opacity="1" stroke="white"
@@ -111,20 +111,20 @@
       /><text fill="black" x="10" xml:space="preserve" y="12" clip-path="url(#clipPath11)" stroke="none"
       >2.1: Sucess/Insucess message</text
     ></g
-    ><g font-size="11px" transform="translate(74,136)" fill-opacity="1" fill="white" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="white" stroke-opacity="1"
-    ><rect x="0" width="150" height="15" y="0" clip-path="url(#clipPath12)" stroke="none"
+    ><g font-size="11px" transform="translate(109,136)" fill-opacity="1" fill="white" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="white" stroke-opacity="1"
+    ><rect x="0" width="77" height="15" y="0" clip-path="url(#clipPath12)" stroke="none"
       /><text fill="black" x="9" xml:space="preserve" y="12" clip-path="url(#clipPath12)" stroke="none"
-      >2: Operation type choosen</text
+      >2: Confirms</text
     ></g
-    ><g font-size="11px" transform="translate(50,96)" fill-opacity="1" fill="white" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="white" stroke-opacity="1"
-    ><rect x="0" width="195" height="15" y="0" clip-path="url(#clipPath13)" stroke="none"
+    ><g font-size="11px" transform="translate(88,96)" fill-opacity="1" fill="white" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="white" stroke-opacity="1"
+    ><rect x="0" width="117" height="15" y="0" clip-path="url(#clipPath13)" stroke="none"
       /><text fill="black" x="10" xml:space="preserve" y="12" clip-path="url(#clipPath13)" stroke="none"
-      >1.1: Asks to choose Operation Type</text
+      >1.1: Asks to confirm</text
     ></g
-    ><g font-size="11px" transform="translate(39,63)" fill-opacity="1" fill="white" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="white" stroke-opacity="1"
-    ><rect x="0" width="218" height="15" y="0" clip-path="url(#clipPath14)" stroke="none"
-      /><text fill="black" x="10" xml:space="preserve" y="12" clip-path="url(#clipPath14)" stroke="none"
-      >1: Request to deactivate Operation Type</text
+    ><g font-size="11px" transform="translate(47,63)" fill-opacity="1" fill="white" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="white" stroke-opacity="1"
+    ><rect x="0" width="202" height="15" y="0" clip-path="url(#clipPath14)" stroke="none"
+      /><text fill="black" x="9" xml:space="preserve" y="12" clip-path="url(#clipPath14)" stroke="none"
+      >1: Select operation type to deactivate</text
     ></g
     ><g font-size="8px" fill-opacity="1" fill="rgb(120,120,120)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" stroke="rgb(120,120,120)" stroke-opacity="1"
     ><text x="0" xml:space="preserve" y="10" stroke="none"
