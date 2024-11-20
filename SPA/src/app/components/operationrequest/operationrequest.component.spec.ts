@@ -4,9 +4,10 @@ import { OperationrequestComponent } from './operationrequest.component';
 
 import { OperationRequestService } from '../../services/operationRequest.service';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideHttpClient } from '@angular/common/http';
 import { OperationRequest } from '../../model/operationRequest.model';
 import { of } from 'rxjs';
+
+import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 
 
 describe('OperationrequestComponent', () => {
@@ -33,5 +34,11 @@ describe('OperationrequestComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should open create modal', () => {
+    component.openCreateModal();
+
+    expect(component.showCreate).toBeTrue();
   });
 });
