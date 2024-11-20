@@ -124,6 +124,9 @@ The following tests are to be developed:
 - the page must reload to show the new patient profile.
 - a success message should be shown after creation.
 
+Unitary tests to the component will be implemented.
+
+E2E Tests will also check all the US flow, from the user interaction to the backend server.
 
 ## 5. Implementation
 

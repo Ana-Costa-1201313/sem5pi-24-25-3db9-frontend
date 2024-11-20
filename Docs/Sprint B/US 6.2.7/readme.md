@@ -2,7 +2,7 @@
 
 ## 1. Context
 
-This task appears in the start of the project's development, to be able to create a patient profile.
+This task appears in the start of the project's development, to be able to edit a patient profile.
 
 
 ## 2. Requirements
@@ -95,6 +95,9 @@ The following tests are to be developed:
 - the page must reload to show the updated patient profile.
 - a success message should be shown after updating.
 
+Unitary tests to the component will be implemented.
+
+E2E Tests will also check all the US flow, from the user interaction to the backend server.
 
 ## 5. Implementation
 
