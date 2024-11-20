@@ -10,11 +10,12 @@ import { Message } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DialogModule } from 'primeng/dialog';
 import { MessagesModule } from 'primeng/messages';
+import { MenubarComponent } from '../menubar/menubar.component';
 
 @Component({
   selector: 'app-specialization',
   standalone: true,
-  imports: [ButtonModule, TableModule, FormsModule, ReactiveFormsModule, DialogModule, MessagesModule],
+  imports: [ButtonModule, TableModule, FormsModule, ReactiveFormsModule, DialogModule, MessagesModule, MenubarComponent],
   templateUrl: './specialization.component.html',
   styleUrl: './specialization.component.css'
 })
