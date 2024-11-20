@@ -90,7 +90,7 @@ This diagram guides the realization of the functionality, for level 3 process vi
 
 The following tests are to be developed:
 - all patient profiles must be displayed in the patient page.
-- getting a staff profile by name, email, or dateOfBirth.
+- getting a patient profile by name, email, or dateOfBirth.
 
 Unitary tests to the component will be implemented.
 

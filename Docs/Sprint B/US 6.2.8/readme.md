@@ -100,7 +100,7 @@ This diagram guides the realization of the functionality, for level 3 process vi
 
 The following tests are to be developed:
 - the patient information should be deleted
-- the page must reload to show the deleted staff.
+- the page must reload to show the deleted patient.
 
 Unitary tests to the component will be implemented.
 
