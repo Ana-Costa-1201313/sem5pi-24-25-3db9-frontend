@@ -23,7 +23,7 @@ export class MenubarComponent implements OnInit {
   ngOnInit(): void {
 
     const sessionData = {
-      username: "Username",
+      username: "email@gmail.com",
       loggedIn: true,
       role: "Admin",
     };
@@ -85,6 +85,9 @@ export class MenubarComponent implements OnInit {
     ];
 
     this.endItems = [
+      {
+        label: session.username,
+      },
       {
         label: 'LogOut',
         icon: 'pi pi-sign-out',
