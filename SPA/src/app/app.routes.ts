@@ -5,23 +5,24 @@ import { LoginComponent } from './components/login/login.component';
 
 
 export const routes: Routes = [
-  {
+	{
     path: '',
-    component: HomeComponent,
-    title: 'Home page',
+    component: LoginComponent,
+    title: 'Login page',
   },
   {
     path: 'staff',
     component: StaffComponent,
     title: 'Staff page',
-  }, {
-    path: 'login',
-    component: LoginComponent,
-    title: 'Login page',
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    title: 'Home page',
   },
   {
     path: '**',
-    component: HomeComponent,
-    title: 'Home page',
+    component: LoginComponent,
+    title: 'Login page',
   },
 ];

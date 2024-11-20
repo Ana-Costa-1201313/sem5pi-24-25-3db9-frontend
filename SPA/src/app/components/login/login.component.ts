@@ -22,7 +22,7 @@ export class LoginComponent {
                 private loginService: LoginService,
                 private cdr: ChangeDetectorRef
   ) {
-    if (this.getSession() != null) this.router.navigate(['/']);
+    if (this.getSession() != null) this.router.navigate(['/home']);
   }
 
   private getSession() {
@@ -67,7 +67,7 @@ export class LoginComponent {
         //    this.router.navigate(['/dashboard'])
 
         //}
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       },
       (error) => {
         console.error('Login failed:', error);

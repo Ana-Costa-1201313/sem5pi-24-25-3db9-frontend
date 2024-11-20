@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
@@ -7,13 +7,14 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CardModule, RouterModule, CommonModule],
+  imports: [CardModule, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
   showLogoffButton: boolean = false;
   constructor(
+	private router: Router,
     private cdr: ChangeDetectorRef
   ) {
   }
@@ -40,6 +41,8 @@ export class HomeComponent {
     sessionStorage.removeItem('SessionUtilizadorInfo');
     this.showLogoffButton = false; // Hide the Logoff button after logging off
     this.checkSession();
+	this.router.navigate(['/']);
+
   }
 
   ngOnInit(): void {
