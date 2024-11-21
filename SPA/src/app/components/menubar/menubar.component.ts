@@ -73,6 +73,18 @@ export class MenubarComponent implements OnInit {
             routerLink: '',
             visible: this.role === 'Admin' || this.role === 'Doctor'
           },
+          {
+            label: 'Operation Planning',
+            icon: 'pi pi-angle-right',
+            routerLink: '',
+            visible: this.role === 'Admin' || this.role === 'Doctor'
+          },
+          {
+            label: '3D Room visualization',
+            icon: 'pi pi-angle-right',
+            routerLink: '',
+            visible: this.role === 'Admin' || this.role === 'Doctor'
+          },
         ].filter(item => item.visible)
       }
     ];

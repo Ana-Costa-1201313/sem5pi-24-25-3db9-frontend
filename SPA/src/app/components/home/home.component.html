@@ -69,4 +69,25 @@
       </div>
     </div>
   </div>
+  <div class="row mt-5 text-center">
+    <div class="col" *ngIf="role == 'Admin'">
+      <div class="card card-border">
+        <div class="card-body">
+          <h5 class="card-title fw-bold card-title">Operation Planning</h5>
+          <p class="card-text">Plan operations for a given day and room.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card card-border" *ngIf="role == 'Admin' || role == 'Doctor' || role == 'Nurse' || role == 'Technician'">
+        <div class="card-body">
+          <h5 class="card-title fw-bold card-title">3D Room visualization</h5>
+          <p class="card-text">
+            Check the 3D Model of all operations rooms and if they are
+            scheduled.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
