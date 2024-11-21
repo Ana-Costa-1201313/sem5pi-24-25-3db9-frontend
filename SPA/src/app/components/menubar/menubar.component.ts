@@ -76,7 +76,7 @@ export class MenubarComponent implements OnInit {
           {
             label: '3D Room visualization',
             icon: 'pi pi-angle-right',
-            routerLink: '',
+            routerLink: '/visualization',
             visible:
               this.role === 'Admin' ||
               this.role == 'Doctor' ||
