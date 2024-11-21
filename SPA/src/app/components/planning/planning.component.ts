@@ -274,18 +274,18 @@ export class PlanningComponent implements OnInit {
 
   submitForm() {
 
-    //   const planningData = new PlanningDTO(
-    //     this.planType,
-    //     this.selectedRoomNumber,
-    //     this.date,
-    //     this.selectedOpRequests
-    //   );
+       const planningData = new PlanningDTO(
+         this.planType,
+         this.selectedRoomNumber.toString(),
+         this.date,
+         this.selectedOpRequests
+       );
 
     this.isDialogVisible = true;
 
     //REQUEST TEM DE SER MUDADO PARA 
-    //this.planningService.postPlanning(planningData).subscribe(
-    this.appointmentService.getAppointmentList().subscribe(
+    this.planningService.postPlanning(planningData).subscribe(
+    //this.appointmentService.getAppointmentList().subscribe(
       (response: AppointmentDto[]) => {
         this.loading = false;
         this.responseDataArray = response;
