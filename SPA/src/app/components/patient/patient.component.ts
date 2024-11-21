@@ -9,11 +9,12 @@ import { Patient } from '../../model/patient.model';
 import { PatientService } from '../../services/patient.service';
 import { FormsModule } from '@angular/forms';
 import { EditPatient } from '../../model/editPatient.model';
+import { MenubarComponent } from '../menubar/menubar.component';
 
 @Component({
   selector: 'app-patient',
   standalone: true,
-  imports: [CommonModule, TableModule, DialogModule, FormsModule, ButtonModule,MessagesModule],
+  imports: [CommonModule, TableModule, DialogModule, FormsModule, ButtonModule,MessagesModule, MenubarComponent],
   templateUrl: './patient.component.html',
   styleUrl: './patient.component.css'
 })
