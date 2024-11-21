@@ -8,30 +8,24 @@ import { MenubarModule } from 'primeng/menubar';
   standalone: true,
   imports: [MenubarModule],
   templateUrl: './menubar.component.html',
-  styleUrl: './menubar.component.css'
+  styleUrl: './menubar.component.css',
 })
 export class MenubarComponent implements OnInit {
-
   items: MenuItem[] | undefined;
   endItems: MenuItem[] | undefined;
   role: string | null = null;
 
-
-  constructor(
-    private router: Router
-  ) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-
     const session = this.getSession();
     this.role = session?.role || null;
-
 
     this.items = [
       {
         label: 'Home',
         icon: 'pi pi-home',
-        routerLink: '/home'
+        routerLink: '/home',
       },
       {
         label: 'SubMenus',
@@ -41,52 +35,56 @@ export class MenubarComponent implements OnInit {
             label: 'User',
             icon: 'pi pi-angle-right',
             routerLink: '',
-            visible: this.role === 'Admin'
+            visible: this.role === 'Admin',
           },
           {
             label: 'Patient',
             icon: 'pi pi-angle-right',
             routerLink: '/patient',
-            visible: this.role === 'Admin'
+            visible: this.role === 'Admin',
           },
           {
             label: 'Staff',
             icon: 'pi pi-angle-right',
             routerLink: '/staff',
-            visible: this.role === 'Admin'
+            visible: this.role === 'Admin',
           },
           {
             label: 'Specialization',
             icon: 'pi pi-angle-right',
             routerLink: '/specialization',
-            visible: this.role === 'Admin'
+            visible: this.role === 'Admin',
           },
           {
             label: 'Operation Type',
             icon: 'pi pi-angle-right',
             routerLink: '/operationtype',
-            visible: this.role === 'Admin'
+            visible: this.role === 'Admin',
           },
           {
             label: 'Operation Request',
             icon: 'pi pi-angle-right',
             routerLink: '',
-            visible: this.role === 'Admin' || this.role === 'Doctor'
+            visible: this.role === 'Admin' || this.role === 'Doctor',
           },
           {
             label: 'Operation Planning',
             icon: 'pi pi-angle-right',
             routerLink: '',
-            visible: this.role === 'Admin' || this.role === 'Doctor'
+            visible: this.role === 'Admin',
           },
           {
             label: '3D Room visualization',
             icon: 'pi pi-angle-right',
             routerLink: '',
-            visible: this.role === 'Admin' || this.role === 'Doctor'
+            visible:
+              this.role === 'Admin' ||
+              this.role == 'Doctor' ||
+              this.role == 'Nurse' ||
+              this.role == 'Technician',
           },
-        ].filter(item => item.visible)
-      }
+        ].filter((item) => item.visible),
+      },
     ];
 
     this.endItems = [
@@ -97,10 +95,9 @@ export class MenubarComponent implements OnInit {
         label: 'LogOut',
         icon: 'pi pi-sign-out',
         routerLink: '',
-        command: () => this.logOff()
-      }
+        command: () => this.logOff(),
+      },
     ];
-
   }
 
   private getSession() {
@@ -123,5 +120,4 @@ export class MenubarComponent implements OnInit {
     sessionStorage.removeItem('SessionUtilizadorInfo');
     this.router.navigate(['/']);
   }
-
 }
