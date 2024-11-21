@@ -8,7 +8,7 @@ export const environment = {
     rooms: '/SurgeryRoom',
     operationRequest: '/OperationRequest',
     operationRequestFilterByStatus: "/OperationRequest/list/?status=Picked",
-    planning: "/Planning",
+    planning: "/Appointment/planning",
     appointment: "/Appointment",
   },
 };
