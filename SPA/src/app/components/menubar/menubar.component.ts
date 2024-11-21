@@ -31,7 +31,7 @@ export class MenubarComponent implements OnInit {
       {
         label: 'Home',
         icon: 'pi pi-home',
-        routerLink: ''
+        routerLink: '/home'
       },
       {
         label: 'SubMenus',
@@ -46,25 +46,25 @@ export class MenubarComponent implements OnInit {
           {
             label: 'Patient',
             icon: 'pi pi-angle-right',
-            routerLink: '',
+            routerLink: '/patient',
             visible: this.role === 'Admin'
           },
           {
             label: 'Staff',
             icon: 'pi pi-angle-right',
-            routerLink: 'staff',
+            routerLink: '/staff',
             visible: this.role === 'Admin'
           },
           {
             label: 'Specialization',
             icon: 'pi pi-angle-right',
-            routerLink: 'specialization',
+            routerLink: '/specialization',
             visible: this.role === 'Admin'
           },
           {
             label: 'Operation Type',
             icon: 'pi pi-angle-right',
-            routerLink: 'operationtype',
+            routerLink: '/operationtype',
             visible: this.role === 'Admin'
           },
           {
