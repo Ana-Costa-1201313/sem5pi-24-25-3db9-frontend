@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 
@@ -16,19 +17,11 @@ export class MenubarComponent implements OnInit {
   role: string | null = null;
 
 
-  constructor() {
-
-  }
+  constructor(
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-
-    const sessionData = {
-      username: "email@gmail.com",
-      loggedIn: true,
-      role: "Admin",
-    };
-
-    sessionStorage.setItem('SessionUtilizadorInfo', JSON.stringify(sessionData));
 
     const session = this.getSession();
     this.role = session?.role || null;
@@ -91,7 +84,8 @@ export class MenubarComponent implements OnInit {
       {
         label: 'LogOut',
         icon: 'pi pi-sign-out',
-        routerLink: ''
+        routerLink: '',
+        command: () => this.logOff()
       }
     ];
 
@@ -100,6 +94,22 @@ export class MenubarComponent implements OnInit {
   private getSession() {
     const session = sessionStorage.getItem('SessionUtilizadorInfo');
     return session ? JSON.parse(session) : null;
+  }
+
+  // Get the value of a cookie by its name
+  getCookie(name: string): string | null {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
+    return null;
+  }
+
+  // Logoff method
+  logOff(): void {
+    // Remove the JWT cookie by setting it with an expired date
+    document.cookie = 'jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    sessionStorage.removeItem('SessionUtilizadorInfo');
+    this.router.navigate(['/']);
   }
 
 }

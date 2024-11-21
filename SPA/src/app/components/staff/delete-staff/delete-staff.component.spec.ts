@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeleteStaffComponent } from './delete-staff.component';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 import { SpecializationService } from '../../../services/specialization.service';
 import { StaffService } from '../../../services/staff.service';
 import { StaffComponent } from '../staff.component';
-import { of } from 'rxjs';
+import { DeleteStaffComponent } from './delete-staff.component';
 
 describe('DeleteStaffComponent', () => {
   let component: DeleteStaffComponent;
@@ -35,7 +35,7 @@ describe('DeleteStaffComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should deactivate staff', () => {
+  it('should deactivate staff: deactive should be false', () => {
     const staff = { id: '1' } as any;
     component.currentStaff = staff;
 
@@ -44,6 +44,16 @@ describe('DeleteStaffComponent', () => {
     component.deactivateStaff();
 
     expect(component.deactivate).toBeFalse();
+  });
+
+  it('should deactivate staff: deactivateStaff should been called 1 time', () => {
+    const staff = { id: '1' } as any;
+    component.currentStaff = staff;
+
+    spyOn(service, 'deactivateStaff').and.returnValue(of({} as any));
+
+    component.deactivateStaff();
+
     expect(service.deactivateStaff).toHaveBeenCalledTimes(1);
   });
 
