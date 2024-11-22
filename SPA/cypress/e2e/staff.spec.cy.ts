@@ -1,4 +1,13 @@
 describe('Staff Page Test', () => {
+  before(() => {
+    cy.visit('/login');
+    cy.get('#form3Example3').type('admin@hotmail.com');
+    cy.get('#form3Example4').type('AAAAAAAAAAA1!');
+    cy.get('#loginButton').click();
+
+    cy.get('.main-title').should('be.visible');
+  });
+
   it('Visits the staff page', () => {
     cy.visit('/staff');
     cy.contains('Staff');
@@ -10,14 +19,23 @@ describe('Staff Page Test', () => {
 });
 
 describe('Staff Test', () => {
+  beforeEach(() => {
+    cy.visit('/login');
+    cy.get('#form3Example3').type('admin@hotmail.com');
+    cy.get('#form3Example4').type('AAAAAAAAAAA1!');
+    cy.get('#loginButton').click();
+
+    cy.get('.main-title').should('be.visible');
+  });
+
   it('Create staff', () => {
     cy.visit('/staff');
 
     cy.get('#buttonCreate').click();
 
     cy.get('#name').type('TestName');
-    cy.get('#licenseNumber').type('17825');
-    cy.get('#phone').type('992948964');
+    cy.get('#licenseNumber').type('17815');
+    cy.get('#phone').type('992943914');
     cy.get('#recruitmentYear').type('2022');
 
     cy.get('#role').click();
@@ -64,8 +82,8 @@ describe('Staff Test', () => {
         cy.get('#buttonDetails').click();
       });
 
-      cy.get('#licenseNumber').should('contain.text', '17825');
-    });
+    cy.get('#licenseNumber').should('contain.text', '17815');
+  });
 
   it('Deactivate staff', () => {
     cy.visit('/staff');

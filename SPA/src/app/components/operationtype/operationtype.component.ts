@@ -16,6 +16,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { RequiredStaff } from '../../model/operationType/requiredStaff.model';
 import { Specialization } from '../../model/specialization.model';
 import { SpecializationService } from '../../services/specialization.service';
+import { MenubarComponent } from '../menubar/menubar.component';
 
 @Component({
   selector: 'app-operationtype',
@@ -23,7 +24,7 @@ import { SpecializationService } from '../../services/specialization.service';
   imports: [
     CommonModule, TableModule, DialogModule, FormsModule, ButtonModule,
     MessagesModule, ReactiveFormsModule, DropdownModule, InputTextModule,
-    InputNumberModule
+    InputNumberModule, MenubarComponent
   ],
   templateUrl: './operationtype.component.html',
   styleUrl: './operationtype.component.css'
