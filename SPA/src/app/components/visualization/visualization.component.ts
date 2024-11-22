@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { TableModule } from 'primeng/table';
+import { MenubarComponent } from '../menubar/menubar.component';
 
 @Component({
   selector: 'app-visualization',
@@ -15,6 +16,7 @@ import { TableModule } from 'primeng/table';
     ButtonModule,
     ReactiveFormsModule,
     CalendarModule,
+    MenubarComponent,
   ],
   templateUrl: './visualization.component.html',
   styleUrls: ['./visualization.component.css']

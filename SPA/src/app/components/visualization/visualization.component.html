@@ -1,3 +1,6 @@
+<div class="mb-4">
+    <app-menubar></app-menubar>
+</div>
 <div class="text-center">
     <h1 class="fw-bold mt-2 main-title mb-4">3D Visualization</h1>
 </div>
@@ -8,24 +11,14 @@
             <div class="col-md-12">
                 <div class="mb-12">
                     <span class="p-float-label">
-                        <p-calendar 
-                            formControlName="date" 
-                            [showIcon]="true" 
-                            inputId="buttondisplay"
-                            [showOnFocus]="true" 
-                            display="block" 
-                            autoWidth="false"
-                            [style]="{ minWidth: '100%' }">
+                        <p-calendar formControlName="date" [showIcon]="true" inputId="buttondisplay"
+                            [showOnFocus]="true" display="block" autoWidth="false" [style]="{ minWidth: '100%' }">
                         </p-calendar>
                     </span>
                 </div>
             </div>
         </div>
-        <p-button 
-            class="mt-4 d-block" 
-            id="buttonCreateSubmit" 
-            type="Submit" 
-            label="See Rooms" 
+        <p-button class="mt-4 d-block" id="buttonCreateSubmit" type="Submit" label="See Rooms"
             [disabled]="formGroup.invalid" />
     </form>
 </div>
