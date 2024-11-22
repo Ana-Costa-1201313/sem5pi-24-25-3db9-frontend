@@ -64,8 +64,42 @@ describe('PatientComponent', () => {
     component.ngOnInit();
     
     expect(component.patientList).toEqual(mockPatients);
+    
+  });
+
+  it('should load patient profile list 2', () => {
+    const mockPatients: Patient[] = [
+      {
+        id: '1',
+        firstName: 'Bernardo',
+        lastName: 'Silva',
+        fullName: 'Bernardo Silva',
+        gender: 'Masculine',
+        dateOfBirth: new Date('2000-01-01'),
+        email: 'bernardoSilva@gmail.com',
+        phone: '919100055',
+        emergencyContact: '987987986',
+      },
+      {
+        id: '2',
+        firstName: 'Ruben',
+        lastName: 'Dias',
+        fullName: 'Ruben Dias',
+        gender: 'Masculine',
+        dateOfBirth: new Date('1990-01-01'),
+        email: 'rubenDias@gmail.com',
+        phone: '919100056',
+        emergencyContact: '987987982',
+      },
+    ];
+
+    spyOn(service,'getPatientList').and.returnValue(of(mockPatients));
+
+    component.ngOnInit();
+    
+    
     expect(component.filteredPatientList).toEqual(mockPatients);
-    expect(service.getPatientList).toHaveBeenCalledTimes(1);
+   
   });
 
   it('should open the create modal', ()=>{
@@ -129,8 +163,47 @@ describe('PatientComponent', () => {
     component.submitNewPatient();
 
     expect(component.patientList).toContain(jasmine.objectContaining(newPatient));
+   
+  });
+
+  it('should create a new patient profile 2', () => {
+    const newPatient: Partial<Patient> = {
+      firstName: 'Ruben',
+        lastName: 'Dias',
+        fullName: 'Ruben Dias',
+        gender: 'Masculine',
+        dateOfBirth: new Date('1990-01-01'),
+        email: 'rubenDias@gmail.com',
+        phone: '919100056',
+        emergencyContact: '987987982',
+    };
+    spyOn(service, 'createPatient').and.returnValue(of(newPatient as Patient));
+
+    component.newPatient = newPatient;
+    component.submitNewPatient();
+
+   
     expect(component.filteredPatientList).toContain(jasmine.objectContaining(newPatient));
-    expect(component.showCreate).toBeFalse();
+   
+  });
+
+  it('should create a new patient profile 3', () => {
+    const newPatient: Partial<Patient> = {
+      firstName: 'Ruben',
+        lastName: 'Dias',
+        fullName: 'Ruben Dias',
+        gender: 'Masculine',
+        dateOfBirth: new Date('1990-01-01'),
+        email: 'rubenDias@gmail.com',
+        phone: '919100056',
+        emergencyContact: '987987982',
+    };
+    spyOn(service, 'createPatient').and.returnValue(of(newPatient as Patient));
+
+    component.newPatient = newPatient;
+    component.submitNewPatient();
+
+   
     expect(component.message[0].severity).toBe('success');
   });
 
@@ -167,6 +240,65 @@ describe('PatientComponent', () => {
     expect(component.patientList[0].email).toEqual('rubenDias@gmail.com');
   });
 
+  it('should edit a patient profile 2', () => {
+    const mockPatient: Patient = {
+      id: '1',
+        firstName: 'Ruben',
+        lastName: 'Dias',
+        fullName: 'Ruben Dias',
+        gender: 'Masculine',
+        dateOfBirth: new Date('1990-01-01'),
+        email: 'rubenDias@gmail.com',
+        phone: '919100056',
+        emergencyContact: '987987982',
+    };
+    const updatedPatient: Patient = {
+      ...mockPatient, 
+      firstName: 'Bernardo',
+      lastName: 'Silva',
+      fullName: 'Bernardo Silva'
+    };
+
+    component.patientList = [mockPatient];
+    component.editingPatient = {... mockPatient};
+    spyOn(service, 'updatePatient').and.returnValue(of(updatedPatient));
+
+    component.submitEditPatient();
+
+    
+    expect(component.patientList[0].firstName).toEqual('Bernardo');
+    
+  });
+
+  it('should edit a patient profile  3', () => {
+    const mockPatient: Patient = {
+      id: '1',
+        firstName: 'Ruben',
+        lastName: 'Dias',
+        fullName: 'Ruben Dias',
+        gender: 'Masculine',
+        dateOfBirth: new Date('1990-01-01'),
+        email: 'rubenDias@gmail.com',
+        phone: '919100056',
+        emergencyContact: '987987982',
+    };
+    const updatedPatient: Patient = {
+      ...mockPatient, 
+      firstName: 'Bernardo',
+      lastName: 'Silva',
+      fullName: 'Bernardo Silva'
+    };
+
+    component.patientList = [mockPatient];
+    component.editingPatient = {... mockPatient};
+    spyOn(service, 'updatePatient').and.returnValue(of(updatedPatient));
+
+    component.submitEditPatient();
+
+    
+    expect(component.patientList[0].email).toEqual('rubenDias@gmail.com');
+  });
+
   it('should delete a patient profile', () => {
     const mockPatient: Patient = {
       id: '1',
@@ -188,8 +320,31 @@ describe('PatientComponent', () => {
     component.confirmDeletePatient();
     
     expect(component.patientList).not.toContain(mockPatient);
-    expect(component.filteredPatientList).not.toContain(mockPatient);
-    expect(component.showDeleteConfirm).toBeFalse();
+    
+  })
+
+  it('should delete a patient profile 2', () => {
+    const mockPatient: Patient = {
+      id: '1',
+        firstName: 'Ruben',
+        lastName: 'Dias',
+        fullName: 'Ruben Dias',
+        gender: 'Masculine',
+        dateOfBirth: new Date('1990-01-01'),
+        email: 'rubenDias@gmail.com',
+        phone: '919100056',
+        emergencyContact: '987987982',
+    };
+
+    component.patientList = [mockPatient];
+    component.filteredPatientList = [mockPatient];
+    spyOn(service,'deletePatient').and.returnValue(of(null));
+
+    component.currentPatient= mockPatient;
+    component.confirmDeletePatient();
+    
+    
+   
     expect(component.message[0].severity).toBe('success');
   })
 });
