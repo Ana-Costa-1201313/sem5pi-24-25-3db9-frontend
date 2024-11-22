@@ -16,6 +16,7 @@ import {
 import FloorComponent from '../floor/floor.component';
 import RoomComponent from '../room/room.component';
 import { SpriteComponent } from '../sprite/sprite.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-hospital',
@@ -44,12 +45,12 @@ export class HospitalComponent implements OnInit {
 
   private toggleControl(): void {
     if (this.activeControls === this.controls1) {
-      this.controls1.enabled = false; 
-      this.controls2.enabled = true;  
+      this.controls1.enabled = false;
+      this.controls2.enabled = true;
       this.activeControls = this.controls2;
     } else {
-      this.controls2.enabled = false; 
-      this.controls1.enabled = true;  
+      this.controls2.enabled = false;
+      this.controls1.enabled = true;
       this.activeControls = this.controls1;
     }
   }
@@ -266,16 +267,18 @@ export class HospitalComponent implements OnInit {
     }
   }
 
-  constructor(private service: AppointmentService) { }
+  constructor(private service: AppointmentService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
 
+    const date = this.route.snapshot.queryParamMap.get('date');
 
-    this.service.getAppointmentList('2024-12-11').subscribe((ap) => {
-      this.apList = ap;
-      console.log(this.apList);
-    });
-
+    if (date) {
+      this.service.getAppointmentList(date).subscribe((ap) => {
+        this.apList = ap;
+        console.log(this.apList);
+      });
+    }
     fetch('/assets/json/rooms.json')
       .then((response) => response.json())
       .then((data) => {

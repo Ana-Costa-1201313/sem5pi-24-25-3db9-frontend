@@ -31,9 +31,11 @@ export class VisualizationComponent {
   submitForm() {
     if (this.formGroup.valid) {
       const selectedDate = this.formGroup.get('date')?.value;
-      console.log('Selected Date:', selectedDate);
 
-      window.location.href="http://localhost:4201/hospital";
+      const formattedDate = selectedDate.toISOString().split('T')[0];
+
+      const targetUrl = `http://localhost:4201/hospital?date=${formattedDate}`;
+      window.location.href = targetUrl;
     }
   }
 }
