@@ -14,7 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-patient',
   standalone: true,
-  imports: [CommonModule, TableModule, DialogModule, FormsModule, ButtonModule,MessagesModule],
+  imports: [CommonModule, TableModule, DialogModule, FormsModule, ButtonModule,MessagesModule, MenubarComponent],
   templateUrl: './patient.component.html',
   styleUrl: './patient.component.css'
 })

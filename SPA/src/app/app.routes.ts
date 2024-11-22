@@ -4,12 +4,13 @@ import { StaffComponent } from './components/staff/staff.component';
 import { PatientComponent } from './components/patient/patient.component';
 import { OperationtypeComponent } from './components/operationtype/operationtype.component';
 import { SpecializationComponent } from './components/specialization/specialization.component';
+import { LoginComponent } from './components/login/login.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
-    title: 'Home page',
+    component: LoginComponent,
+    title: 'Login page',
   },
   {
     path: 'staff',
@@ -20,6 +21,11 @@ export const routes: Routes = [
     path: 'patient',
     component: PatientComponent,
     title: 'Patient page',
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    title: 'Home page',
   },
   {
     path: 'operationtype',
@@ -33,8 +39,8 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    component: HomeComponent,
-    title: 'Home page',
+    component: LoginComponent,
+    title: 'Login page',
   },
 
 ];

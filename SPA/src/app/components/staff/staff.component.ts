@@ -20,6 +20,7 @@ import { CreateStaffComponent } from './create-staff/create-staff.component';
 import { DeleteStaffComponent } from './delete-staff/delete-staff.component';
 import { DetailStaffComponent } from './detail-staff/detail-staff.component';
 import { EditStaffComponent } from './edit-staff/edit-staff.component';
+import { MenubarComponent } from '../menubar/menubar.component';
 
 @Component({
   selector: 'app-staff',
@@ -41,6 +42,7 @@ import { EditStaffComponent } from './edit-staff/edit-staff.component';
     DeleteStaffComponent,
     CreateStaffComponent,
     EditStaffComponent,
+    MenubarComponent
   ],
   templateUrl: './staff.component.html',
   styleUrl: './staff.component.css',
