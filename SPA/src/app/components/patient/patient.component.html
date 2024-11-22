@@ -4,13 +4,13 @@
 <div class="text-center">
   <h1 class="fw-bold mt-2 main-title mb-4">
     Patient
-    <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="openCreateModal()"
+    <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="openCreateModal()" id="buttonCreatePatient"
     />
   </h1>
 </div>
 
 <div class="container">
-  <p-messages [(value)]="message" />
+  <p-messages [(value)]="message" id="message"/>
   <p-table [value]="filteredPatientList" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '20rem' }">
     <ng-template pTemplate="header">
       <tr>
@@ -42,9 +42,9 @@
         <td>{{ patient.email }}</td>
         <td>{{ patient.dateOfBirth | date:'dd/MM/yyyy' }}</td>
         <td class="text-center">
-          <p-button icon="pi pi-eye" class="me-2" [text]="true" (click)="openDetailsModal(patient)" ></p-button>
-          <p-button icon="pi pi-pencil" class="me-2" [text]="true" (click)="openEditModal(patient)" ></p-button>
-          <p-button icon="pi pi-trash" class="me-2 p-button-danger" [text]="true" (click)="deletePatient(patient)" ></p-button>
+          <p-button icon="pi pi-eye" class="me-2" [text]="true" (click)="openDetailsModal(patient)" id="buttonDetailPatient"></p-button>
+          <p-button icon="pi pi-pencil" class="me-2" [text]="true" (click)="openEditModal(patient)" id="buttonEditPatient"></p-button>
+          <p-button icon="pi pi-trash" class="me-2 p-button-danger" [text]="true" (click)="deletePatient(patient)" id="buttonDeletePatient"></p-button>
         </td>
       </tr>
     </ng-template>
@@ -91,7 +91,7 @@
     </div>
   
     <div class="text-center mt-4">
-      <button pButton type="submit" label="Create" icon="pi pi-check" class="p-button-success"></button>
+      <button pButton type="submit" label="Create" icon="pi pi-check" class="p-button-success" id="buttonSubmit"></button>
       <button pButton type="button" label="Cancel" icon="pi pi-times" (click)="showCreate = false" class="p-button-secondary ms-2"></button>
     </div>
   </form>  
@@ -110,19 +110,19 @@
     <h5 class="title-separator separator">General Information</h5>
     <hr class="line-separator separator" />
     <div class="row">
-      <label for="fullName"><b>Full Name:</b> {{ currentPatient?.fullName }}</label>
-      <label for="dateOfBirth" class="mt-2"><b>Date of Birth:</b> {{ currentPatient?.dateOfBirth | date:'dd/MM/yyyy' }}</label>
-      <label for="gender" class="mt-2"><b>Gender:</b> {{ currentPatient?.gender }}</label>
-      <label for="medicalRecordNumber" class="mt-2"><b>Medical Record Number:</b> {{ currentPatient?.medicalRecordNumber }}</label>
+      <label id="name" for="fullName"><b>Full Name:</b> {{ currentPatient?.fullName }}</label>
+      <label id="dateOfBirth" for="dateOfBirth" class="mt-2"><b>Date of Birth:</b> {{ currentPatient?.dateOfBirth | date:'dd/MM/yyyy' }}</label>
+      <label id="gender" for="gender" class="mt-2"><b>Gender:</b> {{ currentPatient?.gender }}</label>
+      <label id="medicalRecordNumber" for="medicalRecordNumber" class="mt-2"><b>Medical Record Number:</b> {{ currentPatient?.medicalRecordNumber }}</label>
     </div>
 
     <!-- Contact Information Section -->
     <h5 class="title-separator separator mt-4">Contact Information</h5>
     <hr class="line-separator separator" />
     <div class="row">
-      <label for="phone"><b>Phone:</b> {{ currentPatient?.phone }}</label>
-      <label for="email" class="mt-2"><b>Email:</b> {{ currentPatient?.email }}</label>
-      <label for="emergencyContact" class="mt-2"><b>Emergency Contact:</b> {{ currentPatient?.emergencyContact }}</label>
+      <label id="phone" for="phone"><b>Phone:</b> {{ currentPatient?.phone }}</label>
+      <label id="email" for="email" class="mt-2"><b>Email:</b> {{ currentPatient?.email }}</label>
+      <label id="emergencyContact" for="emergencyContact" class="mt-2"><b>Emergency Contact:</b> {{ currentPatient?.emergencyContact }}</label>
     </div>
 
     <!-- Medical Information Section (Optional) -->
@@ -171,7 +171,7 @@
    
 
     <div class="text-center mt-4">
-      <button pButton type="submit" label="Save Changes" icon="pi pi-check" class="p-button-success"></button>
+      <button pButton type="submit" label="Save Changes" icon="pi pi-check" class="p-button-success" id="buttonSubmit"></button>
       <button pButton type="button" label="Cancel" icon="pi pi-times" (click)="showEdit = false" class="p-button-secondary ms-2"></button>
     </div>
   </form>
@@ -180,7 +180,7 @@
 <p-dialog header="Confirm Deletion" [(visible)]="showDeleteConfirm" [modal]="true" [style]="{ width: '30vw' }" [closable]="false">
   <p>Are you sure you want to delete the profile of <b>{{ currentPatient?.fullName }}</b>?</p>
   <div class="text-center mt-3">
-    <button pButton label="Yes" icon="pi pi-check" class="p-button-danger me-2" (click)="confirmDeletePatient()" ></button>
+    <button pButton label="Yes" icon="pi pi-check" class="p-button-danger me-2" (click)="confirmDeletePatient()" id="confirmDelete"></button>
     <button pButton label="No" icon="pi pi-times" class="p-button-secondary" (click)="showDeleteConfirm = false" ></button>
   </div>
 </p-dialog>

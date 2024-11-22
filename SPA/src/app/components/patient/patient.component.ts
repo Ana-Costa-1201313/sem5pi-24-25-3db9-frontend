@@ -9,6 +9,7 @@ import { Patient } from '../../model/patient.model';
 import { PatientService } from '../../services/patient.service';
 import { FormsModule } from '@angular/forms';
 import { EditPatient } from '../../model/editPatient.model';
+import { HttpErrorResponse } from '@angular/common/http';
 import { MenubarComponent } from '../menubar/menubar.component';
 
 @Component({
@@ -63,6 +64,13 @@ export class PatientComponent implements OnInit {
   openDeleteModal(patient: Patient): void {
     this.currentPatient = patient;
   }
+  onFailure(error: HttpErrorResponse): void {
+    this.message = [{
+      severity: 'error',
+      summary: 'Failure!',
+      detail: error.status >= 500 ? 'Server error' : error.error.message
+    }];
+  }
 
   submitNewPatient(): void{
     this.patientService.createPatient(this.newPatient).subscribe(
@@ -77,10 +85,8 @@ export class PatientComponent implements OnInit {
           detail: `${this.newPatient.fullName}'s profile has been created successfully.`
         }];
       },
-      (error) => {
-        console.error('Erro ao criar o patient profile',error);
-      }
-    )
+      (error) => this.onFailure(error)
+    );
   }
  
   submitEditPatient(): void {
@@ -112,9 +118,7 @@ export class PatientComponent implements OnInit {
       }
       this.showEdit = false; 
     },
-    (error) => {
-      console.error('Erro ao atualizar o patient profile', error);
-    }
+    (error) => this.onFailure(error)
   );
 }
 
@@ -140,17 +144,7 @@ confirmDeletePatient(): void {
           detail: `${this.currentPatient.fullName}'s profile has been deleted successfully.`
         }];
       },
-      (error) => {
-        console.error('Error deleting the patient profile', error);
-        this.showDeleteConfirm = false;
-
-       
-        this.message = [{
-          severity: 'error',
-          summary: 'Error',
-          detail: 'There was an error deleting the patient profile. Please try again.'
-        }];
-      }
+      (error) => this.onFailure(error)
     );
   }
 }
