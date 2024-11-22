@@ -50,7 +50,7 @@ describe('Operation Type Tests', () => {
     cy.get('.p-dropdown-item').contains('Dermatology').click();
 
     cy.get('#specialization1').click();
-    cy.get('.p-dropdown-item').contains('Nurse Anaesthetist').click();
+    cy.get('.p-dropdown-item').contains('Nurse Anesthesia').click();
 
     cy.get('#buttonCreateSubmit').find('button').click({ force: true });
 

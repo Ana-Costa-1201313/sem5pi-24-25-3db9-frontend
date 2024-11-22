@@ -9,5 +9,10 @@ export const environment = {
     patient: '/Patient',
     operationTypes: '/OperationTypes',
     specialization: '/Specializations',
+    rooms: '/SurgeryRoom',
+    operationRequest: '/OperationRequest',
+    operationRequestFilterByStatus: "/OperationRequest/list/?status=Picked",
+    planning: "/Appointment/planning",
+    appointment: "/Appointment",
   },
 };
