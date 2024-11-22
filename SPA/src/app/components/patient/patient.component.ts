@@ -10,6 +10,7 @@ import { PatientService } from '../../services/patient.service';
 import { FormsModule } from '@angular/forms';
 import { EditPatient } from '../../model/editPatient.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MenubarComponent } from '../menubar/menubar.component';
 
 @Component({
   selector: 'app-patient',
