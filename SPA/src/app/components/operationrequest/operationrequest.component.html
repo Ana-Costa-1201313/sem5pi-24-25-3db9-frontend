@@ -1,80 +1,114 @@
 <div class="text-center">
-    <h1 class="fw-bold mt-2 main-title mb-4">Operation Request
-      <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="openCreateModal()" />
-    </h1>
-  </div>
-  
+  <h1 class="fw-bold mt-2 main-title mb-4">Operation Request
+    <p-button icon="pi pi-plus" class="me-3 ms-3" (click)="openCreateModal()"/>
+  </h1>
+</div>
+
+<div class="container">
+  <p-table [value]="filteredOperationRequestList" styleClass="p-datatable-striped"
+    [tableStyle]="{ 'min-width': '20rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>
+          <p-columnFilter type="text" field="id" placeholder="Search by Id" ariaLabel="Filter Id"
+            [matchModeOptions]="matchModeOptions" matchMode="contains" />
+        </th>
+        <th>
+          <p-columnFilter type="text" field="optypename" placeholder="Search by operation type name"
+            ariaLabel="Filter Operation Type" [matchModeOptions]="matchModeOptions" matchMode="contains" />
+        </th>
+        <th>
+          <p-columnFilter type="text" field="patientId" placeholder="Search by patient id" ariaLabel="Filter Patient"
+            [matchModeOptions]="matchModeOptions" matchMode="contains" />
+        </th>
+        <th>
+          <p-columnFilter type="text" field="priority" placeholder="Search by priority" ariaLabel="Filter Priority"
+            [matchModeOptions]="matchModeOptions" matchMode="contains" />
+        </th>
+        <th>
+          <div class="d-flex align-items-center">
+            <span class="me-3">Status</span>
+            <p-columnFilter type="boolean" field="active" placeholder="Search by status" ariaLabel="Filter status"
+              [matchModeOptions]="matchModeOptions" matchMode="equals" />
+          </div>
+        </th>
+
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th class=>Operation Type Name</th>
+        <th class=>Deadline</th>
+        <th class=>Priority</th>
+        <th class=>Patient Name</th>
+        <th class=>Doctor Name</th>
+        <th class=>Status</th>
+        <th class=>Description</th>
+        <th class=></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-opReq>
+      <tr>
+        <td>{{ opReq.opTypeName.name }}</td>
+        <td>{{ opReq.deadlineDate }}</td>
+        <td>{{ opReq.priority }}</td>
+        <td>{{ opReq.patientName }}</td>
+        <td>{{ opReq.doctorName }}</td>
+        <td>{{ opReq.status }}</td>
+        <td>{{ opReq.description }}</td>
+        <td class="text-center">
+
+
+          <p-button icon="pi pi-eye" class="me-3" [rounded]="true" [text]="true" (click)="openDetailsModal(opReq)" />
+          <p-button icon="pi pi-pencil" class="me-3" [rounded]="true" [text]="true" />
+          <p-button icon="pi pi-trash" class="me-3" [rounded]="true" [text]="true" (click)="openDeactivateModal(opReq)"
+            id="buttonDeactivateOperationRequest" />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog header="Operation Request" [(visible)]="showDetails" [modal]="true" [style]="{ width: '50vw' }"
+  [draggable]="false" [resizable]="false">
+  <ng-template pTemplate="header">
+    <h4 class="fw-bold">{{ currentOpRequest?.id }}</h4>
+  </ng-template>
   <div class="container">
-    <p-table [value]="filteredOperationRequestList" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '20rem' }">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>
-            <p-columnFilter type="text" field="id" placeholder="Search by Id" ariaLabel="Filter Id"
-              [matchModeOptions]="matchModeOptions" matchMode="contains" />
-          </th>
-          <th>
-            <p-columnFilter type="text" field="optypename" placeholder="Search by operation type name"
-              ariaLabel="Filter Operation Type" [matchModeOptions]="matchModeOptions" matchMode="contains" />
-          </th>
-          <th>
-            <p-columnFilter type="text" field="patientId" placeholder="Search by patient id"
-              ariaLabel="Filter Patient" [matchModeOptions]="matchModeOptions" matchMode="contains" />
-          </th>
-          <th>
-            <p-columnFilter type="text" field="priority" placeholder="Search by priority"
-              ariaLabel="Filter Priority" [matchModeOptions]="matchModeOptions" matchMode="contains" />
-          </th>
-          <th>
-            <div class="d-flex align-items-center">
-              <span class="me-3">Status</span>
-              <p-columnFilter type="boolean" field="active" placeholder="Search by status" ariaLabel="Filter status"
-                [matchModeOptions]="matchModeOptions" matchMode="equals" />
-            </div>
-          </th>
-  
-          <th></th>
-          <th></th>
-        </tr>
-        <tr>
-          <th class=>Operation Type Name</th>
-          <th class=>Deadline</th>
-          <th class=>Priority</th>
-          <th class=>Patient Name</th>
-          <th class=>Doctor Name</th>
-          <th class=>Status</th>
-          <th class=>Description</th>
-          <th class=></th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-opReq>
-        <tr>
-          <td>{{ opReq.opTypeName.name }}</td>
-          <td>{{ opReq.deadlineDate }}</td>
-          <td>{{ opReq.priority }}</td>
-          <td>{{ opReq.patientName }}</td>
-          <td>{{ opReq.doctorName }}</td>
-          <td>{{ opReq.status }}</td>
-          <td>{{ opReq.description }}</td>
-          <td class="text-center">
-  
-  
-            <p-button icon="pi pi-eye" class="me-3" [rounded]="true" [text]="true" (click)="openDetailsModal(opReq)" />
-            <p-button icon="pi pi-pencil" class="me-3" [rounded]="true" [text]="true" />
-            <p-button icon="pi pi-trash" class="me-3" [rounded]="true" [text]="true" />
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+    <h5 class="title-separator separator">General Information</h5>
+    <hr class="line-separator separator" />
+    <div class="row">
+      <label for="Id"><b>Id:</b> {{ currentOpRequest?.id }}</label>
+      <label for="OpTypeName"><b>OpTypeName:</b> {{ currentOpRequest?.opTypeName.name }}</label>
+      <label for="OpTypeId" class="mt-2"><b>OpTypeId:</b> {{ currentOpRequest?.opTypeId }}</label>
+      <label for="Deadline" class="mt-2"><b>Deadline:</b> {{ currentOpRequest?.deadlineDate }}</label>
+      <label for="Priority" class="mt-2"><b>Priority:</b> {{ currentOpRequest?.priority }}</label>
+      <label for="PatientName" class="mt-2"><b>PatientName:</b> {{ currentOpRequest?.patientName }}</label>
+      <label for="PatientId" class="mt-2"><b>PatientId:</b> {{ currentOpRequest?.patientId }}</label>
+      <label for="DoctorName" class="mt-2"><b>DoctorName:</b> {{ currentOpRequest?.doctorName }}</label>
+      <label for="DoctorId" class="mt-2"><b>DoctorId:</b> {{ currentOpRequest?.doctorId }}</label>
+      <label for="Status" class="mt-2"><b>Status:</b> {{ currentOpRequest?.status }}</label>
+      <label for="Description" class="mt-2"><b>Description:</b> {{ currentOpRequest?.description }}</label>
+    </div>
   </div>
-  
-  <p-dialog
-  header="Operation Request"
-  [(visible)]="showCreate"
-  [modal]="true"
-  [style]="{ width: '50vw' }"
-  [draggable]="false"
-  [resizable]="false"
->
+</p-dialog>
+
+<p-dialog header="Operation Request" [(visible)]="deactivate" [modal]="true" [style]="{ width: '25vw' }"
+  [draggable]="false" [resizable]="false">
+  <ng-template pTemplate="header">
+    <h4 class="fw-bold">Delete Operation Request</h4>
+  </ng-template>
+  <h4 class="fw-bold">{{ currentOpRequest?.id }}</h4>
+
+  <div class="mt-2 mb-4">Are you sure you want to delete this operation request?</div>
+  <p-button label="Confirm" icon="pi pi-check" class="me-3" [rounded]="true" [text]="true"
+    (click)="deactivateOperationRequest()" id="buttonConfirmDeactivate" />
+  <p-button label="Cancel" icon="pi pi-times" class="me-3" [rounded]="true" [text]="true" severity="danger"
+    (click)="deactivate = false" />
+</p-dialog>
+
+<p-dialog header="Operation Request" [(visible)]="showCreate" [modal]="true" [style]="{ width: '50vw' }"
+  [draggable]="false" [resizable]="false">
   <ng-template pTemplate="header">
     <h4 class="fw-bold">Create Operation Request</h4>
   </ng-template>
@@ -85,109 +119,59 @@
       <input pInputText formControlName="opTypeName" autoWidth="false" />
       <label for="opTypeName">Operation Type Name *</label>
     </span>
-    <p-message
-      *ngIf="
+    <p-message *ngIf="
         createOpReqForm.get('opTypeName')?.dirty &&
         createOpReqForm.get('opTypeName')?.hasError('required')
-      "
-      severity="error"
-      text="Field is required"
-    ></p-message>
+      " severity="error" text="Field is required"></p-message>
 
     <span class="p-float-label mt-4">
       <input pInputText formControlName="deadlineDate" autoWidth="false" />
       <label for="deadlineDate">Deadline Date *</label>
     </span>
-    <p-message
-      *ngIf="
+    <p-message *ngIf="
         createOpReqForm.get('deadlineDate')?.dirty &&
         createOpReqForm.get('deadlineDate')?.hasError('required')
-      "
-      severity="error"
-      text="Field is required"
-    ></p-message>
+      " severity="error" text="Field is required"></p-message>
 
     <span class="p-float-label mt-4">
       <input pInputText formControlName="priority" autoWidth="false" />
       <label for="priority">Priority *</label>
     </span>
-    <p-message
-      *ngIf="
+    <p-message *ngIf="
         createOpReqForm.get('priority')?.dirty &&
         createOpReqForm.get('priority')?.hasError('required')
-      "
-      severity="error"
-      text="Field is required"
-    ></p-message>
+      " severity="error" text="Field is required"></p-message>
 
     <span class="p-float-label mt-4">
       <input pInputText formControlName="patientEmail" autoWidth="false" />
       <label for="patientEmail">Patient Email *</label>
     </span>
-    <p-message
-      *ngIf="
+    <p-message *ngIf="
         createOpReqForm.get('patientEmail')?.dirty &&
         createOpReqForm.get('patientEmail')?.hasError('required')
-      "
-      severity="error"
-      text="Field is required"
-    ></p-message>
+      " severity="error" text="Field is required"></p-message>
 
     <span class="p-float-label mt-4">
       <input pInputText formControlName="doctorEmail" autoWidth="false" />
       <label for="doctorEmail">Doctor Email *</label>
     </span>
-    <p-message
-      *ngIf="
+    <p-message *ngIf="
         createOpReqForm.get('doctorEmail')?.dirty &&
         createOpReqForm.get('doctorEmail')?.hasError('required')
-      "
-      severity="error"
-      text="Field is required"
-    ></p-message>
+      " severity="error" text="Field is required"></p-message>
 
     <span class="p-float-label mt-4">
       <input pInputText formControlName="description" autoWidth="false" />
       <label for="description">Description *</label>
     </span>
-    <p-message
-      *ngIf="
+    <p-message *ngIf="
         createOpReqForm.get('description')?.dirty &&
         createOpReqForm.get('description')?.hasError('required')
-      "
-      severity="error"
-      text="Field is required"
-    ></p-message>
+      " severity="error" text="Field is required"></p-message>
 
-    <p-button
-      class="mt-4 d-block"
-      type="Submit"
-      label="Submit"
-      [disabled]="createOpReqForm.invalid"
-    />
+    <p-button class="mt-4 d-block" type="Submit" label="Submit" [disabled]="createOpReqForm.invalid" />
   </form>
 </p-dialog>
 
-  <p-dialog header="Operation Request" [(visible)]="showDetails" [modal]="true" [style]="{ width: '50vw' }"
-    [draggable]="false" [resizable]="false">
-    <ng-template pTemplate="header">
-      <h4 class="fw-bold">{{ currentOpRequest?.id }}</h4>
-    </ng-template>
-    <div class="container">
-      <h5 class="title-separator separator">General Information</h5>
-      <hr class="line-separator separator" />
-      <div class="row">
-        <label for="Id"><b>Id:</b> {{ currentOpRequest?.id }}</label>
-        <label for="OpTypeName"><b>OpTypeName:</b> {{ currentOpRequest?.opTypeName.name }}</label>
-        <label for="OpTypeId" class="mt-2"><b>OpTypeId:</b> {{ currentOpRequest?.opTypeId }}</label>
-        <label for="Deadline" class="mt-2"><b>Deadline:</b> {{ currentOpRequest?.deadlineDate }}</label>
-        <label for="Priority" class="mt-2"><b>Priority:</b> {{ currentOpRequest?.priority }}</label>
-        <label for="PatientName" class="mt-2"><b>PatientName:</b> {{ currentOpRequest?.patientName }}</label>
-        <label for="PatientId" class="mt-2"><b>PatientId:</b> {{ currentOpRequest?.patientId }}</label>
-        <label for="DoctorName" class="mt-2"><b>DoctorName:</b> {{ currentOpRequest?.doctorName }}</label>
-        <label for="DoctorId" class="mt-2"><b>DoctorId:</b> {{ currentOpRequest?.doctorId }}</label>
-        <label for="Status" class="mt-2"><b>Status:</b> {{ currentOpRequest?.status }}</label>
-        <label for="Description" class="mt-2"><b>Description:</b> {{ currentOpRequest?.description }}</label>
-      </div>
-    </div>
-  </p-dialog>
+
+

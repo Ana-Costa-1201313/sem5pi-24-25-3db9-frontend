@@ -22,4 +22,8 @@ export class OperationRequestService {
   getPickedOperationRequestList(): Observable<OperationRequest[]> {
     return this.http.get<OperationRequest[]>(this.url+"/list/?status=Picked");
   }
+
+  deactivateOperationRequest(operationRequestId: string): Observable<OperationRequest>{
+    return this.http.delete<OperationRequest>(`${this.url}/${operationRequestId}`);
+  }
 }

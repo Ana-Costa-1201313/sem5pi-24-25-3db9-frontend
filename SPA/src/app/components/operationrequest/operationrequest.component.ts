@@ -84,6 +84,37 @@ export class OperationrequestComponent implements OnInit {
     this.showCreate = true;
   }
 
+  openDeactivateModal(opRequest: OperationRequest): void {
+    this.currentOpRequest = opRequest;
+  }
+
+  deactivateOperationRequest(): void {
+    if (this.currentOpRequest?.id == null) {
+      return;
+    }
+    this.service.deactivateOperationRequest(this.currentOpRequest.id).subscribe(
+      () => {
+        this.operationRequestList = this.operationRequestList.filter(
+          (opReq) => opReq.id !== this.currentOpRequest.id
+        );
+        this.filteredOperationRequestList = [...this.operationRequestList];
+      },
+      (error: HttpErrorResponse) => {
+        this.message = [
+          { severity: 'error', summary: 'Error', detail: error.message },
+        ];
+      }
+    );
+
+    this.message = [
+      {
+        severity: 'info',
+        summary: 'Success!',
+        detail: 'The Operation Request "' + this.currentOpRequest.id + '" was deleted with success.',
+      },
+    ];
+  }
+
   addOpReq(): void {
     this.showCreate = false;
 
