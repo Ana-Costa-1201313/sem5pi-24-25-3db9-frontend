@@ -8,6 +8,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
   Validators,
+  FormBuilder,
 } from '@angular/forms';
 import { FilterMatchMode, Message, SelectItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -22,6 +23,7 @@ import { TableModule } from 'primeng/table';
 import { CreateOperationRequest } from '../../model/createOperationRequest';
 import { OperationRequest } from '../../model/operationRequest.model';
 import { OperationRequestService } from '../../services/operationRequest.service';
+import { EditOperationRequest } from '../../model/editOperationRequest.model';
 
 @Component({
   selector: 'app-operationrequest',
@@ -53,8 +55,11 @@ export class OperationrequestComponent implements OnInit {
   lazyEvent: any;
   message: Message[] = [];
   showCreate: boolean = false;
+  showUpdate: boolean = false;
   showDetails: boolean = false;
   deactivate: boolean = false;
+
+  updateOperationRequestForm: FormGroup;
 
   createOpReqForm = new FormGroup({
     opTypeName: new FormControl(null, Validators.required),
@@ -65,7 +70,15 @@ export class OperationrequestComponent implements OnInit {
     description: new FormControl(null, Validators.required),
   });
 
-  constructor(private service: OperationRequestService) { }
+  constructor(
+    private service: OperationRequestService,
+    private fb : FormBuilder) {
+    this.updateOperationRequestForm = this.fb.group({
+      deadlineDate: ['', Validators.required],
+      priority: ['', Validators.required],
+      description: ['', Validators.required],
+    })
+   }
 
   ngOnInit(): void {
     this.service.getOperationRequestList().subscribe((op) => {
@@ -141,9 +154,54 @@ export class OperationrequestComponent implements OnInit {
     );
   }
 
+  openUpdateModal(opRequest: OperationRequest): void {
+    this.currentOpRequest = opRequest;
+    this.showUpdate = true;
+
+    this.updateOperationRequestForm.reset();
+    this.updateOperationRequestForm.patchValue({
+      deadlineDate: opRequest.deadlineDate,
+      priority: opRequest.priority,
+      description: opRequest.description,
+    });
+  }
+
   openDetailsModal(opRequest: OperationRequest): void {
     this.currentOpRequest = opRequest;
     this.showDetails = true;
+  }
+
+  updateOperationRequest(): void {
+    if(this.updateOperationRequestForm.invalid) return;
+
+    this.showUpdate = false;
+
+    const updatedData: EditOperationRequest = {
+      deadlineDate: this.updateOperationRequestForm.value.deadlineDate,
+      priority: this.updateOperationRequestForm.value.priority,
+      description: this.updateOperationRequestForm.value.description,
+    };
+
+    this.service.updateOperationRequest(this.currentOpRequest.id, updatedData).subscribe({
+      next: () => {
+        // Success message
+        this.message = [
+          {
+            severity: 'success',
+            summary: 'Success!',
+            detail: 'Operation Request updated successfully!',
+          },
+        ];
+  
+        // Refresh the operation type list
+        this.service.getOperationRequestList().subscribe((op) => {
+          this.operationRequestList = op.map(opReq => ({
+            ...opReq,
+          }));
+        });
+      },
+      error: (error) => this.onFailure(error),
+    });
   }
 
   onFailure(error: HttpErrorResponse): void {

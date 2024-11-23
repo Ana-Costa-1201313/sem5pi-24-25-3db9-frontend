@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { OperationRequest } from '../model/operationRequest.model';
 import { environment } from '../../environments/environment';
 import { CreateOperationRequest } from '../model/createOperationRequest';
+import { EditOperationRequest } from '../model/editOperationRequest.model';
 
 @Injectable({ providedIn: 'root' })
 export class OperationRequestService {
@@ -25,5 +26,9 @@ export class OperationRequestService {
 
   deactivateOperationRequest(operationRequestId: string): Observable<OperationRequest>{
     return this.http.delete<OperationRequest>(`${this.url}/${operationRequestId}`);
+  }
+
+  updateOperationRequest(operationRequestId: string, editOperationRequest: EditOperationRequest): Observable<OperationRequest>{
+    return this.http.patch<OperationRequest>(`${this.url}/${operationRequestId}`, editOperationRequest);
   }
 }
