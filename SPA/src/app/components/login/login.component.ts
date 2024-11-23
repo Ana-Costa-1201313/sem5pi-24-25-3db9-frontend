@@ -61,13 +61,6 @@ export class LoginComponent {
         this.setJwtCookie(response?.value?.jwt);
 
         console.log('Cookies:', document.cookie);
-
-         //Redirect user to the home page
-        //switch (response?.value?.role?.toUpperCase()) {
-        //  case Role.Admin:
-        //    this.router.navigate(['/dashboard'])
-
-        //}
         this.router.navigate(['/home']);
       },
       (error) => {
@@ -78,8 +71,6 @@ export class LoginComponent {
         alert('Login failed. Please check your credentials.');
       }
     );
-    // Redirect user to home page (or dashboard)
-    //this.router.navigate(['/']);
   }
 
   onRegister() {
@@ -87,7 +78,6 @@ export class LoginComponent {
     this.loginService.doRegister(this.email, this.email).subscribe(
       response => {
         console.log('Registration successful', response);
-        // Navigate to the registration page or another view
         this.router.navigate(['/']);
       },
       error => {
@@ -100,11 +90,11 @@ export class LoginComponent {
   }
 
   private setJwtCookie(jwt: string | null): void {
-    // Set the expiration time to 5 hours from now
+    // Set  expiration  to 5 hours  
     const expirationDate = new Date();
-    expirationDate.setTime(expirationDate.getTime() + (5 * 60 * 60 * 1000));  // 5 hours in milliseconds
+    expirationDate.setTime(expirationDate.getTime() + (5 * 60 * 60 * 1000));  // 5 hours  milliseconds
 
-    // Set the JWT token in a cookie with HttpOnly, Secure, SameSite, and expiry
+    // Set the JWT token in a cookie with HttpOnly, Secure, SameSite, and expiry HttpOnly nao funciona com interceptor
     //document.cookie = `jwt=${jwt}; expires=${expirationDate.toUTCString()}; path=/; Secure; HttpOnly; SameSite=Strict`;
     document.cookie = `jwt=${jwt}; expires=${expirationDate.toUTCString()}; path=/; Secure; SameSite=Strict`;
   }

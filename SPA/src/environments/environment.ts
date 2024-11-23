@@ -5,6 +5,7 @@ export const environment = {
     staff: '/Staff',
     login: '/Auth/Login/loginDto',
     registerNewPatientUser: '/users/createPatient',
+    deletePatientUser: '/users/deletePatientRequest2',
     totalRecordsStaff: '/totalRecords',
     patient: '/Patient',
     operationTypes: '/OperationTypes',

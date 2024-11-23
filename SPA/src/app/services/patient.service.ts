@@ -8,7 +8,8 @@ import { EditPatient } from "../model/editPatient.model";
 
 @Injectable({providedIn: 'root'})
 export class PatientService{
-    url = `${environment.apiUrl}${environment.endpoints.patient}`;
+  url = `${environment.apiUrl}${environment.endpoints.patient}`;
+  deleteUrl = `${environment.apiUrl}${environment.endpoints.deletePatientUser}`;
 
     constructor(private http: HttpClient){}
 
@@ -26,4 +27,10 @@ export class PatientService{
     deletePatient(id: string): Observable<void>{
         return this.http.delete<void>(`${this.url}/${id}`);
     }
+
+    deletePatient_2(email: string): Observable<void> {
+      const params = new HttpParams().set('email', email); // Append email as query parameter
+      return this.http.delete<void>(`${this.deleteUrl}`, { params });
+    }
+
 }

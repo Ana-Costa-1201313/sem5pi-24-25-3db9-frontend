@@ -68,6 +68,16 @@
         </div>
       </div>
     </div>
+  <div class="col" *ngIf="role == 'Patient'">
+      <div class="card card-border" routerLink="/delete-patient">
+        <div class="card-body">
+          <h5 class="card-title fw-bold card-title">Delete Account & Profile</h5>
+          <p class="card-text">
+            You sure?
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="row mt-5 text-center">
     <div class="col" *ngIf="role == 'Admin'">

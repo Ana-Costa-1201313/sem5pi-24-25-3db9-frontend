@@ -1,0 +1,18 @@
+<div>
+  <app-menubar></app-menubar>
+</div>
+
+<div class="container">
+  <div class="row mt-5 text-center">
+    <div class="col" *ngIf="role == 'Patient'">
+      <div class="card card-border" (click)="openDeleteConfirmation()">
+        <div class="card-body">
+          <h5 class="card-title fw-bold card-title">Delete Account & Profile</h5>
+          <p class="card-text">
+            You sure?
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

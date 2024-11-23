@@ -8,6 +8,7 @@ import { PlanningComponent } from './components/planning/planning.component';
 import { LoginComponent } from './components/login/login.component';
 import { VisualizationComponent } from './components/visualization/visualization.component';
 import { OperationrequestComponent } from './components/operationrequest/operationrequest.component';
+import { DeletePatientComponent } from './components/delete-patient/delete-patient.component';
 
 export const routes: Routes = [
   {
@@ -34,6 +35,11 @@ export const routes: Routes = [
     path: 'operationtype',
     component: OperationtypeComponent,
     title: 'Operation Type page',
+  },
+  {
+    path: 'delete-patient',
+    component: DeletePatientComponent,
+    title: 'Delete Patient page',
   },
   {
     path: 'specialization',
