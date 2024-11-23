@@ -18,4 +18,8 @@ export class OperationRequestService {
   addOperationRequest(operationRequest: CreateOperationRequest): Observable<OperationRequest> {
     return this.http.post<OperationRequest>(this.url, operationRequest);
   }
+
+  getPickedOperationRequestList(): Observable<OperationRequest[]> {
+    return this.http.get<OperationRequest[]>(this.url+"/list/?status=Picked");
+  }
 }

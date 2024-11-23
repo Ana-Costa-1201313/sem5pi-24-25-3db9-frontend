@@ -1,10 +1,14 @@
+<div>
+  <app-menubar></app-menubar>
+</div>
+
 <div class="text-center">
   <h1 class="fw-bold mt-2 main-title">Healthcare Application</h1>
 </div>
 
 <div class="container">
   <div class="row mt-5 text-center">
-    <div class="col">
+    <div class="col" *ngIf="role == 'Admin'">
       <div class="card card-border">
         <div class="card-body">
           <h5 class="card-title fw-bold card-title">User</h5>
@@ -12,8 +16,8 @@
         </div>
       </div>
     </div>
-    <div class="col">
-      <div class="card card-border">
+    <div class="col" *ngIf="role == 'Admin'">
+      <div class="card card-border" routerLink="/patient">
         <div class="card-body">
           <h5 class="card-title fw-bold card-title">Patient</h5>
           <p class="card-text">
@@ -24,7 +28,7 @@
     </div>
   </div>
   <div class="row mt-5 text-center">
-    <div class="col">
+    <div class="col" *ngIf="role == 'Admin'">
       <div class="card card-border" routerLink="/staff">
         <div class="card-body">
           <h5 class="card-title fw-bold card-title">Staff</h5>
@@ -34,8 +38,8 @@
         </div>
       </div>
     </div>
-    <div class="col">
-      <div class="card card-border">
+    <div class="col" *ngIf="role == 'Admin'">
+      <div class="card card-border" routerLink="/specialization">
         <div class="card-body">
           <h5 class="card-title fw-bold card-title">Specialization</h5>
           <p class="card-text">Areas of expertise for better patient care.</p>
@@ -44,7 +48,7 @@
     </div>
   </div>
   <div class="row mt-5 text-center">
-    <div class="col">
+    <div class="col" *ngIf="role == 'Admin'">
       <div class="card card-border" routerLink="/operationtype">
         <div class="card-body">
           <h5 class="card-title fw-bold card-title">Operation Type</h5>
@@ -54,12 +58,38 @@
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col" *ngIf="role == 'Admin' || role == 'Doctor'">
       <div class="card card-border" routerLink="/operationrequest">
         <div class="card-body">
           <h5 class="card-title fw-bold card-title">Operation Request</h5>
           <p class="card-text">
             Submit and track requests for scheduled operations.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5 text-center">
+    <div class="col" *ngIf="role == 'Admin'">
+      <div class="card card-border" routerLink="/planning">
+        <div class="card-body">
+          <h5 class="card-title fw-bold card-title">Operation Planning</h5>
+          <p class="card-text">Plan operations for a given day and room.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card card-border" *ngIf="
+          role == 'Admin' ||
+          role == 'Doctor' ||
+          role == 'Nurse' ||
+          role == 'Technician'
+        " routerLink="/visualization">
+        <div class="card-body">
+          <h5 class="card-title fw-bold card-title">3D Room visualization</h5>
+          <p class="card-text">
+            Check the 3D Model of all operations rooms and if they are
+            scheduled.
           </p>
         </div>
       </div>
