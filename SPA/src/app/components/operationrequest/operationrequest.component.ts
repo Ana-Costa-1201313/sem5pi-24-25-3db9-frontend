@@ -86,6 +86,7 @@ export class OperationrequestComponent implements OnInit {
 
   openDeactivateModal(opRequest: OperationRequest): void {
     this.currentOpRequest = opRequest;
+    this.deactivate = true;
   }
 
   deactivateOperationRequest(): void {
