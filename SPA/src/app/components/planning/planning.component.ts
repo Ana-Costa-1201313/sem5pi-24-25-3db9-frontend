@@ -21,6 +21,7 @@ import { PlanningService } from '../../services/planning.service';
 import { AppointmentDto } from '../../model/appointmentDto.model';
 import { AppointmentService } from '../../services/appointment.service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MenubarComponent } from '../menubar/menubar.component';
 
 @Component({
   selector: 'app-planning',
@@ -39,7 +40,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     CalendarModule,
     SelectButtonModule,
     ListboxModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    MenubarComponent
   ],
   templateUrl: './planning.component.html',
   styleUrls: ['./planning.component.css'],
