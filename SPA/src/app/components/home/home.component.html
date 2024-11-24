@@ -95,4 +95,16 @@
       </div>
     </div>
   </div>
+  <div class="row mt-5 text-center">
+    <div class="col" *ngIf="role == 'Patient'">
+      <div class="card card-border" routerLink="/patientprofile">
+        <div class="card-body">
+          <h5 class="card-title fw-bold card-title">Patient Profile</h5>
+          <p class="card-text">
+            Edit your patient profile.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -5,6 +5,7 @@ import { PatientComponent } from './components/patient/patient.component';
 import { OperationtypeComponent } from './components/operationtype/operationtype.component';
 import { SpecializationComponent } from './components/specialization/specialization.component';
 import { PlanningComponent } from './components/planning/planning.component';
+import { PatientProfileComponent } from './components/patient/patientprofile.component';
 import { LoginComponent } from './components/login/login.component';
 import { VisualizationComponent } from './components/visualization/visualization.component';
 import { OperationrequestComponent } from './components/operationrequest/operationrequest.component';
@@ -60,4 +61,9 @@ export const routes: Routes = [
     component: LoginComponent,
     title: 'Login page',
   },
+  {
+    path: 'patientprofile',
+    component: PatientProfileComponent,
+    title: 'Patient Profile page',
+  }
 ];

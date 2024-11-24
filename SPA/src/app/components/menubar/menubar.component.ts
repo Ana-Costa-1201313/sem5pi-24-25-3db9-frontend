@@ -83,6 +83,12 @@ export class MenubarComponent implements OnInit {
               this.role == 'Nurse' ||
               this.role == 'Technician',
           },
+          {
+            label: 'Patient Profile',
+            icon: 'pi pi-angle-right',
+            routerLink: '/patientprofile',
+            visible: this.role === 'Patient',
+          }
         ].filter((item) => item.visible),
       },
     ];

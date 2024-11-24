@@ -15,5 +15,6 @@ export const environment = {
     operationRequestFilterByStatus: "/OperationRequest/list/?status=Picked",
     planning: "/Appointment/planning",
     appointment: "/Appointment",
+    patientprofile: "/Patient",
   },
 };
