@@ -1,90 +1,45 @@
-# US 6.2.11
+# US 6.2.15
 
 ## 1. Context
 
-This task appears in the middle of the project's development, to be able to edit staff profiles.
+This task appears in the middle of the project's development, to be able to edit operation requests.
 
 
 ## 2. Requirements
 
-**US 6.2.11**  As an Admin - I want to edit a staff’s profile, so that I can update their information.
+**US 6.2.15**  As a Doctor, I want to update an operation requisition, so that the Patient has access to the necessary healthcare.
 
 **Acceptance Criteria:**
 
-- Admins can search for and select a staff profile to edit.
-- Editable fields include contact information, availability slots, and specialization.
-- The system logs all profile changes, and any changes to contact information trigger a confirmation email to the staff member.
-- The edited data is updated in real-time across the system.
+- Doctors can update operation requests they created (e.g., change the deadline or priority).
+- The system checks that only the requesting doctor can update the operation request.
+- The system logs all updates to the operation request (e.g., changes to priority or deadline).
+- Updated requests are reflected immediately in the system and notify the Planning Module of any changes.
 
 **Dependencies/References:**
 
-It is also required that the user is registered and logged in as an admin and that the staff profile is already in the system.
-The backend component of this US must be already developed.
-
+The user logged in must be registered in the system as a 'Doctor'.
 
 ## 3. Analysis
 
+The following requirements specified by the client were considered during the development of this user story:
 
-For this US were considered the requirements specified in the project's description and the client's answers. 
-Some relevant answers excerpts are here specified:
+- **Question:** You want to log all updates to the operation request. Do you plan to have this info available in the app or is this just for audit purposes ?
+  - **Answer:** The history of the operation type definition is part of the application's data. If the user needs to view the details of an operation that was performed last year, they need to be able to see the operation configuration that was in place at that time.
 
-*"Can the same user have both a patient and a healthcare profile? No..."*
+- **Question:** There was a previous question, "What information can physicians update on an operating requisition?", with the following answer, "Physicians can update the operating time, priority, and description text, but not change the patient.". However, half of this answer applies to the Operation Type, instead of the Operation Request. Operation Requests have, at least, an ID, a Patient, an Operation Type, a Doctor, a Deadline Date, and a Priority. Considering the previous answer, the doctor cannot change the Patient ID but can change the Priority. Besides the Priority, could the doctor also update the Deadline Date or Operation Type?
+  - **Answer:** 
+The answer was about operation requests, not operation types. I believe the term "operation time" in the original answer was the reason for this misunderstanding, as it means the expected deadline for the request, not the duration. Thus, the doctor can change the deadline, the priority, and the description. The doctor cannot change the operation type nor the patient.
 
-
-*"When it comes to patients and healthcare staff ... So the email is the identifying attribute, right? For users, or is it the username? It's the username, okay? But typically, as you know, nowadays, most of the usernames that you have in all the systems are your email, okay? So they hack, kind of, instead of you allowing to create a specific username, you use your own email as the username ... you should use the email as the username."*
-
-- **Question:** How should the specialization be assigned to a staff? Should the admin write it like a first name? Or should the admin select the specialization?
-  - **Answer:** The system has a list of specializations. staff is assigned a specialization from that list.
-
-
-- **Question:** Boa tarde, gostaria de saber se é objetivo o sistema diferenciar as especializações para cada tipo de staff. Ou seja se temos de validar que a especialização x só pode ser atribuída por exemplo a um membro do staff que seja doctor, ou se consideramos que qualquer especialização existente no sistema pode ser atribuída a qualquer staff ficando da autoria do responsável por criar os perfis atribuir especializações válidas de acordo com a role do staff.
-  - **Answer:** As especializações são independentes do professional ser médico ou enfermeiro
-
-
-- **Question:** -Médicos e enfermeiros podem ter apenas uma especialidade ou podem ser especialistas em várias? -Quem faz parte do staff? Toda a gente na sala de operação? Se sim, todos eles tem as suas respetivas especialidades, incluindo técnicos? 
-  - **Answer:** Um médico ou enfermeiro apenas tem uma especialização. no staff apenas consideramos médicos e enfermeiros
-
-
-- **Question:** Regarding the specializations, do doctors, nurses, and technicians share the same group of specializations, or does each type of professional have distinct, role-specific specializations? Could you clarify how these specializations are categorized?
-  - **Answer:** They share the same set of specializations.
-
-
-*"When we are registering users to the platform, do we immediately need to give them a profile? Like when we register a user, do we immediately need to create their patient or healthcare professional staff profile? Or can we just leave them as a user to log in? Because there's some user stories that reference the creation of users with roles, but not necessarily their profile. I think that's up to you, honestly.
-It will boil down to a design decision. From the functional perspective, it's not something important. Okay, so I think it will be more a question of does it make more sense for you from the technical perspective to do it immediately or do it afterwards?"*
-
-- **Question:** Are healthcare staff IDs unique across roles?
-  - **Answer:** Yes, staff IDs are unique and not role-specific (e.g., a doctor and nurse can share the same ID format).
-
-*"... regarding healthcare staff, we want to understand if the staff ID is unique or if it is, for example, if it is unique in the sense that, for example, doctor is 1, nurse is 2, or if, for example, the doctor has ID 1, there is a nurse ID 1? Okay, I understand what the issue is. Employees are identified by a mechanical number, basically. And it doesn't matter if this typing number is for a doctor, a nurse, or an assistant. It's a number of employees ..."*
-
-
-- **Question:** Can you clarify the difference between mechanographic number, staff id and license number?
-  - **Answer:** The staff id and mechanographic number is the same concept. the license number is the number assigned by the professional guild (ex., "ordem dos enfermeiros", "ordem dos médicos") to the doctor or nurse attesting they legally can perform the medical acts of their profession.
-
-
-- **Question:** I have one question related to the staff license number. Since it will be generated, would you like it to be generated in any particular format or algorithm of your choice?
-  - **Answer:** There is a misinformation in the RFP. staff id are unique and generated by the system. License numbers are unique but are not generated by the system. Staff id follow the format "(N | D | O)yyyynnnnn", for instance, N202401234, N is for nurse, D is for doctor, O is for other. yyyy is the year of recruitment. nnnnn is a sequential number. License numbers are assigned by the professional guild. the admin will enter the license number and the system records it
-  
-
-- **Question:** There are 2 separate use cases regarding backoffice users: One for the creation of the user account and another one for the creation of the staff's profile. Is there a fixed order for these operations to take place? Does the admin always create the profile first or can he create the user first aswell? If the profile is created first, for example, should the user be created automaticaly or should the admin create the user afterwards, having to do 2 distinct operations?
-  - **Answer:** Recommended Flow: Order of operations: The system should support profile first. The admin should then create the user account. the account and user profile are linked by the professional email address or username (depending on the IAM provider).
- Distinct Operations: The operations should remain distinct, even if they are performed in quick succession. This ensures that each step (creating user credentials and creating a staff profile) is carefully tracked and managed. Validation: The system should ensure that a staff profile and user account are both created and linked before the staff member can access the system. 
-  
-
-- **Question:** Can you clarify the username and email requirements?
-  - **Answer:** The username is the "official" email address of the user. for backoffice users, this is the mechanographic number of the collaborator, e.g., D240003 or N190345, and the DNS domain of the system. For instance, Doctor Manuela Fernandes has email "D180023@myhospital.com". The system must allow for an easy configuration of the DNS domain (e.g., environment variable). For patients, the username is the email address provided in the patient record and used as identity in the external IAM. for instance patient Carlos Silva has provided his email csilva98@gmail.com the first time he entered the hospital. That email address will be his username when he self-registers in the system
-
-
-### 3.1. Domain Model excerpt
-![DM Staff](DM%20Staff.png)
-
+- **Question:**  So in the draft documentation, it says that some of the information they can update is the operating time and the priority.
+I'm wondering if there's any more relevant information that the doctor can access and change.
+  - **Answer:** 
+For the operating requisition, you can access the requisition itself, the requisition text. [...] So the doctor can change the priority, the operation time and that description text.
 
 ### 3.2. HTTP requests
 
 The following **HTTP requests** will be implemented:
-- GET (to check available staff member)
-- PUT (to edit a specific staff member)
-- PATCH (to edit some data of a specific staff member)
+- PATCH (to edit the date, priority and/or description of an operation request)
 
 ## 4. Design
 
@@ -92,23 +47,23 @@ This section presents the design adopted to solve the requirement.
 
 ### 4.1. Level 1 Sequence Diagram
 
-This diagram guides the realization of the functionality, for level 1 procecss view.
+This diagram guides the realization of the functionality, for level 1 process view.
 
-![US6.2.11 N1 SD](US6.2.11%20N1%20SD.svg)
+![US6.2.15 N1 SD](US6.2.15%20N1%20SD.svg)
 
 
 ### 4.2. Level 2 Sequence Diagram
 
-This diagram guides the realization of the functionality, for level 2 procecss view.
+This diagram guides the realization of the functionality, for level 2 process view.
 
-![US6.2.11 N2 SD](US6.2.11%20N2%20SD.svg)
+![US6.2.15 N2 SD](US6.2.15%20N2%20SD.svg)
 
 
 ### 4.3. Level 3 Sequence Diagram
 
 This diagram guides the realization of the functionality, for level 3 process view.
 
-![US6.2.11 N3 SD](US6.2.11%20N3%20SD.svg)
+![US6.2.15 N3 SD](US6.2.15%20N3%20SD.svg)
 
 
 ### 4.4. Applied Design Patterns
@@ -127,11 +82,10 @@ This diagram guides the realization of the functionality, for level 3 process vi
 ### 4.5. Tests
 
 The following tests are to be developed:
-- the edited staff must have the same data as the input.
+- the edited operation request must have the same data as the input.
 - an error message should be displayed when the input is invalid or mandatory.
-- the page must reload to show the updated staff.
+- the page must reload to show the updated operation request.
 - a success message should be shown after updating.
-- the availability slots must have the right format.
 
 
 Unitary tests to the component will be implemented.
@@ -143,14 +97,14 @@ E2E Tests will also check all the US flow, from the user interaction to the back
 
 The implementation of this US is according to the design, as can be seen in the diagrams presented before.
 
-All commits referred the corresponding issue in GitHub, using the #34 tag, as well as a relevant commit message.
+All commits referred the corresponding issue in GitHub, using the #38 tag, as well as a relevant commit message.
 
 The estimated duration for this US is 12h.
 
 
 ## 6. Integration/Demonstration
 
-To edit a staff profile, run the Backoffice, Auth and the SPA app, then go to the Staff page and click on "pencil" icon to edit a profile.
+To edit an operation request, run the Backoffice, Auth and the SPA app, then go to the Operation request page and click on "pencil" icon to edit an operation request.
 
 ## 7. Observations
 
