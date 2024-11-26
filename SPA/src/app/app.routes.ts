@@ -57,13 +57,13 @@ export const routes: Routes = [
     title: 'Operation Request page',
   },
   {
-    path: '**',
-    component: LoginComponent,
-    title: 'Login page',
-  },
-  {
     path: 'patientprofile',
     component: PatientProfileComponent,
     title: 'Patient Profile page',
+  },
+  {
+    path: '**',
+    component: LoginComponent,
+    title: 'Login page',
   }
 ];
